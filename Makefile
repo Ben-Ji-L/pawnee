@@ -8,9 +8,9 @@ FOLDERS = webserver
 # make lancera toujours la construction de cette règle si elle est
 # demandée, même si un fichier/répertoire du nom de la cible existe
 # On indique ici la règle all ainsi que les répertoires
-.PHONY: all $ ( FOLDERS )
+.PHONY: all $(FOLDERS)
 # La règle qui sera exécutée si on lance make sans argument
-all: $ ( FOLDERS )
+all: $(FOLDERS)
 # Cette règle va lancer make dans le répertoire webserver
 # option -C de make
 webserver:
