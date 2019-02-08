@@ -1,0 +1,7 @@
+1) il y a une erreur sur la socket du serveur : elle est déjà utilisée (par la précédente connexion du serveur)
+
+2) Le serveur se lance, puis se ferme sans affichage sur le client. L'option -z envoie la requete mais sans entrées ni sorties.
+
+3) Ca ne fonctionne pas : le serveur n'est pas configuré pour fonctionner en IPV6.
+
+4) Il ne se passe rien sur le deuxième client, car le serveur n'est configuré que pour un seul client.
