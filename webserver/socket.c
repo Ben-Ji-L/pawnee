@@ -5,6 +5,8 @@
 int creer_serveur(int port){
 
 	int socket_serveur;
+	int optval = 1;
+
 	socket_serveur = socket(AF_INET, SOCK_STREAM, 0);
 
 	if (socket_serveur == -1){
@@ -17,7 +19,10 @@ int creer_serveur(int port){
 	saddr.sin_family = AF_INET ; /* Socket ipv4 */
 	saddr.sin_port = htons(port); /* Port d ’é coute */
 	saddr.sin_addr.s_addr = INADDR_ANY ; /* é coute sur toutes les interfaces */
-	
+
+	if (setsockopt(socket_serveur, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1)
+	    perror("Impossible de modifier l'option SO_REUSEADDR");
+
 	if (bind (socket_serveur, (struct sockaddr*)&saddr , sizeof(saddr)) == -1){
 		perror("bind socker_serveur");/* traitement de l ’ erreur */
 		return -1;
