@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
+#include <sys/wait.h>
 #include <netinet/in.h>
 #include <string.h>
 #include <unistd.h>
@@ -9,6 +10,7 @@
 
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
+void child_handler(int signal);
 
 int main()
 {
@@ -40,10 +42,31 @@ int main()
 }
 
 void initialiser_signaux(void) {
+
+	// On ignore le signal SIGPIPE
     if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
         perror("signal error");
         exit(1);
     }
+
+   	// Traitement signal SIGCHLD
+   	struct sigaction sa;
+
+   	sa.sa_handler = child_handler;
+   	sigemptyset(&sa.sa_mask);
+   	sa.sa_flags = SA_RESTART;
+
+   	if (sigaction(SIGCHLD,  &sa, NULL) == -1) {
+   		perror("error sigaction");
+   		exit(1);
+   	}
+
+
+}
+
+void child_handler(int signal) {
+	printf("signal recu %d\n", signal);
+	while (waitpid(-1, NULL, WNOHANG) > 0) {}
 }
 
 void repondre_client(int socket_client) {
@@ -71,7 +94,7 @@ void repondre_client(int socket_client) {
 			if (taille == -1) {
 				perror("read boucle error");
 				exit(1);
-			}
+			} else if (taille == 0) break;
 			if(write(socket_client, message_client, taille) == -1) {
 				perror("write error");
 				exit(1);
