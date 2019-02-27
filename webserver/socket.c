@@ -20,11 +20,12 @@ int creer_serveur(int port){
 	saddr.sin_port = htons(port); /* Port d ’é coute */
 	saddr.sin_addr.s_addr = INADDR_ANY ; /* é coute sur toutes les interfaces */
 
-	if (setsockopt(socket_serveur, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1)
-	    perror("option SO_REUSEADDR error");
-
 	if (bind (socket_serveur, (struct sockaddr*)&saddr , sizeof(saddr)) == -1){
-		perror("bind socker_serveur");/* traitement de l ’ erreur */
+		perror("bind socket_serveur");/* traitement de l ’ erreur */
+		return -1;
+	}
+	if (setsockopt(socket_serveur, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1) {
+	    perror("option SO_REUSEADDR error");
 		return -1;
 	}
 
