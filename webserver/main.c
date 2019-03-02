@@ -10,7 +10,7 @@
 
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
-void child_handler(int signal);
+void child_handler(void);
 
 int main()
 {
@@ -52,7 +52,7 @@ void initialiser_signaux(void) {
    	// Traitement signal SIGCHLD
    	struct sigaction sa;
 
-   	sa.sa_handler = child_handler;
+   	sa.sa_handler = (__sighandler_t) child_handler;
    	sigemptyset(&sa.sa_mask);
    	sa.sa_flags = SA_RESTART;
 
@@ -64,7 +64,7 @@ void initialiser_signaux(void) {
 
 }
 
-void child_handler(int signal) {
+void child_handler(void) {
 	while (waitpid(-1, NULL, WNOHANG) > 0) {}
 }
 
@@ -84,7 +84,7 @@ void repondre_client(int socket_client) {
 
 		fgets(data, 512, flux);
 
-		fprintf(flux, "%s", data);
+		printf("%s", data);
 		fclose(flux);
 		exit(0);
 	}

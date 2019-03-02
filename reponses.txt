@@ -5,3 +5,10 @@
 3) Ca ne fonctionne pas : le serveur n'est pas configuré pour fonctionner en IPV6.
 
 4) Il ne se passe rien sur le deuxième client, car le serveur n'est configuré que pour un seul client.
+
+5.2.1
+
+3) le client nous répond : "Empty reply from server"
+
+4) la requete est GET / HTTP/1.1
+ elle est composé de la méthode HTTP, de l'URI de la ressource demandée et de la version du protocole HTTP
