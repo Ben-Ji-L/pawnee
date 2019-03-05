@@ -12,8 +12,7 @@ void initialiser_signaux(void);
 void repondre_client(int socket_client);
 void child_handler(void);
 
-int main()
-{
+int main() {
     int socket_serveur;
     int socket_client;
     socket_serveur = creer_serveur(8080);
