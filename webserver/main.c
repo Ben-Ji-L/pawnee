@@ -83,12 +83,26 @@ void repondre_client(int socket_client) {
         fgets(data, 100, flux);
         printf("%s", data);
 
-       if (strncmp(data, "GET / HTTP/1.1\r\n", 100) != 0) {
+        if (strncmp(data, "GET /inexistant HTTP/1.1\r\n", 100) == 0) {
 
             do {
                 fgets(data, 512, flux);
             } while (strncmp(data, "\r\n", 2) != 0);
-            
+
+            fprintf(flux, "HTTP/1.1 404 Not Found\r\n"
+                          "Connection: Keep-Alive\r\n"
+                          "Content-Length: 0\r\n"
+                          "404 Not Found\r\n\r\n");
+
+            fclose(flux);
+            exit(0);
+
+        } else if (strncmp(data, "GET / HTTP/1.1\r\n", 100) != 0) {
+
+            do {
+                fgets(data, 512, flux);
+            } while (strncmp(data, "\r\n", 2) != 0);
+
             fprintf(flux, "HTTP/1.1 400 Bad Request\r\n"
                           "Connection: close\r\n"
                           "Content-Length: 0\r\n"
