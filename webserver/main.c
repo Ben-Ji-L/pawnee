@@ -116,7 +116,10 @@ void repondre_client(int socket_client) {
             fgets(data, 512, flux);
         } while (strncmp(data, "\r\n", 2) != 0);
 
-        char* bienvenue = "Bonjour bienvenue sur notre serveur\r\n";
+        char* bienvenue = "<style>"
+                          "h1 { font-family: Montserrat; font-weight: bold; color: purple;}"
+                          "</style>"
+                          "<h1>Bonjour et bienvenue sur notre serveur</h1\r\n";
         fprintf(flux, "HTTP/1.1 200 OK\r\n"
                       "Connection: open\r\n"
                       "Content-Length: %d\r\n"
