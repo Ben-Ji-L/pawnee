@@ -102,7 +102,6 @@ void repondre_client(int socket_client) {
         
         else if (strcmp(request.target, "/") == 0)
         	send_response(flux, 200, "OK", bienvenue);
-        
         else
         	send_response(flux, 404, "Not Found", "Not Found\r\n");
         

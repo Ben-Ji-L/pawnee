@@ -31,3 +31,7 @@ void send_response(FILE *client, int code, const char *reason_phrase, const char
 	fprintf(client, "\r\n");
 	fprintf(client, "%s", message_body);
 }
+
+char *rewrite_target(char *target) {
+	// utiliser strchr
+}
