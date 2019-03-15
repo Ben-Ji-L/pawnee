@@ -6,7 +6,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
+
 #include "socket.h"
+#include "utils.h"
+#include "http_parse.h"
 
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
@@ -17,7 +20,7 @@ int main() {
     int socket_client;
     socket_serveur = creer_serveur(8080);
 
-    printf("serveur cree\n");
+    printf("serveur lancé\n");
 
     if (listen(socket_serveur, 10) == -1){
         perror("error socket_serveur");
@@ -74,57 +77,35 @@ void repondre_client(int socket_client) {
     }
 
     if (pid == 0) {
-        FILE* flux;
+        FILE *flux;
         char data[512];
 
-        flux = fdopen(socket_client, "w+");
-
-        fgets(data, 100, flux);
-        printf("%s", data);
-
-        if (strncmp(data, "GET /inexistant HTTP/1.1\r\n", 100) == 0) {
-
-            do {
-                fgets(data, 512, flux);
-            } while (strncmp(data, "\r\n", 2) != 0);
-
-            fprintf(flux, "HTTP/1.1 404 Not Found\r\n"
-                          "Connection: Keep-Alive\r\n"
-                          "Content-Length: 0\r\n"
-                          "404 Not Found\r\n\r\n");
-
-            fclose(flux);
-            exit(0);
-
-        } else if (strncmp(data, "GET / HTTP/1.1\r\n", 100) != 0) {
-
-            do {
-                fgets(data, 512, flux);
-            } while (strncmp(data, "\r\n", 2) != 0);
-
-            fprintf(flux, "HTTP/1.1 400 Bad Request\r\n"
-                          "Connection: close\r\n"
-                          "Content-Length: 0\r\n"
-                          "400 Bad Request\r\n\r\n");
-
-            fclose(flux);
-            exit(0);
-        }
-
-        do {
-            fgets(data, 512, flux);
-        } while (strncmp(data, "\r\n", 2) != 0);
-
-        char* bienvenue = "<style>"
+        char *bienvenue = "<style>"
                           "h1 { font-family: Montserrat; font-weight: bold; color: purple;}"
                           "</style>"
                           "<h1>Bonjour et bienvenue sur notre serveur</h1\r\n";
-        fprintf(flux, "HTTP/1.1 200 OK\r\n"
-                      "Connection: open\r\n"
-                      "Content-Length: %d\r\n"
-                      "200 OK\r\n\r\n", (int) strlen(bienvenue));
+        
 
-        fprintf(flux, "%s", bienvenue);
+        flux = fdopen(socket_client, "w+");
+
+        fgets_or_exit(data, 512, flux);
+        printf("%s\n", data);
+        skip_headers(flux);
+
+        http_request request;
+
+        if (!parse_http_request(data, &request))
+        	send_response(flux, 400, "Bad Request", "Bad Request\r\n");
+        
+        else if (request.method == HTTP_UNSUPPORTED)
+        	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed\r\n");
+        
+        else if (strcmp(request.target, "/") == 0)
+        	send_response(flux, 200, "OK", bienvenue);
+        
+        else
+        	send_response(flux, 404, "Not Found", "Not Found\r\n");
+        
         fclose(flux);
         exit(0);
     }

@@ -1,2 +1,4 @@
-socket.o: socket.c
-main.o: main.c socket.h
+socket.o: socket.c socket.h
+http_parse.o: http_parse.c http_parse.h
+main.o: main.c socket.h utils.h http_parse.h
+utils.o: utils.c utils.h http_parse.h
