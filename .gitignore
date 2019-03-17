@@ -1,2 +1,2 @@
-webserver/**.o
+webserver/*.o
 webserver/pawnee
