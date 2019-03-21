@@ -4,11 +4,17 @@
 
 #include "socket.h"
 
+/**
+ * On met en place le serveur dans cette fonction en précisant le port que l'on souhaite écouter.
+ * @param port Le port sur lequel on souhaite que le serveur écoute.
+ * @return Le socket du serveur.
+ */
 int creer_serveur(int port){
 
     int socket_serveur;
     int optval = 1;
 
+    // On crée la socket pour que le serveur puisse écouter le réseau.
     socket_serveur = socket(AF_INET, SOCK_STREAM, 0);
 
     if (socket_serveur == -1){
