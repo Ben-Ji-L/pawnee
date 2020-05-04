@@ -1,2 +1,6 @@
 webserver/*.o
 webserver/pawnee
+webserver/makefile.dep
+
+web/
+m4101c.pdf

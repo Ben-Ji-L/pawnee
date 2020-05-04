@@ -1,0 +1,5 @@
+text/html*html
+image/png*png
+image/jpeg*jpg
+application/pdf*pdf
+image/x-icon*ico

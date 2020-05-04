@@ -6,16 +6,41 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
+#include <linux/limits.h>
 
 #include "socket.h"
 #include "utils.h"
 #include "http_parse.h"
 
+char *mime_filepath;
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
 void child_handler(void);
 
-int main() {
+char *root;
+
+int main(int argc, char *argv[]) {
+
+    char abs_exe_path[PATH_MAX];
+    char path_save[PATH_MAX];
+  	
+  	char *p;
+
+  	if(!(p = strrchr(argv[0], '/')))
+    	getcwd(abs_exe_path, sizeof(abs_exe_path));
+  	else {
+    	*p = '\0';
+    	getcwd(path_save, sizeof(path_save));
+    	chdir(argv[0]);
+    	getcwd(abs_exe_path, sizeof(abs_exe_path));
+    	chdir(path_save);
+  	}
+
+  	printf("Absolute path to executable is: %s\n", abs_exe_path);
+    mime_filepath = strcat(abs_exe_path, "/types.txt");
+
+    root = check_root(argv[1]);
+    argc++;
 
     // Les deux sockets dont on aura besoin.
     int socket_serveur;
@@ -103,14 +128,8 @@ void repondre_client(int socket_client) {
     // Si on est dans un processus fils.
     if (pid == 0) {
         FILE *flux;
+        FILE *file;
         char data[512];
-
-        // Le message de bienvenu du serveur.
-        char *bienvenue = "<style>"
-                          "h1 { font-family: Montserrat; font-weight: bold; color: purple;}"
-                          "</style>"
-                          "<h1>Bonjour et bienvenue sur notre serveur</h1\r\n";
-        
 
         // On ouvre le socket en lecture et en écriture
         flux = fdopen(socket_client, "w+");
@@ -118,25 +137,29 @@ void repondre_client(int socket_client) {
         fgets_or_exit(data, 512, flux);
         printf("%s\n", data);
         skip_headers(flux);
-
+        
         http_request request;
 
         // Ici on parse la requete et selon l'en-tete on envoie la réponse appropriée.
-        if (!parse_http_request(data, &request))
+        if (!parse_http_request(data, &request)) {
             // En cas de requete mal écrite.
-        	send_response(flux, 400, "Bad Request", "Bad Request\r\n");
+        	send_response(flux, 400, "Bad Request", "Bad request", strlen("Bad request\r\n"));
         
-        else if (request.method == HTTP_UNSUPPORTED)
+        } else if (request.method == HTTP_UNSUPPORTED) {
             // Si la méthode n'est pas supportée par le serveur sur cette URL.
-        	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed\r\n");
-        
-        else if (strcmp(request.target, "/") == 0)
-            // Si le client demande la racine du serveur, on envoie le message de bienvenu
-        	send_response(flux, 200, "OK", bienvenue);
-        else
-            // Si on ne trouve pas la ressource demandée.
-        	send_response(flux, 404, "Not Found", "Not Found\r\n");
-
+        	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
+        } else {
+            printf("root : %s\n", root);
+            printf("target rewrite : %s\n", rewrite_target(request.target));
+            file = check_and_open(rewrite_target(request.target), root);
+		    if (file == NULL) {
+			    send_response(flux, 404, "Not Found", "Not Found", strlen("Not Found\r\n"));
+            } else {
+                send_response(flux, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
+                copy(file, flux);
+                fclose(file);
+            }
+        }
         // On oublie pas de fermer le socket
         fclose(flux);
         exit(0);
