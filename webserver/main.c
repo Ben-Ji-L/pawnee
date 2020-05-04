@@ -12,32 +12,16 @@
 #include "utils.h"
 #include "http_parse.h"
 
-char *mime_filepath;
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
 void child_handler(void);
 
 char *root;
 
+
 int main(int argc, char *argv[]) {
-
-    char abs_exe_path[PATH_MAX];
-    char path_save[PATH_MAX];
-  	
-  	char *p;
-
-  	if(!(p = strrchr(argv[0], '/')))
-    	getcwd(abs_exe_path, sizeof(abs_exe_path));
-  	else {
-    	*p = '\0';
-    	getcwd(path_save, sizeof(path_save));
-    	chdir(argv[0]);
-    	getcwd(abs_exe_path, sizeof(abs_exe_path));
-    	chdir(path_save);
-  	}
-
-  	printf("Absolute path to executable is: %s\n", abs_exe_path);
-    mime_filepath = strcat(abs_exe_path, "/types.txt");
+    get_app_path(argv[0]);
+    printf("Absolute path to executable is: %s\n", abs_exe_path);
 
     root = check_root(argv[1]);
     argc++;
@@ -151,14 +135,17 @@ void repondre_client(int socket_client) {
         } else {
             printf("root : %s\n", root);
             printf("target rewrite : %s\n", rewrite_target(request.target));
+
             file = check_and_open(rewrite_target(request.target), root);
 		    if (file == NULL) {
 			    send_response(flux, 404, "Not Found", "Not Found", strlen("Not Found\r\n"));
+                fclose(flux);
+                exit(0);
             } else {
                 send_response(flux, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
                 copy(file, flux);
-                fclose(file);
             }
+            fclose(file);
         }
         // On oublie pas de fermer le socket
         fclose(flux);

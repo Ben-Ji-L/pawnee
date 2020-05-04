@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <limits.h>
+#include <linux/limits.h>
 
 #include "utils.h"
 #include "http_parse.h"
@@ -77,6 +78,7 @@ char *rewrite_target(char *target) {
 	if (strcmp(rewrited_target, "/") == 0) {
 		return "index.html";
 	}
+
 	return ++rewrited_target;
 }
 
@@ -128,7 +130,7 @@ FILE *check_and_open(const char *target, const char *document_root) {
 		perror("fopen error ");
 		return NULL;
 	}
-
+	
 	return result;
 }
 
@@ -159,7 +161,7 @@ char *get_mime_type(char *name) {
 	size_t len = 0;
     ssize_t read;
 	ext++;
-
+	char *mime_filepath = strcat(abs_exe_path, "/types.txt");
 	
 	printf("mime type file : %s\n", mime_filepath);
 
@@ -179,4 +181,19 @@ char *get_mime_type(char *name) {
 		perror("open mime file error : ");
 	}
 	return mime_type;
+}
+
+void get_app_path(char *argv0) {
+	char path_save[PATH_MAX];
+    char *p;
+
+    if(!(p = strrchr(argv0, '/')))
+        getcwd(abs_exe_path, sizeof(abs_exe_path));
+    else {
+        *p = '\0';
+        getcwd(path_save, sizeof(path_save));
+        chdir(argv0);
+        getcwd(abs_exe_path, sizeof(abs_exe_path));
+        chdir(path_save);
+    }
 }
