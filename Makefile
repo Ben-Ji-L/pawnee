@@ -15,3 +15,6 @@ all: $(FOLDERS)
 # option -C de make
 webserver:
 	make -C webserver
+
+check:
+	cppcheck webserver
