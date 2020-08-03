@@ -11,6 +11,7 @@
 #include "socket.h"
 #include "utils.h"
 #include "http_parse.h"
+#include "stats.h"
 
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
@@ -41,6 +42,7 @@ int main(int argc, char *argv[]) {
     }
 
     initialiser_signaux();
+    init_stats();
 
     // Le serveur attend des requetes
     while(1) {
@@ -50,6 +52,7 @@ int main(int argc, char *argv[]) {
             perror("accept error");
             exit(1);
         }
+        get_stats()->served_connections++;
 
         // Si pas d'erreur on répond au client
         repondre_client(socket_client);
@@ -117,18 +120,18 @@ void repondre_client(int socket_client) {
 
         // On ouvre le socket en lecture et en écriture
         flux = fdopen(socket_client, "w+");
-
         fgets_or_exit(data, 512, flux);
         printf("%s\n", data);
         skip_headers(flux);
         
         http_request request;
-
+        get_stats()->served_requests++;
+        
         // Ici on parse la requete et selon l'en-tete on envoie la réponse appropriée.
         if (!parse_http_request(data, &request)) {
             // En cas de requete mal écrite.
+            get_stats()->ko_400++;
         	send_response(flux, 400, "Bad Request", "Bad request", strlen("Bad request\r\n"));
-        
         } else if (request.method == HTTP_UNSUPPORTED) {
             // Si la méthode n'est pas supportée par le serveur sur cette URL.
         	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
@@ -136,12 +139,20 @@ void repondre_client(int socket_client) {
             printf("root : %s\n", root);
             printf("target rewrite : %s\n", rewrite_target(request.target));
 
+            if (strcmp(rewrite_target(request.target), "stats") == 0) {
+                send_stats(flux);
+                fclose(flux);
+                exit(0);
+            }
+
             file = check_and_open(rewrite_target(request.target), root);
 		    if (file == NULL) {
+                get_stats()->ko_404++;
 			    send_response(flux, 404, "Not Found", "Not Found", strlen("Not Found\r\n"));
                 fclose(flux);
                 exit(0);
             } else {
+                get_stats()->ok_200++;
                 send_response(flux, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
                 copy(file, flux);
             }

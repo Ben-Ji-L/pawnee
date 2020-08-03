@@ -1,6 +1,8 @@
 # ifndef __UTILS_H__
 # define __UTILS_H__
 
+#include <linux/limits.h>
+
 #include "http_parse.h"
 
 char abs_exe_path[PATH_MAX];
