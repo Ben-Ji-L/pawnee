@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <sys/mman.h>
 
 #include "stats.h"
 #include "utils.h"

@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
             perror("accept error");
             exit(1);
         }
+
         get_stats()->served_connections++;
 
         // Si pas d'erreur on répond au client
