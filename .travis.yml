@@ -1,0 +1,6 @@
+language: c
+
+install: cppcheck
+script: 
+    - make
+    - make check
