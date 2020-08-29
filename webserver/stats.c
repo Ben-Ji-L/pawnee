@@ -2,6 +2,9 @@
 #include <string.h>
 #include <sys/mman.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <semaphore.h>
 
 #include "stats.h"
 #include "utils.h"
@@ -23,13 +26,25 @@ void send_stats(FILE *client) {
 }
 
 int init_stats(void) {
-    shared_memory = mmap(NULL, sizeof(stats), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-    if (shared_memory == MAP_FAILED) {
-        perror("mmap error");
+    sem_t semaphore;
+    if (sem_init(&semaphore, 0, 1) == -1) {
+        perror("sem_init error");
         exit(EXIT_FAILURE);
     }
 
+    shared_memory = mmap(NULL, sizeof(stats), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+    if (shared_memory == MAP_FAILED) {
+        perror("mmap stats error");
+        exit(EXIT_FAILURE);
+    }
     memcpy(shared_memory, &stats, sizeof(stats));
+
+    shared_semaphore = mmap(NULL, sizeof(sem_t), PROT_WRITE | PROT_READ, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+    if (shared_semaphore == MAP_FAILED) {
+        perror("mmap semaphore error");
+        exit(EXIT_FAILURE);
+    }
+    memcpy(shared_semaphore, &semaphore, sizeof(semaphore));
 
     stats.served_connections = 0;
     stats.served_requests = 0;

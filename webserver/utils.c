@@ -108,7 +108,6 @@ char *check_root(char *root) {
 FILE *check_and_open(const char *target, const char *document_root) {
 	char *path = strcat(strdup(document_root), target);
 	struct stat path_stat;
-	printf("path : %s\n", path);
 
 	// Si stat echoue
 	if (stat(path, &path_stat) != 0) {
@@ -162,8 +161,6 @@ char *get_mime_type(char *name) {
     ssize_t read;
 	ext++;
 	char *mime_filepath = strcat(abs_exe_path, "/types.txt");
-	
-	printf("mime type file : %s\n", mime_filepath);
 
 	FILE *mime_type_file = fopen(mime_filepath, "r");
 	if (mime_type_file != NULL) {

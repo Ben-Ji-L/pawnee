@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <linux/limits.h>
+#include <semaphore.h>
 
 #include "socket.h"
 #include "utils.h"
@@ -22,7 +23,6 @@ char *root;
 
 int main(int argc, char *argv[]) {
     get_app_path(argv[0]);
-    printf("Absolute path to executable is: %s\n", abs_exe_path);
 
     root = check_root(argv[1]);
     argc++;
@@ -53,7 +53,9 @@ int main(int argc, char *argv[]) {
             exit(1);
         }
 
+        sem_wait(shared_semaphore);
         get_stats()->served_connections++;
+        sem_post(shared_semaphore);
 
         // Si pas d'erreur on répond au client
         repondre_client(socket_client);
@@ -61,6 +63,7 @@ int main(int argc, char *argv[]) {
         // On ferme le socket
         close(socket_client);
     }
+
     return 0;
 }
 
@@ -122,23 +125,26 @@ void repondre_client(int socket_client) {
         // On ouvre le socket en lecture et en écriture
         flux = fdopen(socket_client, "w+");
         fgets_or_exit(data, 512, flux);
-        printf("%s\n", data);
         skip_headers(flux);
         
         http_request request;
+
+        sem_wait(shared_semaphore);
         get_stats()->served_requests++;
+        sem_post(shared_semaphore);
         
         // Ici on parse la requete et selon l'en-tete on envoie la réponse appropriée.
         if (!parse_http_request(data, &request)) {
             // En cas de requete mal écrite.
+            sem_wait(shared_semaphore);
             get_stats()->ko_400++;
+            sem_post(shared_semaphore);
+
         	send_response(flux, 400, "Bad Request", "Bad request", strlen("Bad request\r\n"));
         } else if (request.method == HTTP_UNSUPPORTED) {
             // Si la méthode n'est pas supportée par le serveur sur cette URL.
         	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
         } else {
-            printf("root : %s\n", root);
-            printf("target rewrite : %s\n", rewrite_target(request.target));
 
             if (strcmp(rewrite_target(request.target), "stats") == 0) {
                 send_stats(flux);
@@ -148,12 +154,18 @@ void repondre_client(int socket_client) {
 
             file = check_and_open(rewrite_target(request.target), root);
 		    if (file == NULL) {
+                sem_wait(shared_semaphore);
                 get_stats()->ko_404++;
+                sem_post(shared_semaphore);
+
 			    send_response(flux, 404, "Not Found", "Not Found", strlen("Not Found\r\n"));
                 fclose(flux);
                 exit(0);
             } else {
+                sem_wait(shared_semaphore);
                 get_stats()->ok_200++;
+                sem_post(shared_semaphore);
+
                 send_response(flux, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
                 copy(file, flux);
             }

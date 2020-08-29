@@ -10,6 +10,8 @@ typedef struct {
     int ko_404;
 } web_stats;
 
+sem_t *shared_semaphore;
+
 void send_stats(FILE *client);
 int init_stats(void);
 web_stats *get_stats(void);
