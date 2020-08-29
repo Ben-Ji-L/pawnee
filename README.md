@@ -1,4 +1,4 @@
-# MyAwesomeServ
+# MyAwesomeServ [![Build Status](https://travis-ci.org/Benji59/myawesomeserv.svg?branch=master)](https://travis-ci.org/Benji59/myawesomeserv)
 
 ## Colline Praca et Benjamin Lemaire
 
