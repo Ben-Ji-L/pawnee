@@ -1,8 +1,10 @@
 #include <sys/socket.h>
 #include <stdio.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #include "socket.h"
+#include "config.h"
 
 /**
  * On met en place le serveur dans cette fonction en précisant le port que l'on souhaite écouter.
@@ -26,7 +28,7 @@ int creer_serveur(int port){
     struct sockaddr_in saddr ;
     saddr.sin_family = AF_INET ; /* Socket ipv4 */
     saddr.sin_port = htons(port); /* Port d ’é coute */
-    saddr.sin_addr.s_addr = INADDR_ANY ; /* é coute sur toutes les interfaces */
+    saddr.sin_addr.s_addr = inet_addr(get_config()->listen_addr); /* é coute sur toutes les interfaces */
 
     if (setsockopt(socket_serveur, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1) {
         perror("option SO_REUSEADDR error");

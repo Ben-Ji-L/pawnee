@@ -9,6 +9,7 @@
 
 #include "utils.h"
 #include "http_parse.h"
+#include "config.h"
 
 /**
  * On lit des données et en cas d'erreur on quite le programme avec un statut d'erreur.
@@ -160,7 +161,7 @@ char *get_mime_type(char *name) {
 	size_t len = 0;
     ssize_t read;
 	ext++;
-	char *mime_filepath = strcat(abs_exe_path, "/types.txt");
+	char *mime_filepath = get_config()->mimes_file;
 
 	FILE *mime_type_file = fopen(mime_filepath, "r");
 	if (mime_type_file != NULL) {

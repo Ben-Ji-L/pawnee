@@ -13,6 +13,7 @@
 #include "utils.h"
 #include "http_parse.h"
 #include "stats.h"
+#include "config.h"
 
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
@@ -23,16 +24,20 @@ char *root;
 
 int main(int argc, char *argv[]) {
     get_app_path(argv[0]);
+    init_config();
 
-    root = check_root(argv[1]);
-    argc++;
+    if (argc > 1) {
+        root = check_root(argv[1]);
+        argc++;
+    } else
+        root = check_root(get_config()->website_root);
 
     // Les deux sockets dont on aura besoin.
     int socket_serveur;
     int socket_client;
 
     // On crée le serveur
-    socket_serveur = creer_serveur(8080);
+    socket_serveur = creer_serveur(get_config()->port);
 
     printf("serveur lancé\n");
 
