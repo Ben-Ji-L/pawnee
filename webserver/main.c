@@ -23,8 +23,9 @@ char *root;
 
 
 int main(int argc, char *argv[]) {
-    get_app_path(argv[0]);
-    init_config();
+    char *executable_path = get_app_path(argv[0]);
+
+    init_config(executable_path);
 
     if (argc > 1) {
         root = check_root(argv[1]);

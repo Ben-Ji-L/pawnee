@@ -161,9 +161,8 @@ char *get_mime_type(char *name) {
 	size_t len = 0;
     ssize_t read;
 	ext++;
-	char *mime_filepath = get_config()->mimes_file;
 
-	FILE *mime_type_file = fopen(mime_filepath, "r");
+	FILE *mime_type_file = fopen(get_config()->mimes_file, "r");
 	if (mime_type_file != NULL) {
 		while ((read = getline(&line, &len, mime_type_file)) != -1) {
 			line[strlen(line)-1] = '\0';
@@ -178,12 +177,15 @@ char *get_mime_type(char *name) {
 	} else {
 		perror("open mime file error : ");
 	}
+
 	return mime_type;
 }
 
-void get_app_path(char *argv0) {
+char *get_app_path(char *argv0) {
+	char abs_exe_path[PATH_MAX];
 	char path_save[PATH_MAX];
     char *p;
+	char *result;
 
     if(!(p = strrchr(argv0, '/')))
         getcwd(abs_exe_path, sizeof(abs_exe_path));
@@ -194,4 +196,6 @@ void get_app_path(char *argv0) {
         getcwd(abs_exe_path, sizeof(abs_exe_path));
         chdir(path_save);
     }
+	result = &abs_exe_path[0];
+	return result;
 }

@@ -8,6 +8,7 @@ typedef struct {
     char *mimes_file;
 } server_config;
 
-int init_config(void);
+int init_config(char *abs_path);
+int get_config_from_file(char *abs_path);
 server_config *get_config(void);
 #endif
