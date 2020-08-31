@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     // On crée le serveur
     socket_serveur = creer_serveur(get_config()->port);
 
-    printf("serveur lancé\n");
+    printf("serveur lancé à l'adresse : http://%s sur le port : %d\n", get_config()->listen_addr, get_config()->port);
 
     if (listen(socket_serveur, 10) == -1){
         perror("error socket_serveur");
