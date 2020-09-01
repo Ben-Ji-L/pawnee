@@ -1,8 +1,17 @@
 language: c
 
+matrix:
+    include:
+        - os: linux
+        env:
+            - MATRIX_EVAL="brew install cppcheck"
+        
+        - os: osx
+        env:
+            - MATRIX_EVAL="sudo apt-get install cppcheck"
+
 before_install:
-    - sudo apt-get update
-    - sudo apt-get -y install cppcheck
+    - eval "${MATRIX_EVAL}"
 
 script: 
     - make
