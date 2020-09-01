@@ -1,5 +1,9 @@
 language: c
 
+os: 
+    - linux
+    - osx
+
 before_install:
     - sudo apt-get update
     - sudo apt-get -y install cppcheck
