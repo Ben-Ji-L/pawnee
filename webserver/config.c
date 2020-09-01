@@ -11,6 +11,12 @@
 static server_config config;
 server_config *shared_mem_config;
 
+/**
+ * Initialise la structure qui stocke la configuration du serveur,
+ * à partir du fichier de configuration si il est présent
+ * @param abs_path le chemin absolu de l'application
+ * @return 0 si tout se passe bien, 1 sinon
+ */
 int init_config(char *abs_path) {
     char types[PATH_MAX];
     strcpy(types, abs_path);
@@ -33,6 +39,11 @@ int init_config(char *abs_path) {
     return 0;
 }
 
+/**
+ * Ouvre le fichier de configuration du serveur puis le lit
+ * @param abs_path le chemin absolu de l'application
+ * @return 0 si tout se passe bien, 1 sinon
+ */
 int get_config_from_file(char *abs_path) {
     FILE *config_file;
 
@@ -80,6 +91,10 @@ int get_config_from_file(char *abs_path) {
     return 0;
 }
 
+/**
+ * Renvoie la configuration du serveur
+ * @return un pointeur vers la zone mémoire partagée contenant la configuration
+ */
 server_config *get_config(void) {
     return shared_mem_config;
 }

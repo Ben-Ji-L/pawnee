@@ -3,6 +3,7 @@
 
 #include <linux/limits.h>
 
+// Structure représentant la configuration du serveur
 typedef struct {
     int port;
     char listen_addr[PATH_MAX];
