@@ -22,24 +22,21 @@ int init_config(char *abs_path) {
     }
 
     // si le fichie n'est pas lu on place les valeurs par défaut dans la structure
-    if (get_config_from_file(abs_path) != 0) {
-        config.port = 8080;
-    }
-    config.listen_addr = "127.0.0.1";
-    config.website_root = "web/";
-
+    config.port = 8080;
+    strcpy(config.listen_addr, "127.0.0.1");
+    strcpy(config.website_root, "web");
     strcat(types, "/types.txt");
-    config.mimes_file = types;
+    strcpy(config.mimes_file, types);
+    get_config_from_file(abs_path);
 
-    memcpy(shared_mem_config, &config, sizeof(config));
-
+    memmove(shared_mem_config, &config, sizeof(server_config));
     return 0;
 }
 
 int get_config_from_file(char *abs_path) {
     FILE *config_file;
 
-    char path[256];
+    char path[PATH_MAX];
     strcpy(path, abs_path);
 
     int bufferLength = 255;
@@ -50,10 +47,11 @@ int get_config_from_file(char *abs_path) {
         return 1;
     }
 
-    // on lit une ligne
-    // si elle commence par un # on passe à la suivante
-    // si elle contient un = on lit la clé et la valeur
-    // si partie gauche = port on stocke la valeur de droite dans config.port
+    /** on lit une ligne
+      * si elle commence par un # on passe à la suivante
+       * si elle contient un = on lit la clé et la valeur
+       * si partie gauche = port on stocke la valeur de droite dans config.port
+       */
     while(fgets(buffer, bufferLength, config_file)) {
 
         // traitement de la ligne
@@ -62,13 +60,23 @@ int get_config_from_file(char *abs_path) {
             
             if (strcmp(token, "port") == 0) {
                 token = strtok(NULL, "=");
-
                 config.port = atoi(token);
+            } else if (strcmp(token, "listen_addr") == 0) {
+                token = strtok(NULL, "=");
+                token = strtok(token, "\"");      
+                strcpy(config.listen_addr, token);
+            } else if (strcmp(token, "website_root") == 0) {
+                token = strtok(NULL, "=");
+                token = strtok(token, "\"");
+                strcpy(config.website_root, token);
+            } else if (strcmp(token, "mimes_file") == 0) {
+                token = strtok(NULL, "=");
+                token = strtok(token, "\"");
+                strcpy(config.mimes_file, token);
             }
         }
     }
     fclose(config_file);
-
     return 0;
 }
 

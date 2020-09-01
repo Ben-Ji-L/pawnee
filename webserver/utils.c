@@ -84,6 +84,8 @@ char *rewrite_target(char *target) {
 }
 
 char *check_root(char *root) {
+
+	//printf("root in check root: %s\n", root);
 	if (access(root, R_OK | W_OK) != 0) {
 		perror("no access to the root");
 		exit(1);

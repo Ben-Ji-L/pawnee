@@ -1,11 +1,13 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+#include <linux/limits.h>
+
 typedef struct {
     int port;
-    char *listen_addr;
-    char *website_root;
-    char *mimes_file;
+    char listen_addr[PATH_MAX];
+    char website_root[PATH_MAX];
+    char mimes_file[PATH_MAX];
 } server_config;
 
 int init_config(char *abs_path);
