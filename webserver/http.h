@@ -4,5 +4,6 @@
 void skip_headers(FILE * client);
 void send_status(FILE *client, int code, const char *reason_phrase);
 void send_response(FILE *client, int code, const char *reason_phrase, char *message_body, int size);
+char *rewrite_target(char *target);
 
 #endif

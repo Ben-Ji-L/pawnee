@@ -7,7 +7,6 @@
 #include <semaphore.h>
 
 #include "stats.h"
-#include "utils.h"
 #include "http.h"
 #include "log.h"
 

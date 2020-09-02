@@ -10,7 +10,6 @@
 #include <semaphore.h>
 
 #include "socket.h"
-#include "utils.h"
 #include "http_parse.h"
 #include "stats.h"
 #include "config.h"

@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include "config.h"
-#include "utils.h"
 #include "log.h"
 
 // La configuration du serveur

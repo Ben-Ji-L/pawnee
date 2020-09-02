@@ -7,7 +7,7 @@
 #include <limits.h>
 #include <linux/limits.h>
 
-#include "utils.h"
+#include "file.h"
 
 /**
  * On ignore les en-tête de la requête.
@@ -54,4 +54,20 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
 		fprintf(client, "%s\r\n", message_body);
 	}
 	
+}
+
+/**
+ * Fonction qui réecrit la requête en enlevant les variables (après le ?)
+ * et qui transforme la requête "/" en "index.html"
+ * @param target la requête à examiner
+ * @return la requête réécrite
+ */
+char *rewrite_target(char *target) {
+	char *rewrited_target = strtok(strdup(target), "?");
+
+	if (strcmp(rewrited_target, "/") == 0) {
+		return "index.html";
+	}
+
+	return ++rewrited_target;
 }
