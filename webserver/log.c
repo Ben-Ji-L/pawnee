@@ -7,9 +7,16 @@
 #include "http_parse.h"
 #include "log.h"
 
+// le fichier de log des requêtes
 FILE *log_requests;
+
+// le fichier de log des erreurs
 FILE *log_errors;
 
+/**
+ * Initialisation du fichier de log des requêtes
+ * @param path le chemin vers le dossier des logs
+ */
 void create_requests_logs_file(char *path) {
     FILE *request_log;
     char request_path[PATH_MAX];
@@ -30,6 +37,10 @@ void create_requests_logs_file(char *path) {
     log_requests = request_log;
 }
 
+/**
+ * Initialisation du fichier de log des erreurs
+ * @param path le chemin vers le dossier des logs
+ */
 void create_errors_logs_file(char *path) {
     FILE *error_log;
     char error_path[PATH_MAX];
@@ -47,6 +58,12 @@ void create_errors_logs_file(char *path) {
     log_errors = error_log;
 }
 
+/**
+ * Fonction qui écrit une requête dans les logs
+ * @param log_file le fichier dans lequel on doit écrire
+ * @param request la requête à écrire
+ * @param code le code HTTP de la requête
+ */
 void write_request(FILE *log_file, http_request request, int code) {
     char *method = "";
     int hours, minutes, seconds, day, month, year;
@@ -58,41 +75,56 @@ void write_request(FILE *log_file, http_request request, int code) {
     } else if (request.method == 1)
         method = "UNSUPPORTED";
     
+    // le temps actuel
     struct tm *local = localtime(&now);
 
-	hours = local->tm_hour;	  	// get hours since midnight (0-23)
-	minutes = local->tm_min;	 	// get minutes passed after the hour (0-59)
-	seconds = local->tm_sec;	 	// get seconds passed after minute (0-59)
+	hours = local->tm_hour;	  	// l'heure depuis minuit, de 0 à 23
+	minutes = local->tm_min;	 	// les minutes, de 0 à 59
+	seconds = local->tm_sec;	 	// les secondes, de 0 à 59
 
-	day = local->tm_mday;			// get day of month (1 to 31)
-	month = local->tm_mon + 1;   	// get month of year (0 to 11)
-	year = local->tm_year + 1900;	// get year since 1900
+	day = local->tm_mday;			// le jour, de 1 à 31
+	month = local->tm_mon + 1;   	// le mois, de 0 à 11
+	year = local->tm_year + 1900;	// l'année depuis 1900
 
+    // le formattage de la ligne de log
     fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] HTTP:%d/%d %d %s %s\n", day, month, year, hours, minutes, seconds, request.http_major, request.http_minor, code, method, request.target);
 }
 
+/**
+ * Fonction qui écrit une erreur dans les logs
+ * @param log_file le fichier dans lequel on doit écrire
+ * @param error l'erreur à écrire
+ */
 void write_error(FILE *log_file, char *error) {
     int hours, minutes, seconds, day, month, year;
     time_t now;
     time(&now);
 
+    // le temps actuel
     struct tm *local = localtime(&now);
 
-	hours = local->tm_hour;	  	// get hours since midnight (0-23)
-	minutes = local->tm_min;	 	// get minutes passed after the hour (0-59)
-	seconds = local->tm_sec;	 	// get seconds passed after minute (0-59)
+	hours = local->tm_hour;	  	// l'heure depuis minuit, de 0 à 23
+	minutes = local->tm_min;	 	// les minutes, de 0 à 59
+	seconds = local->tm_sec;	 	// les secondes, de 0 à 59
 
-	day = local->tm_mday;			// get day of month (1 to 31)
-	month = local->tm_mon + 1;   	// get month of year (0 to 11)
-	year = local->tm_year + 1900;	// get year since 1900
+	day = local->tm_mday;			// le jour, de 1 à 31
+	month = local->tm_mon + 1;   	// le mois, de 0 à 11
+	year = local->tm_year + 1900;	// l'année depuis 1900
 
+    // le formattage de la ligne de log
     fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] %s\n", day, month, year, hours, minutes, seconds, error);
 }
 
+/**
+ * Renvoie un descripteur de fichier vers le fichier de log des requêtes
+ */
 FILE *get_log_requests(void) {
     return log_requests;
 }
 
+/**
+ * Renvoie un descripteur de fichier vers le fichier de log des erreurs
+ */
 FILE *get_log_errors(void) {
     return log_errors;
 }
