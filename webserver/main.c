@@ -75,6 +75,9 @@ int main(int argc, char *argv[]) {
         close(socket_client);
     }
 
+    fclose(get_log_requests());
+    fclose(get_log_errors());
+
     return 0;
 }
 
