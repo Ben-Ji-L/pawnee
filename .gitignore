@@ -4,3 +4,4 @@ webserver/makefile.dep
 
 web/
 m4101c.pdf
+webserver/logs/*

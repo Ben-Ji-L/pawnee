@@ -16,18 +16,23 @@
 #include "config.h"
 #include "http.h"
 #include "file.h"
+#include "log.h"
 
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
 void child_handler(void);
 
 char *root;
-
+FILE *requests_log;
 
 int main(int argc, char *argv[]) {
+
     char *executable_path = get_app_path(argv[0]);
 
     init_config(executable_path);
+
+    requests_log = create_requests_logs_file(executable_path);
+    create_errors_logs_file(executable_path);
 
     if (argc > 1) {
         root = check_root(argv[1]);
@@ -140,21 +145,31 @@ void repondre_client(int socket_client) {
         sem_wait(shared_semaphore);
         get_stats()->served_requests++;
         sem_post(shared_semaphore);
-        
+
         // Ici on parse la requete et selon l'en-tete on envoie la réponse appropriée.
         if (!parse_http_request(data, &request)) {
             // En cas de requete mal écrite.
+            write_request(requests_log, request, 400);
+
             sem_wait(shared_semaphore);
             get_stats()->ko_400++;
             sem_post(shared_semaphore);
 
         	send_response(flux, 400, "Bad Request", "Bad request", strlen("Bad request\r\n"));
         } else if (request.method == HTTP_UNSUPPORTED) {
+            write_request(requests_log, request, 405);
+
             // Si la méthode n'est pas supportée par le serveur sur cette URL.
         	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
         } else {
 
             if (strcmp(rewrite_target(request.target), "stats") == 0) {
+                write_request(requests_log, request, 200);
+
+                sem_wait(shared_semaphore);
+                get_stats()->ok_200++;
+                sem_post(shared_semaphore);
+
                 send_stats(flux);
                 fclose(flux);
                 exit(0);
@@ -162,6 +177,8 @@ void repondre_client(int socket_client) {
 
             file = check_and_open(rewrite_target(request.target), root);
 		    if (file == NULL) {
+                write_request(requests_log, request, 404);
+
                 sem_wait(shared_semaphore);
                 get_stats()->ko_404++;
                 sem_post(shared_semaphore);
@@ -170,6 +187,8 @@ void repondre_client(int socket_client) {
                 fclose(flux);
                 exit(0);
             } else {
+                write_request(requests_log, request, 200);
+
                 sem_wait(shared_semaphore);
                 get_stats()->ok_200++;
                 sem_post(shared_semaphore);
