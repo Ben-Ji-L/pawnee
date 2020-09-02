@@ -1,5 +1,7 @@
 text/html*html
+image/x-icon*ico
+text/css*css
+image/svg+xml*svg
 image/png*png
 image/jpeg*jpg
 application/pdf*pdf
-image/x-icon*ico
