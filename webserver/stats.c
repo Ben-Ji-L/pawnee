@@ -8,6 +8,7 @@
 
 #include "stats.h"
 #include "utils.h"
+#include "http.h"
 
 static web_stats stats;
 web_stats *shared_memory;

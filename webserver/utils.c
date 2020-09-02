@@ -27,53 +27,6 @@ char *fgets_or_exit(char *buffer, int size, FILE *stream) {
 }
 
 /**
- * On ignore les en-tête de la requête.
- * @param client  Le stream de la requête.
- */
-void skip_headers(FILE *client) {
-
-	char data[512];
-	do {
-		fgets_or_exit(data, 512, client);
-    } while (strncmp(data, "\r\n", 2) != 0);
-}
-
-/**
- * Fonction qui envoie au client le statut de la réponse
- * @param client Le flux où l'in va envoyer les données.
- * @param code Le code HTTP de la réponse.
- * @param reason_phrase La phrase qui accompagne le code HTTP.
- */
-void send_status(FILE *client, int code, const char *reason_phrase) {
-	fprintf(client, "HTTP/1.1 %d %s\r\n", code, reason_phrase);
-}
-
-/**
- * Dans cette fonction on met en forme la réponse HTTP.
- * @param client Le flux où écrire les données
- * @param code Le code HTTP de la réponse.
- * @param reason_phrase La phrase qui accompagne le code de la réponse.
- * @param message_body Le corps de la réponse.
- */
-void send_response(FILE *client, int code, const char *reason_phrase, char *message_body, int size) {
-
-    // On envoie la réponse en respectant la forme d'une réponse HTTP.
-    send_status(client, code, reason_phrase);
-
-	if (code == 200) {
-		fprintf(client, "Content-Length: %d\r\n", size);
-		fprintf(client, "Content-Type: %s\r\n", get_mime_type(message_body));
-		fprintf(client, "\r\n");
-		
-	} else {
-		fprintf(client, "Content-Length: %d\r\n", size);
-		fprintf(client, "\r\n");
-		fprintf(client, "%s\r\n", message_body);
-	}
-	
-}
-
-/**
  * Fonction qui réecrit la requête en enlevant les variables (après le ?)
  * et qui transforme la requête "/" en "index.html"
  * @param target la requête à examiner
@@ -115,67 +68,6 @@ char *check_root(char *root) {
 		return root;
 	
 	return strcat(root, "/");
-}
-
-/**
- * Fonction qui vérifie si un fichier existe, si on peut l'ouvrir
- * et ouvre un fichier
- * @param target la cible de la requête
- * @param document_root le répertoire racine du site à servir
- * @return un pointeur vers le fichier ouvert
- */
-FILE *check_and_open(const char *target, const char *document_root) {
-	char *path = strcat(strdup(document_root), target);
-	struct stat path_stat;
-
-	// Si stat échoue
-	if (stat(path, &path_stat) != 0) {
-		perror("stat error 1 ");
-		return NULL;
-	}
-
-	if (!S_ISREG(path_stat.st_mode)) {
-		perror("stat error 2 ");
-		return NULL;
-	}
-	if (S_ISDIR(path_stat.st_mode)) {
-		perror("stat error 3 ");
-		return NULL;
-	}
-
-	FILE *result = fopen(path, "r");
-	if (result == NULL) {
-		perror("fopen error ");
-		return NULL;
-	}
-	
-	return result;
-}
-
-/**
- * Calcule la taille d'un fichier
- * @param fd le descripteur vers le fichier
- * @return la taille du fichier
- */
-int get_file_size(int fd) {
-	struct stat fd_stat;
-	if (fstat(fd, &fd_stat) == 0) {
-		return fd_stat.st_size;
-	}
-	return 0;
-}
-
-/**
- * Copie le contenu d'un fichier vers un autre
- * @param in le fichier d'où on lit les données
- * @param out le ficher vers lequel on copie les données
- */
-void copy(FILE *in, FILE *out) {
-	char buff[1024];
-	size_t s;
-
-	while ((s = fread(buff, 1, 1024, in)) != 0)
-		fwrite(buff, 1, s, out);
 }
 
 /**

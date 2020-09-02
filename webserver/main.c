@@ -14,6 +14,8 @@
 #include "http_parse.h"
 #include "stats.h"
 #include "config.h"
+#include "http.h"
+#include "file.h"
 
 void initialiser_signaux(void);
 void repondre_client(int socket_client);
