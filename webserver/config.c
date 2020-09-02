@@ -5,6 +5,7 @@
 
 #include "config.h"
 #include "utils.h"
+#include "log.h"
 
 // La configuration du serveur
 static server_config config;
@@ -25,7 +26,7 @@ int init_config(char *abs_path) {
     // Initialisation de la mémoire partagée pour stocker la configuration
     shared_mem_config = mmap(NULL, sizeof(config), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     if (shared_mem_config == MAP_FAILED) {
-        perror("mmap config error");
+        write_error(get_log_errors(), "mmap config error");
         exit(EXIT_FAILURE);
     }
 
@@ -59,7 +60,7 @@ int get_config_from_file(char *abs_path) {
 
     // On essai d'ouvrir le fichier de configuration
     if ((config_file = fopen(strcat(path, "/server.cfg"), "r")) == NULL) {
-        perror("open config file error");
+        write_error(get_log_errors(), "open config file error");
         return 1;
     }
 

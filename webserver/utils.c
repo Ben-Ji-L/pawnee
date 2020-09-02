@@ -10,6 +10,7 @@
 #include "utils.h"
 #include "http_parse.h"
 #include "config.h"
+#include "log.h"
 
 /**
  * On lit des données et en cas d'erreur on quite le programme avec un statut d'erreur.
@@ -20,7 +21,7 @@
  */
 char *fgets_or_exit(char *buffer, int size, FILE *stream) {
 	if (fgets(buffer, size, stream) == NULL) {
-		perror("fgets error");
+		write_error(get_log_errors(), "fgets error");
 		exit(1);
 	}
 	return buffer;
@@ -49,18 +50,18 @@ char *rewrite_target(char *target) {
  */
 char *check_root(char *root) {
 	if (access(root, R_OK | W_OK) != 0) {
-		perror("no access to the root");
+		write_error(get_log_errors(), "no access to the root");
 		exit(1);
 	}
 
 	struct stat root_stat;
 	if (stat(root, &root_stat) != 0) {
-		perror("root access error");
+		write_error(get_log_errors(), "root access error");
 		exit(1);
 	}
 
 	if (!S_ISDIR(root_stat.st_mode)) {
-		perror("root is not a directory");
+		write_error(get_log_errors(), "root is not a directory");
 		exit(1);
 	} 
 
@@ -100,7 +101,7 @@ char *get_mime_type(char *name) {
 		}
 		fclose(mime_type_file);
 	} else {
-		perror("open mime file error : ");
+		write_error(get_log_errors(), "open mime file error : ");
 	}
 
 	return mime_type;

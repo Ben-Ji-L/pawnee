@@ -5,6 +5,7 @@
 
 #include "socket.h"
 #include "config.h"
+#include "log.h"
 
 /**
  * On met en place le serveur dans cette fonction en précisant le port que l'on souhaite écouter.
@@ -21,7 +22,7 @@ int creer_serveur(int port){
 
     if (socket_serveur == -1){
         /* traitement de l’erreur */
-        perror("socket_serveur ");
+        write_error(get_log_errors(), "socket_serveur ");
         return -1;
     }
 
@@ -31,12 +32,12 @@ int creer_serveur(int port){
     saddr.sin_addr.s_addr = inet_addr(get_config()->listen_addr); /* écoute sur toutes les interfaces */
 
     if (setsockopt(socket_serveur, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1) {
-        perror("option SO_REUSEADDR error");
+        write_error(get_log_errors(), "option SO_REUSEADDR error");
         return -1;
     }
 
     if (bind(socket_serveur, (struct sockaddr*)&saddr , sizeof(saddr)) == -1){
-        perror("bind socket_serveur");/* traitement de l’erreur */
+        write_error(get_log_errors(), "bind socket_serveur");/* traitement de l’erreur */
         return -1;
     }
 

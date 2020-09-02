@@ -7,6 +7,8 @@
 #include <limits.h>
 #include <linux/limits.h>
 
+#include "log.h"
+
 /**
  * Fonction qui vérifie si un fichier existe, si on peut l'ouvrir
  * et ouvre un fichier
@@ -20,22 +22,22 @@ FILE *check_and_open(const char *target, const char *document_root) {
 
 	// Si stat échoue
 	if (stat(path, &path_stat) != 0) {
-		perror("stat error 1 ");
+		write_error(get_log_errors(), "stat error: no such file or directory");
 		return NULL;
 	}
 
 	if (!S_ISREG(path_stat.st_mode)) {
-		perror("stat error 2 ");
+		write_error(get_log_errors(), "stat error: not regular file");
 		return NULL;
 	}
 	if (S_ISDIR(path_stat.st_mode)) {
-		perror("stat error 3 ");
+		write_error(get_log_errors(), "stat error: is a directory");
 		return NULL;
 	}
 
 	FILE *result = fopen(path, "r");
 	if (result == NULL) {
-		perror("fopen error ");
+		write_error(get_log_errors(), "fopen error ");
 		return NULL;
 	}
 	

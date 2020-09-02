@@ -23,7 +23,6 @@ void repondre_client(int socket_client);
 void child_handler(void);
 
 char *root;
-FILE *requests_log;
 
 int main(int argc, char *argv[]) {
 
@@ -31,7 +30,7 @@ int main(int argc, char *argv[]) {
 
     init_config(executable_path);
 
-    requests_log = create_requests_logs_file(executable_path);
+    create_requests_logs_file(executable_path);
     create_errors_logs_file(executable_path);
 
     if (argc > 1) {
@@ -50,7 +49,7 @@ int main(int argc, char *argv[]) {
     printf("serveur lancé à l'adresse : http://%s:%d\n", get_config()->listen_addr, get_config()->port);
 
     if (listen(socket_serveur, 10) == -1){
-        perror("error socket_serveur");
+        write_error(get_log_errors(), "error socket_serveur");
         exit(1);
     }
 
@@ -62,7 +61,7 @@ int main(int argc, char *argv[]) {
         // On accepte une connexion
         socket_client = accept(socket_serveur, NULL, NULL);
         if (socket_client == -1) {
-            perror("accept error");
+            write_error(get_log_errors(), "accept error");
             exit(1);
         }
 
@@ -89,7 +88,7 @@ void initialiser_signaux(void) {
 
     // On ignore le signal SIGPIPE
     if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
-        perror("signal error");
+        write_error(get_log_errors(), "signal error");
         exit(1);
     }
 
@@ -101,7 +100,7 @@ void initialiser_signaux(void) {
     sa.sa_flags = SA_RESTART;
 
     if (sigaction(SIGCHLD,  &sa, NULL) == -1) {
-        perror("error sigaction");
+        write_error(get_log_errors(), "error sigaction");
         exit(1);
     }
 
@@ -125,7 +124,7 @@ void repondre_client(int socket_client) {
     pid_t pid = fork();
 
     if (pid == -1) {
-        perror("fork error");
+        write_error(get_log_errors(), "fork error");
         exit(1);
     }
 
@@ -137,6 +136,11 @@ void repondre_client(int socket_client) {
 
         // On ouvre le socket en lecture et en écriture
         flux = fdopen(socket_client, "w+");
+        if (flux == NULL) {
+            write_error(get_log_errors(), "error socket client");
+            exit(1);
+        }
+        
         fgets_or_exit(data, 512, flux);
         skip_headers(flux);
         
@@ -149,7 +153,7 @@ void repondre_client(int socket_client) {
         // Ici on parse la requete et selon l'en-tete on envoie la réponse appropriée.
         if (!parse_http_request(data, &request)) {
             // En cas de requete mal écrite.
-            write_request(requests_log, request, 400);
+            write_request(get_log_requests(), request, 400);
 
             sem_wait(shared_semaphore);
             get_stats()->ko_400++;
@@ -157,14 +161,14 @@ void repondre_client(int socket_client) {
 
         	send_response(flux, 400, "Bad Request", "Bad request", strlen("Bad request\r\n"));
         } else if (request.method == HTTP_UNSUPPORTED) {
-            write_request(requests_log, request, 405);
+            write_request(get_log_requests(), request, 405);
 
             // Si la méthode n'est pas supportée par le serveur sur cette URL.
         	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
         } else {
 
             if (strcmp(rewrite_target(request.target), "stats") == 0) {
-                write_request(requests_log, request, 200);
+                write_request(get_log_requests(), request, 200);
 
                 sem_wait(shared_semaphore);
                 get_stats()->ok_200++;
@@ -177,7 +181,7 @@ void repondre_client(int socket_client) {
 
             file = check_and_open(rewrite_target(request.target), root);
 		    if (file == NULL) {
-                write_request(requests_log, request, 404);
+                write_request(get_log_requests(), request, 404);
 
                 sem_wait(shared_semaphore);
                 get_stats()->ko_404++;
@@ -187,7 +191,7 @@ void repondre_client(int socket_client) {
                 fclose(flux);
                 exit(0);
             } else {
-                write_request(requests_log, request, 200);
+                write_request(get_log_requests(), request, 200);
 
                 sem_wait(shared_semaphore);
                 get_stats()->ok_200++;

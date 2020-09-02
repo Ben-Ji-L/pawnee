@@ -9,6 +9,7 @@
 #include "stats.h"
 #include "utils.h"
 #include "http.h"
+#include "log.h"
 
 static web_stats stats;
 web_stats *shared_memory;
@@ -37,14 +38,14 @@ void init_stats(void) {
     // On créer le sémaphore
     sem_t semaphore;
     if (sem_init(&semaphore, 0, 1) == -1) {
-        perror("sem_init error");
+        write_error(get_log_errors(), "sem_init error");
         exit(EXIT_FAILURE);
     }
 
     // On initialise la zone mémoire partagée
     shared_memory = mmap(NULL, sizeof(stats), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     if (shared_memory == MAP_FAILED) {
-        perror("mmap stats error");
+        write_error(get_log_errors(), "mmap stats error");
         exit(EXIT_FAILURE);
     }
     memcpy(shared_memory, &stats, sizeof(stats));
@@ -52,7 +53,7 @@ void init_stats(void) {
     // On crée une mémoire partagée pour le sémaphore
     shared_semaphore = mmap(NULL, sizeof(sem_t), PROT_WRITE | PROT_READ, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     if (shared_semaphore == MAP_FAILED) {
-        perror("mmap semaphore error");
+        write_error(get_log_errors(), "mmap semaphore error");
         exit(EXIT_FAILURE);
     }
     memcpy(shared_semaphore, &semaphore, sizeof(semaphore));
