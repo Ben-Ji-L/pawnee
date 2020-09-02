@@ -1,19 +1,17 @@
 language: c
 
-matrix:
-  include:
-    - os: linux
-      env:
-        - MATRIX_EVAL="sudo apt-get install cppcheck"
+os:
+    - linux
+    - osx
 
-    - os: osx
-      osx_image: xcode8
-      env:
-        - MATRIX_EVAL="brew install cppcheck"
+addons:
+    apt:
+        packages:
+            - cppcheck
 
 before_install:
-    - eval "${MATRIX_EVAL}"
-
+    - if [ "$TRAVIS_OS_NAME" = "osx"]; then brew update; fi
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cppcheck; fi
 
 script: 
     - make
