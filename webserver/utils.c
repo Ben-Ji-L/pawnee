@@ -73,6 +73,12 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
 	
 }
 
+/**
+ * Fonction qui réecrit la requête en enlevant les variables (après le ?)
+ * et qui transforme la requête "/" en "index.html"
+ * @param target la requête à examiner
+ * @return la requête réécrite
+ */
 char *rewrite_target(char *target) {
 	char *rewrited_target = strtok(strdup(target), "?");
 
@@ -84,8 +90,6 @@ char *rewrite_target(char *target) {
 }
 
 char *check_root(char *root) {
-
-	//printf("root in check root: %s\n", root);
 	if (access(root, R_OK | W_OK) != 0) {
 		perror("no access to the root");
 		exit(1);
@@ -108,6 +112,13 @@ char *check_root(char *root) {
 	return strcat(root, "/");
 }
 
+/**
+ * Fonction qui vérifie si un fichier existe, si on peut l'ouvrir
+ * et ouvre un fichier
+ * @param target la cible de la requête
+ * @param document_root le répertoire racine du site à servir
+ * @return un pointeur vers le fichier ouvert
+ */
 FILE *check_and_open(const char *target, const char *document_root) {
 	char *path = strcat(strdup(document_root), target);
 	struct stat path_stat;
@@ -136,6 +147,11 @@ FILE *check_and_open(const char *target, const char *document_root) {
 	return result;
 }
 
+/**
+ * Calcule la taille d'un fichier
+ * @param fd le descripteur vers le fichier
+ * @return la taille du fichier
+ */
 int get_file_size(int fd) {
 	struct stat fd_stat;
 	if (fstat(fd, &fd_stat) == 0) {
@@ -154,6 +170,11 @@ int copy(FILE *in, FILE *out) {
 	return 0;
 }
 
+/**
+ * Renvoie le type mime d'un fichier
+ * @param name le nom du fichier dont on veut le type
+ * @return le type mime du fichier
+ */
 char *get_mime_type(char *name) {
 	char *ext = strrchr(name, '.');
 	char *delimiter = "*";
