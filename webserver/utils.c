@@ -27,8 +27,8 @@ char *fgets_or_exit(char *buffer, int size, FILE *stream) {
 }
 
 /**
- * On ignore les en-tete de la requete.
- * @param client  Le stream de la requete.
+ * On ignore les en-tête de la requête.
+ * @param client  Le stream de la requête.
  */
 void skip_headers(FILE *client) {
 
@@ -89,6 +89,11 @@ char *rewrite_target(char *target) {
 	return ++rewrited_target;
 }
 
+/**
+ * Vérifie si on peut ouvrir le dossier racine du site
+ * @param root le chemin vers la racine du site web
+ * @return la racine du site vérifiée et corrigée
+ */
 char *check_root(char *root) {
 	if (access(root, R_OK | W_OK) != 0) {
 		perror("no access to the root");
@@ -123,7 +128,7 @@ FILE *check_and_open(const char *target, const char *document_root) {
 	char *path = strcat(strdup(document_root), target);
 	struct stat path_stat;
 
-	// Si stat echoue
+	// Si stat échoue
 	if (stat(path, &path_stat) != 0) {
 		perror("stat error 1 ");
 		return NULL;
@@ -160,14 +165,17 @@ int get_file_size(int fd) {
 	return 0;
 }
 
-int copy(FILE *in, FILE *out) {
+/**
+ * Copie le contenu d'un fichier vers un autre
+ * @param in le fichier d'où on lit les données
+ * @param out le ficher vers lequel on copie les données
+ */
+void copy(FILE *in, FILE *out) {
 	char buff[1024];
 	size_t s;
 
 	while ((s = fread(buff, 1, 1024, in)) != 0)
 		fwrite(buff, 1, s, out);
-
-	return 0;
 }
 
 /**
@@ -185,7 +193,9 @@ char *get_mime_type(char *name) {
     ssize_t read;
 	ext++;
 
+	// Ouvre le fichier des types mimes
 	FILE *mime_type_file = fopen(get_config()->mimes_file, "r");
+
 	if (mime_type_file != NULL) {
 		while ((read = getline(&line, &len, mime_type_file)) != -1) {
 			line[strlen(line)-1] = '\0';
@@ -204,6 +214,11 @@ char *get_mime_type(char *name) {
 	return mime_type;
 }
 
+/**
+ * Renvoie le chemin de l'application
+ * @param argv0 le chemin de l'executable
+ * @return le chemin de absolu de l'application
+ */
 char *get_app_path(char *argv0) {
 	char abs_exe_path[PATH_MAX];
 	char path_save[PATH_MAX];
@@ -219,6 +234,7 @@ char *get_app_path(char *argv0) {
         getcwd(abs_exe_path, sizeof(abs_exe_path));
         chdir(path_save);
     }
+
 	result = &abs_exe_path[0];
 	return result;
 }

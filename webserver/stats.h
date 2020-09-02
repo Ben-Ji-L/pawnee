@@ -1,6 +1,7 @@
 # ifndef __STATS_H__
 # define __STATS_H__
 
+/* Structure contenant les statistiques */
 typedef struct {
     int served_connections;
     int served_requests;
@@ -10,10 +11,11 @@ typedef struct {
     int ko_404;
 } web_stats;
 
+// Le sémaphore pour éviter les accés concurrents aux statistiques
 sem_t *shared_semaphore;
 
 void send_stats(FILE *client);
-int init_stats(void);
+void init_stats(void);
 web_stats *get_stats(void);
 
 #endif

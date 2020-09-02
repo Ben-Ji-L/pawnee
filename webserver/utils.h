@@ -13,7 +13,7 @@ char *rewrite_target(char *target);
 char *check_root(char *root);
 FILE *check_and_open(const char *target, const char *document_root);
 int get_file_size(int fd);
-int copy(FILE *in, FILE *out);
+void copy(FILE *in, FILE *out);
 char * get_mime_type(char *name);
 char *get_app_path(char *argv0);
 
