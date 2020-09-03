@@ -184,6 +184,6 @@ char *get_app_path(char *argv0) {
         chdir(path_save);
     }
 
-	result = &abs_exe_path[0];
+	result = abs_exe_path;
 	return result;
 }
