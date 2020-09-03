@@ -18,8 +18,10 @@
  * @return un pointeur vers le fichier ouvert
  */
 FILE *check_and_open(const char *target, const char *document_root) {
-	char *path = strcat(strdup(document_root), target);
+	char path[PATH_MAX];
 	struct stat path_stat;
+
+	strcpy(path, strcat(strdup(document_root), target));
 
 	// Si stat échoue
 	if (stat(path, &path_stat) != 0) {
