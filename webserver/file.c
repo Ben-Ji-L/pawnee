@@ -137,12 +137,23 @@ char *get_mime_type(char *name) {
 			line[strlen(line)-1] = '\0';
         	strtok(line, delimiter);
 			if ((token = strtok(NULL, delimiter)) != NULL) {
-				if (strcmp(token, ext) == 13) {
-					return strtok(line, delimiter);
+
+				// suppression de l'espace final
+				token[strlen(token)-1] = '\0';
+
+				if (strcmp(token, ext) == 0) {
+					char *result = strtok(line, delimiter);
+
+					// si il y a un espace en fin de ligne, le supprime
+					if (strcmp(&result[strlen(result)-1], " ") == 0)
+						result[strlen(result-1)] = '\0';
+
+					return result;
 				}
 			}
 		}
 		fclose(mime_type_file);
+
 	} else {
 		write_error(get_log_errors(), "open mime file error : ");
 	}
