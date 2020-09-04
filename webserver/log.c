@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <linux/limits.h>
+#include <limits.h>
 #include <time.h>
 
 #include "http_parse.h"

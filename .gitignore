@@ -3,5 +3,7 @@ webserver/pawnee
 webserver/makefile.dep
 
 web/
+todolist/
+
 m4101c.pdf
 webserver/logs/*

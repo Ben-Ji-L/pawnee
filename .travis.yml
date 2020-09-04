@@ -2,11 +2,16 @@ language: c
 
 os:
     - linux
+    - osx
 
 addons:
     apt:
         packages:
             - cppcheck
+
+before_install:
+    - if [ "$TRAVIS_OS_NAME" = "osx"]; then brew update; fi
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cppcheck; fi
 
 script: 
     - make

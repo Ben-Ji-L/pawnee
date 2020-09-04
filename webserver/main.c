@@ -6,7 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
-#include <linux/limits.h>
+#include <limits.h>
 #include <semaphore.h>
 
 #include "socket.h"
@@ -21,11 +21,12 @@ void initialiser_signaux(void);
 void repondre_client(int socket_client);
 void child_handler(void);
 
-char *root;
+char root[PATH_MAX];
 
 int main(int argc, char *argv[]) {
 
-    char *executable_path = get_app_path(argv[0]);
+    char executable_path[PATH_MAX];
+    strcpy(executable_path, get_app_path(argv[0]));
 
     init_config(executable_path);
 
@@ -33,10 +34,10 @@ int main(int argc, char *argv[]) {
     create_errors_logs_file(executable_path);
 
     if (argc > 1) {
-        root = check_root(argv[1]);
+        strcpy(root, check_root(argv[1]));
         argc++;
     } else
-        root = check_root(get_config()->website_root);
+        strcpy(root, check_root(get_config()->website_root));
 
     // Les deux sockets dont on aura besoin.
     int socket_serveur;

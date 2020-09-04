@@ -1,7 +1,7 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-#include <linux/limits.h>
+#include <limits.h>
 
 // Structure représentant la configuration du serveur
 typedef struct {
