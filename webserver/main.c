@@ -26,7 +26,7 @@ char root[PATH_MAX];
 int main(int argc, char *argv[]) {
 
     char executable_path[PATH_MAX];
-    strcpy(executable_path, get_app_path(argv[0]));
+    strncpy(executable_path, get_app_path(argv[0]), PATH_MAX);
 
     init_config(executable_path);
 
@@ -34,10 +34,10 @@ int main(int argc, char *argv[]) {
     create_errors_logs_file(executable_path);
 
     if (argc > 1) {
-        strcpy(root, check_root(argv[1]));
+        strncpy(root, check_root(argv[1]), PATH_MAX);
         argc++;
     } else
-        strcpy(root, check_root(get_config()->website_root));
+        strncpy(root, check_root(get_config()->website_root), PATH_MAX);
 
     // Les deux sockets dont on aura besoin.
     int socket_serveur;

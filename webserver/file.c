@@ -17,10 +17,15 @@
  * @return un pointeur vers le fichier ouvert
  */
 FILE *check_and_open(const char *target, const char *document_root) {
-	char path[PATH_MAX];
+	char root[PATH_MAX] = "";
+	char path[PATH_MAX] = "";
+
 	struct stat path_stat;
 
-	strcpy(path, strcat(strdup(document_root), target));
+	// Prépare le path du fichier à ouvrir
+	strncpy(root, document_root, PATH_MAX);
+	strncat(path, root, PATH_MAX);
+	strncat(path, target, PATH_MAX);
 
 	// Si stat échoue
 	if (stat(path, &path_stat) != 0) {
