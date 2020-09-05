@@ -87,7 +87,7 @@ void write_request(FILE *log_file, http_request request, int code) {
 	year = local->tm_year + 1900;	// l'année depuis 1900
 
     // le formattage de la ligne de log
-    fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] HTTP:%d/%d %d %s %s\n", day, month, year, hours, minutes, seconds, request.http_major, request.http_minor, code, method, request.target);
+    fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours, minutes, seconds, clientip, request.http_major, request.http_minor, code, method, request.target);
 }
 
 /**

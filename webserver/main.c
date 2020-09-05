@@ -8,6 +8,7 @@
 #include <signal.h>
 #include <limits.h>
 #include <semaphore.h>
+#include <arpa/inet.h>
 
 #include "socket.h"
 #include "http_parse.h"
@@ -56,14 +57,28 @@ int main(int argc, char *argv[]) {
     initialiser_signaux();
     init_stats();
 
-    // Le serveur attend des requetes
+    // Le serveur attend des requêtes
     while(1) {
+
+        // Les variables néccessaires pour trouver l'adresse ip du client
+        struct sockaddr_in addr_client_struct;
+        socklen_t clientaddr_size = sizeof(addr_client_struct);
+        
         // On accepte une connexion
-        socket_client = accept(socket_serveur, NULL, NULL);
+        socket_client = accept(socket_serveur, (struct sockaddr *) &addr_client_struct, &clientaddr_size);
         if (socket_client == -1) {
             write_error(get_log_errors(), "accept error");
             exit(1);
         }
+
+        // Détermination de l'adresse ip du client
+        struct sockaddr_in addr;
+        socklen_t addr_size = sizeof(struct sockaddr_in);
+        if (getpeername(socket_client, (struct sockaddr *)&addr, &addr_size) == -1) {
+            write_error(get_log_errors(), "getpeername error");
+            exit(EXIT_FAILURE);
+        }
+        strncpy(clientip, inet_ntoa(addr.sin_addr), 20);
 
         sem_wait(shared_semaphore);
         get_stats()->served_connections++;

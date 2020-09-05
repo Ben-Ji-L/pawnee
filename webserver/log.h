@@ -3,6 +3,8 @@
 
 #include "http_parse.h"
 
+char clientip[20];
+
 void create_requests_logs_file(char *path);
 void create_errors_logs_file(char *path);
 
