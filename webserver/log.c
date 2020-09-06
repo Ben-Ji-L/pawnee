@@ -70,11 +70,18 @@ void write_request(FILE *log_file, http_request request, int code) {
     time_t now;
     time(&now);
 
-    if (request.method == 0) {
+    switch (request.method) {
+    case 0:
         method = "GET";
-    } else if (request.method == 1)
+        break;
+    case 1:
+        method = "HEAD";
+        break;
+    default:
         method = "UNSUPPORTED";
-    
+        break;
+    }
+
     // le temps actuel
     struct tm *local = localtime(&now);
 
