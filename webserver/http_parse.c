@@ -37,15 +37,17 @@
 #define min(a,b) ((a) < (b) ? (a) : (b))
 #define in_range(a,b,c) ((a) < (b) ? 0 : ((a) > (c) ? 0 : 1))
 
-int parse_http_request(const char *request_line , http_request *request)
-{
+int parse_http_request(const char *request_line , http_request *request) {
 
-   if (strncmp(request_line, "GET ", 4) != 0)
-   {
+   if (strncmp(request_line, "GET ", 4) == 0)
+      request->method = HTTP_GET;
+   else if (strncmp(request_line, "HEAD", 4) == 0)
+      request->method = HTTP_HEAD;
+   else {
       request->method = HTTP_UNSUPPORTED;
       return 0;
    }
-   request->method = HTTP_GET;
+
    /* Find the target start */
    const char *target = strchr(request_line, ' ');
    if (target == NULL)
@@ -81,17 +83,14 @@ int parse_http_request(const char *request_line , http_request *request)
 }
 
 #ifdef COMPILE_MAIN
-int main(int argc, char **argv)
-{
-   if (argc != 2)
-   {
+int main(int argc, char **argv) {
+   if (argc != 2) {
       fprintf(stderr, "usage: %s http_request_line\n", argv[0]);
       return 1;
    }
 
    http_request r;
-   if (!parse_http_request(argv[1], &r))
-   {
+   if (!parse_http_request(argv[1], &r)) {
       fprintf(stderr, "Fails to parse request\n");
       if (r.method == HTTP_UNSUPPORTED)
          fprintf(stderr, "Unsupported method\n");

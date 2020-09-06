@@ -35,6 +35,7 @@
 // Method supported by the parser
 enum http_method {
    HTTP_GET,
+   HTTP_HEAD,
    HTTP_UNSUPPORTED,
 };
 

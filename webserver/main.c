@@ -216,6 +216,14 @@ void repondre_client(int socket_client) {
                 sem_post(shared_semaphore);
 
                 send_response(flux, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
+
+                // si le client envoie une requête avec la méthode HEAD
+                if (request.method == HTTP_HEAD) {
+                    fclose(flux);
+                    fclose(file);
+                    exit(0);
+                }
+
                 copy(file, flux);
             }
             fclose(file);
