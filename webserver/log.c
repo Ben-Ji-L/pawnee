@@ -70,18 +70,6 @@ void write_request(FILE *log_file, http_request request, int code) {
     time_t now;
     time(&now);
 
-    switch (request.method) {
-    case 0:
-        method = "GET";
-        break;
-    case 1:
-        method = "HEAD";
-        break;
-    default:
-        method = "UNSUPPORTED";
-        break;
-    }
-
     // le temps actuel
     struct tm *local = localtime(&now);
 
@@ -94,7 +82,23 @@ void write_request(FILE *log_file, http_request request, int code) {
 	year = local->tm_year + 1900;	// l'année depuis 1900
 
     // le formattage de la ligne de log
-    fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours, minutes, seconds, clientip, request.http_major, request.http_minor, code, method, request.target);
+    switch (request.method) {
+    case 0:
+        method = "GET";
+        fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours, minutes, seconds, \
+            clientip, request.http_major, request.http_minor, code, method, request.target);
+        break;
+    case 1:
+        method = "HEAD";
+        fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours, minutes, seconds, \
+            clientip, request.http_major, request.http_minor, code, method, request.target);
+        break;
+    default:
+        method = "UNSUPPORTED";
+        fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s\n", day, month, year, hours, minutes, seconds, \
+            clientip, request.http_major, request.http_minor, code, method);
+        break;
+    }
 }
 
 /**

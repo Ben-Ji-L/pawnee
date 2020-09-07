@@ -6,4 +6,5 @@ web/
 todolist/
 
 m4101c.pdf
-webserver/logs/*
+webserver/logs/requests.log
+webserver/logs/errors.log
