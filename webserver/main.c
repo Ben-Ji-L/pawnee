@@ -181,6 +181,10 @@ void repondre_client(int socket_client) {
         } else if (request.method == HTTP_UNSUPPORTED) {
             write_request(get_log_requests(), request, 405);
 
+            sem_wait(shared_semaphore);
+            get_stats()->ko_405++;
+            sem_post(shared_semaphore);
+
             // Si la méthode n'est pas supportée par le serveur sur cette URL.
         	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
         } else {

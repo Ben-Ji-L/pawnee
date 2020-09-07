@@ -9,6 +9,7 @@ typedef struct {
     int ko_400;
     int ko_403;
     int ko_404;
+    int ko_405;
 } web_stats;
 
 // Le sémaphore pour éviter les accés concurrents aux statistiques
