@@ -169,7 +169,7 @@ void repondre_client(int socket_client) {
         sem_post(shared_semaphore);
 
         // Ici on parse la requete et selon l'en-tete on envoie la réponse appropriée.
-        if (!parse_http_request(data, &request)) {
+        if (!parse_http_request(data, &request) && (request.method != HTTP_UNSUPPORTED)) {
             // En cas de requete mal écrite.
             write_request(get_log_requests(), request, 400);
 
