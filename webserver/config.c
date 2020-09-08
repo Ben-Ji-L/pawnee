@@ -58,7 +58,7 @@ int get_config_from_file(char *abs_path) {
     char buffer[bufferLength];
 
     // On essai d'ouvrir le fichier de configuration
-    if ((config_file = fopen(strcat(path, "/server.cfg"), "r")) == NULL) {
+    if ((config_file = fopen(strcat(path, "/../config/server.cfg"), "r")) == NULL) {
         write_error(get_log_errors(), "open config file error");
         return 1;
     }
