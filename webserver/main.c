@@ -11,10 +11,10 @@
 #include <arpa/inet.h>
 
 #include "socket.h"
-#include "http_parse.h"
-#include "stats.h"
-#include "config.h"
-#include "http.h"
+#include "http/http_parse.h"
+#include "stats/stats.h"
+#include "config/config.h"
+#include "http/http.h"
 #include "file.h"
 #include "log.h"
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
         // Les variables néccessaires pour trouver l'adresse ip du client
         struct sockaddr_in addr_client_struct;
         socklen_t clientaddr_size = sizeof(addr_client_struct);
-        
+
         // On accepte une connexion
         socket_client = accept(socket_serveur, (struct sockaddr *) &addr_client_struct, &clientaddr_size);
         if (socket_client == -1) {
@@ -158,10 +158,10 @@ void repondre_client(int socket_client) {
             write_error(get_log_errors(), "error socket client");
             exit(1);
         }
-        
+
         fgets_or_exit(data, 512, flux);
         skip_headers(flux);
-        
+
         http_request request;
 
         sem_wait(shared_semaphore);

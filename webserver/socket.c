@@ -4,7 +4,7 @@
 #include <arpa/inet.h>
 
 #include "socket.h"
-#include "config.h"
+#include "config/config.h"
 #include "log.h"
 
 /**

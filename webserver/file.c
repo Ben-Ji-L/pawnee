@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 
-#include "config.h"
+#include "config/config.h"
 #include "log.h"
 
 /**
@@ -47,7 +47,7 @@ FILE *check_and_open(const char *target, const char *document_root) {
 		write_error(get_log_errors(), "fopen error ");
 		return NULL;
 	}
-	
+
 	return result;
 }
 
@@ -112,11 +112,11 @@ char *check_root(char *root) {
 	if (!S_ISDIR(root_stat.st_mode)) {
 		write_error(get_log_errors(), "root is not a directory");
 		exit(1);
-	} 
+	}
 
 	if (strcmp(root+strlen(root)-1, "/") == 0)
 		return root;
-	
+
 	return strcat(root, "/");
 }
 

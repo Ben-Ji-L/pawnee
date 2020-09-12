@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #include "config.h"
-#include "log.h"
+#include "../log.h"
 
 // La configuration du serveur
 static server_config config;
@@ -73,7 +73,7 @@ int get_config_from_file(char *abs_path) {
         // traitement de la ligne
         if (buffer[0] != '#') {
             char *token = strtok(buffer, "=");
-            
+
             // si la ligne lue est le port d'écoute
             if (strcmp(token, "port") == 0) {
                 token = strtok(NULL, "=");
@@ -82,7 +82,7 @@ int get_config_from_file(char *abs_path) {
             // si la ligne lue est l'adresse d'écoute
             } else if (strcmp(token, "listen_addr") == 0) {
                 token = strtok(NULL, "=");
-                token = strtok(token, "\"");      
+                token = strtok(token, "\"");
                 strcpy(config.listen_addr, token);
 
             // si la ligne lue est la racine du site

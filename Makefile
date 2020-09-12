@@ -2,7 +2,7 @@
 # Cette variable contient la liste des sous répertoires
 # pour lesquels il faudra construire un programme.
 # Pour l’instant, seul le serveur web est dans la liste.
-FOLDERS = webserver
+FOLDERS = webserver/config webserver
 # Indique à make les règles qui ne correspondent pas à la création
 # d’un fichier
 # make lancera toujours la construction de cette règle si elle est
@@ -18,3 +18,12 @@ webserver:
 
 check:
 	cppcheck webserver
+
+clean:
+	make -C webserver clean
+
+mrproper:
+	make -C webserver mrproper
+
+run: all
+	./webserver/pawnee

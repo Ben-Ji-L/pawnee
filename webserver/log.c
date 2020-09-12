@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <time.h>
 
-#include "http_parse.h"
+#include "http/http_parse.h"
 #include "log.h"
 
 // le fichier de log des requêtes
@@ -44,7 +44,7 @@ void create_requests_logs_file(char *path) {
 void create_errors_logs_file(char *path) {
     FILE *error_log;
     char error_path[PATH_MAX];
-    
+
     // chemin du log des erreurs
     strcpy(error_path, path);
     strcat(error_path, "errors.log");

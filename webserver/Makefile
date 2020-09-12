@@ -12,6 +12,10 @@ EXE = pawnee
 # de construire automatiquement une liste de fichiers
 HEADERS = $(wildcard *.h)
 CFILES = $(wildcard *.c)
+
+HEADERS += $(wildcard */*.h)
+CFILES += $(wildcard */*.c)
+
 # Cette construction de variable veut dire : remplacer la chaine ".c" par
 # ".o" dans la variable CFILES
 # Ceci nous permet de construire la liste des fichiers .o à fabriquer

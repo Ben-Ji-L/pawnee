@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 
-#include "file.h"
+#include "../file.h"
 
 /**
  * On ignore les en-tête de la requête.
@@ -46,13 +46,13 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
 		fprintf(client, "Content-Length: %d\r\n", size);
 		fprintf(client, "Content-Type: %s\r\n", get_mime_type(message_body));
 		fprintf(client, "\r\n");
-		
+
 	} else {
 		fprintf(client, "Content-Length: %d\r\n", size);
 		fprintf(client, "\r\n");
 		fprintf(client, "%s\r\n", message_body);
 	}
-	
+
 }
 
 /**
