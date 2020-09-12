@@ -12,6 +12,9 @@ typedef struct {
 } server_config;
 
 int init_config(char *abs_path);
+
 int get_config_from_file(char *abs_path);
+
 server_config *get_config(void);
+
 #endif

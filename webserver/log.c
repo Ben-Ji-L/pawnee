@@ -31,7 +31,7 @@ void create_requests_logs_file(char *path) {
     request_log = fopen(request_path, "a");
     if (request_log == NULL) {
         write_error(get_log_errors(), "fopen request log error");
-		exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
 
     log_requests = request_log;
@@ -52,7 +52,7 @@ void create_errors_logs_file(char *path) {
     error_log = fopen(error_path, "a");
     if (error_log == NULL) {
         write_error(get_log_errors(), "fopen errors log error ");
-		exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
 
     log_errors = error_log;
@@ -73,31 +73,34 @@ void write_request(FILE *log_file, http_request request, int code) {
     // le temps actuel
     struct tm *local = localtime(&now);
 
-	hours = local->tm_hour;	  	// l'heure depuis minuit, de 0 à 23
-	minutes = local->tm_min;	 	// les minutes, de 0 à 59
-	seconds = local->tm_sec;	 	// les secondes, de 0 à 59
+    hours = local->tm_hour;        // l'heure depuis minuit, de 0 à 23
+    minutes = local->tm_min;        // les minutes, de 0 à 59
+    seconds = local->tm_sec;        // les secondes, de 0 à 59
 
-	day = local->tm_mday;			// le jour, de 1 à 31
-	month = local->tm_mon + 1;   	// le mois, de 0 à 11
-	year = local->tm_year + 1900;	// l'année depuis 1900
+    day = local->tm_mday;            // le jour, de 1 à 31
+    month = local->tm_mon + 1;    // le mois, de 0 à 11
+    year = local->tm_year + 1900;    // l'année depuis 1900
 
     // le formattage de la ligne de log
     switch (request.method) {
-    case 0:
-        method = "GET";
-        fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours, minutes, seconds, \
+        case 0:
+            method = "GET";
+            fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
+                    minutes, seconds, \
             clientip, request.http_major, request.http_minor, code, method, request.target);
-        break;
-    case 1:
-        method = "HEAD";
-        fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours, minutes, seconds, \
+            break;
+        case 1:
+            method = "HEAD";
+            fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
+                    minutes, seconds, \
             clientip, request.http_major, request.http_minor, code, method, request.target);
-        break;
-    default:
-        method = "UNSUPPORTED";
-        fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s\n", day, month, year, hours, minutes, seconds, \
+            break;
+        default:
+            method = "UNSUPPORTED";
+            fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s\n", day, month, year, hours,
+                    minutes, seconds, \
             clientip, request.http_major, request.http_minor, code, method);
-        break;
+            break;
     }
 }
 
@@ -114,13 +117,13 @@ void write_error(FILE *log_file, char *error) {
     // le temps actuel
     struct tm *local = localtime(&now);
 
-	hours = local->tm_hour;	  	// l'heure depuis minuit, de 0 à 23
-	minutes = local->tm_min;	 	// les minutes, de 0 à 59
-	seconds = local->tm_sec;	 	// les secondes, de 0 à 59
+    hours = local->tm_hour;        // l'heure depuis minuit, de 0 à 23
+    minutes = local->tm_min;        // les minutes, de 0 à 59
+    seconds = local->tm_sec;        // les secondes, de 0 à 59
 
-	day = local->tm_mday;			// le jour, de 1 à 31
-	month = local->tm_mon + 1;   	// le mois, de 0 à 11
-	year = local->tm_year + 1900;	// l'année depuis 1900
+    day = local->tm_mday;            // le jour, de 1 à 31
+    month = local->tm_mon + 1;    // le mois, de 0 à 11
+    year = local->tm_year + 1900;    // l'année depuis 1900
 
     // le formattage de la ligne de log
     fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] %s\n", day, month, year, hours, minutes, seconds, error);

@@ -19,7 +19,9 @@
 #include "log.h"
 
 void initialiser_signaux(void);
+
 void repondre_client(int socket_client);
+
 void child_handler(void);
 
 char root[PATH_MAX];
@@ -49,7 +51,7 @@ int main(int argc, char *argv[]) {
 
     printf("serveur lancé à l'adresse : http://%s:%d\n", get_config()->listen_addr, get_config()->port);
 
-    if (listen(socket_serveur, 10) == -1){
+    if (listen(socket_serveur, 10) == -1) {
         write_error(get_log_errors(), "error socket_serveur");
         exit(1);
     }
@@ -58,7 +60,7 @@ int main(int argc, char *argv[]) {
     init_stats();
 
     // Le serveur attend des requêtes
-    while(1) {
+    while (1) {
 
         // Les variables néccessaires pour trouver l'adresse ip du client
         struct sockaddr_in addr_client_struct;
@@ -74,7 +76,7 @@ int main(int argc, char *argv[]) {
         // Détermination de l'adresse ip du client
         struct sockaddr_in addr;
         socklen_t addr_size = sizeof(struct sockaddr_in);
-        if (getpeername(socket_client, (struct sockaddr *)&addr, &addr_size) == -1) {
+        if (getpeername(socket_client, (struct sockaddr *) &addr, &addr_size) == -1) {
             write_error(get_log_errors(), "getpeername error");
             exit(EXIT_FAILURE);
         }
@@ -117,7 +119,7 @@ void initialiser_signaux(void) {
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_RESTART;
 
-    if (sigaction(SIGCHLD,  &sa, NULL) == -1) {
+    if (sigaction(SIGCHLD, &sa, NULL) == -1) {
         write_error(get_log_errors(), "error sigaction");
         exit(1);
     }
@@ -177,7 +179,7 @@ void repondre_client(int socket_client) {
             get_stats()->ko_400++;
             sem_post(shared_semaphore);
 
-        	send_response(flux, 400, "Bad Request", "Bad request", strlen("Bad request\r\n"));
+            send_response(flux, 400, "Bad Request", "Bad request", strlen("Bad request\r\n"));
         } else if (request.method == HTTP_UNSUPPORTED) {
             write_request(get_log_requests(), request, 405);
 
@@ -186,7 +188,7 @@ void repondre_client(int socket_client) {
             sem_post(shared_semaphore);
 
             // Si la méthode n'est pas supportée par le serveur sur cette URL.
-        	send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
+            send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
         } else {
 
             if (strcmp(rewrite_target(request.target), "stats") == 0) {
@@ -202,14 +204,14 @@ void repondre_client(int socket_client) {
             }
 
             file = check_and_open(rewrite_target(request.target), root);
-		    if (file == NULL) {
+            if (file == NULL) {
                 write_request(get_log_requests(), request, 404);
 
                 sem_wait(shared_semaphore);
                 get_stats()->ko_404++;
                 sem_post(shared_semaphore);
 
-			    send_response(flux, 404, "Not Found", "Not Found", strlen("Not Found\r\n"));
+                send_response(flux, 404, "Not Found", "Not Found", strlen("Not Found\r\n"));
                 fclose(flux);
                 exit(0);
             } else {

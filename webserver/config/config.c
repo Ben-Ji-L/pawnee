@@ -68,7 +68,7 @@ int get_config_from_file(char *abs_path) {
      * si elle contient un = on lit la clé et la valeur
      * si partie gauche = port on stocke la valeur de droite dans config.port
      */
-    while(fgets(buffer, bufferLength, config_file)) {
+    while (fgets(buffer, bufferLength, config_file)) {
 
         // traitement de la ligne
         if (buffer[0] != '#') {
@@ -79,19 +79,19 @@ int get_config_from_file(char *abs_path) {
                 token = strtok(NULL, "=");
                 config.port = atoi(token);
 
-            // si la ligne lue est l'adresse d'écoute
+                // si la ligne lue est l'adresse d'écoute
             } else if (strcmp(token, "listen_addr") == 0) {
                 token = strtok(NULL, "=");
                 token = strtok(token, "\"");
                 strcpy(config.listen_addr, token);
 
-            // si la ligne lue est la racine du site
+                // si la ligne lue est la racine du site
             } else if (strcmp(token, "website_root") == 0) {
                 token = strtok(NULL, "=");
                 token = strtok(token, "\"");
                 strcpy(config.website_root, token);
 
-            // si la ligne lue est le path du fichier de type mime
+                // si la ligne lue est le path du fichier de type mime
             } else if (strcmp(token, "mimes_file") == 0) {
                 token = strtok(NULL, "=");
                 token = strtok(token, "\"");

@@ -34,9 +34,9 @@
 
 // Method supported by the parser
 enum http_method {
-   HTTP_GET,
-   HTTP_HEAD,
-   HTTP_UNSUPPORTED,
+    HTTP_GET,
+    HTTP_HEAD,
+    HTTP_UNSUPPORTED,
 };
 
 
@@ -44,12 +44,11 @@ enum http_method {
 #define MAX_TARGET_SIZE 1024
 
 // describes a http request
-typedef struct
-{
-   enum http_method method;
-   int http_major;
-   int http_minor;
-   char target[MAX_TARGET_SIZE];
+typedef struct {
+    enum http_method method;
+    int http_major;
+    int http_minor;
+    char target[MAX_TARGET_SIZE];
 } http_request;
 
 /** Parses a http request line.
@@ -60,6 +59,6 @@ typedef struct
     @return -1 if error and 0 on success. If the error is an
     unsupported http method, then the method field of request will be set to HTTP_UNSUPPORTED
 */
-int parse_http_request(const char *request_line , http_request *request);
+int parse_http_request(const char *request_line, http_request *request);
 
 #endif

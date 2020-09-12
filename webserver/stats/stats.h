@@ -16,7 +16,9 @@ typedef struct {
 sem_t *shared_semaphore;
 
 void send_stats(FILE *client);
+
 void init_stats(void);
+
 web_stats *get_stats(void);
 
 #endif

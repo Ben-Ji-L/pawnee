@@ -34,52 +34,52 @@
 
 #include "http_parse.h"
 
-#define min(a,b) ((a) < (b) ? (a) : (b))
-#define in_range(a,b,c) ((a) < (b) ? 0 : ((a) > (c) ? 0 : 1))
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define in_range(a, b, c) ((a) < (b) ? 0 : ((a) > (c) ? 0 : 1))
 
-int parse_http_request(const char *request_line , http_request *request) {
+int parse_http_request(const char *request_line, http_request *request) {
 
-   if (strncmp(request_line, "GET ", 4) == 0)
-      request->method = HTTP_GET;
-   else if (strncmp(request_line, "HEAD", 4) == 0)
-      request->method = HTTP_HEAD;
-   else {
-      request->method = HTTP_UNSUPPORTED;
-      return 0;
-   }
+    if (strncmp(request_line, "GET ", 4) == 0)
+        request->method = HTTP_GET;
+    else if (strncmp(request_line, "HEAD", 4) == 0)
+        request->method = HTTP_HEAD;
+    else {
+        request->method = HTTP_UNSUPPORTED;
+        return 0;
+    }
 
-   /* Find the target start */
-   const char *target = strchr(request_line, ' ');
-   if (target == NULL)
-      return 0;
-   target++;
-   /* Find target end and copy target to request */
-   char *target_end = strchr(target, ' ');
-   if (target_end == NULL)
-      return 0;
-   int size = min(target_end - target, MAX_TARGET_SIZE);
-   strncpy(request->target, target, size);
-   /* If target is more than size, \0 is not add to dst, so... */
-   request->target[size] = '\0';
+    /* Find the target start */
+    const char *target = strchr(request_line, ' ');
+    if (target == NULL)
+        return 0;
+    target++;
+    /* Find target end and copy target to request */
+    char *target_end = strchr(target, ' ');
+    if (target_end == NULL)
+        return 0;
+    int size = min(target_end - target, MAX_TARGET_SIZE);
+    strncpy(request->target, target, size);
+    /* If target is more than size, \0 is not add to dst, so... */
+    request->target[size] = '\0';
 
-   /* Now http version (only support HTTP/M.m version format) */
-   /* Quote from RFC:
-      Additionally, version numbers have been restricted to
-      single digits, due to the fact that implementations are known to
-      handle multi-digit version numbers incorrectly.
-   */
-   char *version = target_end + 1;
-   if (strncmp(version, "HTTP/", 5) != 0)
-      return 0;
-   if (!in_range(version[5], '0', '9')) // major
-      return 0;
-   if (version[6] != '.') // mandatory dot
-      return 0;
-   if (!in_range(version[7], '0', '9')) // minor
-      return 0;
-   request->http_major = version[5] - '0';
-   request->http_minor = version[7] - '0';
-   return 1;
+    /* Now http version (only support HTTP/M.m version format) */
+    /* Quote from RFC:
+       Additionally, version numbers have been restricted to
+       single digits, due to the fact that implementations are known to
+       handle multi-digit version numbers incorrectly.
+    */
+    char *version = target_end + 1;
+    if (strncmp(version, "HTTP/", 5) != 0)
+        return 0;
+    if (!in_range(version[5], '0', '9')) // major
+        return 0;
+    if (version[6] != '.') // mandatory dot
+        return 0;
+    if (!in_range(version[7], '0', '9')) // minor
+        return 0;
+    request->http_major = version[5] - '0';
+    request->http_minor = version[7] - '0';
+    return 1;
 }
 
 #ifdef COMPILE_MAIN

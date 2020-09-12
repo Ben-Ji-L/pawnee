@@ -21,14 +21,16 @@ void send_stats(FILE *client) {
     send_status(client, 200, "OK");
     fprintf(client, "Content-Length: %d\r\n", 362);
     fprintf(client, "Content-Type: %s\r\n", "text/html");
-	fprintf(client, "\r\n");
-	fprintf(client, "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body><h1>Statistiques</h1><ul><li>Connections servies : %d</li> \
+    fprintf(client, "\r\n");
+    fprintf(client, "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body><h1>Statistiques</h1><ul><li>Connections servies : %d</li> \
         <li>Requêtes servies : %d</li> \
         <li>Réponses 200 : %d</li> \
         <li>Réponses 400 : %d</li> \
         <li>Réponses 403 : %d</li> \
         <li>Réponses 404 : %d</li> \
-        <li>Réponses 405 : %d</li></ul></body></html>\r\n", get_stats()->served_connections, get_stats()->served_requests, get_stats()->ok_200, get_stats()->ko_400, get_stats()->ko_403, get_stats()->ko_404, get_stats()->ko_405);
+        <li>Réponses 405 : %d</li></ul></body></html>\r\n", get_stats()->served_connections,
+            get_stats()->served_requests, get_stats()->ok_200, get_stats()->ko_400, get_stats()->ko_403,
+            get_stats()->ko_404, get_stats()->ko_405);
 }
 
 /**

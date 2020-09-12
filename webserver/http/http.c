@@ -14,9 +14,9 @@
  */
 void skip_headers(FILE *client) {
 
-	char data[512];
-	do {
-		fgets_or_exit(data, 512, client);
+    char data[512];
+    do {
+        fgets_or_exit(data, 512, client);
     } while (strncmp(data, "\r\n", 2) != 0);
 }
 
@@ -27,7 +27,7 @@ void skip_headers(FILE *client) {
  * @param reason_phrase La phrase qui accompagne le code HTTP.
  */
 void send_status(FILE *client, int code, const char *reason_phrase) {
-	fprintf(client, "HTTP/1.1 %d %s\r\n", code, reason_phrase);
+    fprintf(client, "HTTP/1.1 %d %s\r\n", code, reason_phrase);
 }
 
 /**
@@ -42,16 +42,16 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
     // On envoie la réponse en respectant la forme d'une réponse HTTP.
     send_status(client, code, reason_phrase);
 
-	if (code == 200) {
-		fprintf(client, "Content-Length: %d\r\n", size);
-		fprintf(client, "Content-Type: %s\r\n", get_mime_type(message_body));
-		fprintf(client, "\r\n");
+    if (code == 200) {
+        fprintf(client, "Content-Length: %d\r\n", size);
+        fprintf(client, "Content-Type: %s\r\n", get_mime_type(message_body));
+        fprintf(client, "\r\n");
 
-	} else {
-		fprintf(client, "Content-Length: %d\r\n", size);
-		fprintf(client, "\r\n");
-		fprintf(client, "%s\r\n", message_body);
-	}
+    } else {
+        fprintf(client, "Content-Length: %d\r\n", size);
+        fprintf(client, "\r\n");
+        fprintf(client, "%s\r\n", message_body);
+    }
 
 }
 
@@ -62,11 +62,11 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
  * @return la requête réécrite
  */
 char *rewrite_target(char *target) {
-	char *rewrited_target = strtok(strdup(target), "?");
+    char *rewrited_target = strtok(strdup(target), "?");
 
-	if (strcmp(rewrited_target, "/") == 0) {
-		return "index.html";
-	}
+    if (strcmp(rewrited_target, "/") == 0) {
+        return "index.html";
+    }
 
-	return ++rewrited_target;
+    return ++rewrited_target;
 }
