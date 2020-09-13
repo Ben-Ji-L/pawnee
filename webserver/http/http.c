@@ -42,17 +42,24 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
     // On envoie la réponse en respectant la forme d'une réponse HTTP.
     send_status(client, code, reason_phrase);
 
-    if (code == 200) {
-        fprintf(client, "Content-Length: %d\r\n", size);
-        fprintf(client, "Content-Type: %s\r\n", get_mime_type(message_body));
-        fprintf(client, "\r\n");
+    switch (code) {
+        case 200:
+            fprintf(client, "Content-Length: %d\r\n", size);
+            fprintf(client, "Content-Type: %s\r\n", get_mime_type(message_body));
+            fprintf(client, "\r\n");
+            break;
 
-    } else {
-        fprintf(client, "Content-Length: %d\r\n", size);
-        fprintf(client, "\r\n");
-        fprintf(client, "%s\r\n", message_body);
+        case 405:
+            fprintf(client, "Allow: GET, HEAD\r\n");
+            fprintf(client, "\r\n");
+            break;
+
+        default:
+            fprintf(client, "Content-Length: %d\r\n", size);
+            fprintf(client, "\r\n");
+            fprintf(client, "%s\r\n", message_body);
+            break;
     }
-
 }
 
 /**
