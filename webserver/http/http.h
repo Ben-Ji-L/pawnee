@@ -1,7 +1,9 @@
 # ifndef __HTTP_H
 #define __HTTP_H
 
-void skip_headers(FILE *client);
+#include "http_parse.h"
+
+void skip_headers(FILE *client, http_request *request);
 
 void send_status(FILE *client, int code, const char *reason_phrase);
 

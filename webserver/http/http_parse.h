@@ -49,6 +49,7 @@ typedef struct {
     int http_major;
     int http_minor;
     char target[MAX_TARGET_SIZE];
+    char *headers[20];
 } http_request;
 
 /** Parses a http request line.

@@ -153,6 +153,7 @@ void repondre_client(int socket_client) {
         FILE *flux;
         FILE *file;
         char data[512];
+        http_request request;
 
         // On ouvre le socket en lecture et en écriture
         flux = fdopen(socket_client, "w+");
@@ -162,9 +163,7 @@ void repondre_client(int socket_client) {
         }
 
         fgets_or_exit(data, 512, flux);
-        skip_headers(flux);
-
-        http_request request;
+        skip_headers(flux, &request);
 
         sem_wait(shared_semaphore);
         get_stats()->served_requests++;

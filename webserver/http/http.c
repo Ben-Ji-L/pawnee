@@ -14,11 +14,14 @@
  * On ignore les en-tête de la requête.
  * @param client  Le stream de la requête.
  */
-void skip_headers(FILE *client) {
+void skip_headers(FILE *client, http_request *request) {
 
     char data[512];
+    int i = 0;
+
     do {
-        fgets_or_exit(data, 512, client);
+        request->headers[i] = fgets_or_exit(data, 512, client);
+        i++;
     } while (strncmp(data, "\r\n", 2) != 0);
 }
 
