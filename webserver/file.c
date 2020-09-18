@@ -129,10 +129,10 @@ char *get_mime_type(char *name) {
     char *ext = strrchr(name, '.');
     char *delimiter = "*";
     char *mime_type = NULL;
-    char *line;
     char *token = "";
     size_t len = 0;
-    ssize_t read;
+    char *line = malloc(sizeof(len));
+    ssize_t read = 0;
     ext++;
 
     // Ouvre le fichier des types mimes
@@ -188,6 +188,6 @@ char *get_app_path(char *argv0) {
         chdir(path_save);
     }
 
-    result = abs_exe_path;
+    result = (char *) &abs_exe_path;
     return result;
 }

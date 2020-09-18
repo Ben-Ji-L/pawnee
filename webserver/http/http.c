@@ -96,7 +96,11 @@ char *get_date_http_format(void) {
  * @return la requête réécrite
  */
 char *rewrite_target(char *target) {
-    char *rewrited_target = strtok(strdup(target), "?");
+    char *rewrited_target = malloc(PATH_MAX);
+    if ((rewrited_target = strtok(strdup(target), "?")) == NULL) {
+        perror("rewrite target error");
+        exit(EXIT_FAILURE);
+    }
 
     if (strcmp(rewrited_target, "/") == 0) {
         return "index.html";
