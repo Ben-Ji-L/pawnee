@@ -34,14 +34,17 @@
 
 #include "http_parse.h"
 
+/** find the minimum value between two numbers */
 #define min(a, b) ((a) < (b) ? (a) : (b))
+
+/** find if a number is in two others */
 #define in_range(a, b, c) ((a) < (b) ? 0 : ((a) > (c) ? 0 : 1))
 
 /**
- * La fonction qui examine la requête HTTP.
- * @param request_line La ligne principale de la requête.
- * @param request La requête que l'on parse.
- * @return renvoie 1 si tout se passe bien 0 sinon
+ * function to parse the request
+ * @param request_line main request line
+ * @param request request to parse
+ * @return 1 on success, 0 on error
  */
 int parse_http_request(const char *request_line, http_request *request) {
 

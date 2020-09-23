@@ -11,9 +11,9 @@
 #include "../file.h"
 
 /**
- * On ignore les en-tête de la requête.
- * @param client  Le stream de la requête.
- * @param request La requête que l'on parse.
+ * ignore headers of yhe requests
+ * @param client request stream
+ * @param request request we parse
  */
 void skip_headers(FILE *client, http_request *request) {
 
@@ -27,26 +27,26 @@ void skip_headers(FILE *client, http_request *request) {
 }
 
 /**
- * Fonction qui envoie au client le statut de la réponse
- * @param client Le flux où l'in va envoyer les données.
- * @param code Le code HTTP de la réponse.
- * @param reason_phrase La phrase qui accompagne le code HTTP.
+ * send the status of the response
+ * @param client stream to send data
+ * @param code HTTP code of the response
+ * @param reason_phrase HTTP response reason phrase
  */
 void send_status(FILE *client, int code, const char *reason_phrase) {
     fprintf(client, "HTTP/1.1 %d %s\r\n", code, reason_phrase);
 }
 
 /**
- * Dans cette fonction on met en forme la réponse HTTP.
- * @param client Le flux où écrire les données
- * @param code Le code HTTP de la réponse.
- * @param reason_phrase La phrase qui accompagne le code de la réponse.
- * @param message_body Le corps de la réponse.
- * @param size La taille de la réponse.
+ * function to format the HTTP response
+ * @param client stream to write the response
+ * @param code the HTTP code of the response
+ * @param reason_phrase the reason phrase of the response
+ * @param message_body the body of the response
+ * @param size the size of the response body
  */
 void send_response(FILE *client, int code, const char *reason_phrase, char *message_body, int size) {
 
-    // On envoie la réponse en respectant la forme d'une réponse HTTP.
+    /* we send the status of the response */
     send_status(client, code, reason_phrase);
 
     switch (code) {
@@ -77,8 +77,8 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
 }
 
 /**
- * Renvoie la date actuelle du serveur formattée pour les en-tetes Date du protocole HTTP
- * @return la date correctement formatée
+ * return actual date of the server with the correct format for HTTP response
+ * @return well formatted date
  */
 char *get_date_http_format(void) {
     time_t rawtime;
@@ -92,21 +92,20 @@ char *get_date_http_format(void) {
 }
 
 /**
- * Fonction qui réecrit la requête en enlevant les variables (après le ?)
- * et qui transforme la requête "/" en "index.html"
- * @param target la requête à examiner
- * @return la requête réécrite
+ * rewrite the HTTP target within URLs variables
+ * @param target the target of the request
+ * @return well rewrite target
  */
 char *rewrite_target(char *target) {
-    char *rewrited_target = malloc(PATH_MAX);
-    if ((rewrited_target = strtok(strdup(target), "?")) == NULL) {
+    char *rewrite_target = malloc(PATH_MAX);
+    if ((rewrite_target = strtok(strdup(target), "?")) == NULL) {
         perror("rewrite target error");
         exit(EXIT_FAILURE);
     }
 
-    if (strcmp(rewrited_target, "/") == 0) {
+    if (strcmp(rewrite_target, "/") == 0) {
         return "index.html";
     }
 
-    return ++rewrited_target;
+    return ++rewrite_target;
 }

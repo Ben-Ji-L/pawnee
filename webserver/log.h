@@ -3,7 +3,8 @@
 
 #include "http/http_parse.h"
 
-char clientip[20];
+/** the ip address of the client */
+char client_ip[20];
 
 void create_requests_logs_file(char *path);
 

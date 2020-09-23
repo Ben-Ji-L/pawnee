@@ -32,10 +32,13 @@
 #ifndef __HTTP_PARSE__
 #define __HTTP_PARSE__
 
-// Method supported by the parser
+/** Method supported by the parser */
 enum http_method {
+    /** GET http method */
     HTTP_GET,
+    /** HEAD http method */
     HTTP_HEAD,
+    /** the method is not supported */
     HTTP_UNSUPPORTED,
 };
 
@@ -43,45 +46,32 @@ enum http_method {
 // The maximum size of the target string.
 #define MAX_TARGET_SIZE 1024
 
-/**
- * describes a http request
- */
+/** describes a http request */
 typedef struct {
 
-    /**
-     * La méthode HTTP de la requête.
-     */
+    /** HTTP method of the request */
     enum http_method method;
 
-    /**
-     * La version majeure du protocole HTTP utilisé.
-     */
+    /** major HTTP version of the request */
     int http_major;
 
-    /**
-     * La version mineure du protocole HTTP utilisé.
-     */
+    /** minor HTTP version of the request */
     int http_minor;
 
-    /**
-     * La cible de la requête.
-     */
+    /** target of the request */
     char target[MAX_TARGET_SIZE];
 
-    /**
-     * Les en-têtes de la requête.
-     */
+    /** headers of the request */
     char *headers[20];
 } http_request;
 
-/** Parses a http request line.
-    
-    @param in request_line the line to parse (as a null terminated string)
-    @param out request a valid pointer to a http_request that will be filled by the function
-
-    @return -1 if error and 0 on success. If the error is an
-    unsupported http method, then the method field of request will be set to HTTP_UNSUPPORTED
-*/
+/**
+ * Parses a http request line.
+ * @param in request_line the line to parse (as a null terminated string)
+ * @param out request a valid pointer to a http_request that will be filled by the function
+ * @return -1 if error and 0 on success. If the error is an
+ * unsupported http method, then the method field of request will be set to HTTP_UNSUPPORTED
+ */
 int parse_http_request(const char *request_line, http_request *request);
 
 #endif

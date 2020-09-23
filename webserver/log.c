@@ -7,24 +7,24 @@
 #include "http/http_parse.h"
 #include "log.h"
 
-// le fichier de log des requêtes
+/** the log file for requests */
 FILE *log_requests;
 
-// le fichier de log des erreurs
+/** the log file for errors */
 FILE *log_errors;
 
 /**
- * Initialisation du fichier de log des requêtes
- * @param path le chemin vers le dossier des logs
+ * init the requests log file
+ * @param path the path to the log directory
  */
 void create_requests_logs_file(char *path) {
     FILE *request_log;
     char request_path[PATH_MAX];
 
-    // chemin des logs globaux
+    /* path to global logs path */
     strcat(path, "/logs/");
 
-    // chemin du log des requêtes
+    /* path to requests log file */
     strcpy(request_path, path);
     strcat(request_path, "requests.log");
 
@@ -38,14 +38,14 @@ void create_requests_logs_file(char *path) {
 }
 
 /**
- * Initialisation du fichier de log des erreurs
- * @param path le chemin vers le dossier des logs
+ * init the errors log file
+ * @param path the path to the log directory
  */
 void create_errors_logs_file(char *path) {
     FILE *error_log;
     char error_path[PATH_MAX];
 
-    // chemin du log des erreurs
+    /* path to the errors log file */
     strcpy(error_path, path);
     strcat(error_path, "errors.log");
 
@@ -59,10 +59,10 @@ void create_errors_logs_file(char *path) {
 }
 
 /**
- * Fonction qui écrit une requête dans les logs
- * @param log_file le fichier dans lequel on doit écrire
- * @param request la requête à écrire
- * @param code le code HTTP de la requête
+ * function to write a request in the log file
+ * @param log_file the log file
+ * @param request the request to write
+ * @param code the HTTP code of the request
  */
 void write_request(FILE *log_file, http_request request, int code) {
     char *method = "";
@@ -70,74 +70,76 @@ void write_request(FILE *log_file, http_request request, int code) {
     time_t now;
     time(&now);
 
-    // le temps actuel
+    /* actual time */
     struct tm *local = localtime(&now);
 
-    hours = local->tm_hour;        // l'heure depuis minuit, de 0 à 23
-    minutes = local->tm_min;        // les minutes, de 0 à 59
-    seconds = local->tm_sec;        // les secondes, de 0 à 59
+    hours = local->tm_hour;        // time since midnight, from 0 to 23
+    minutes = local->tm_min;        // minutes, from 0 to 59
+    seconds = local->tm_sec;        // seconds, from 0 to 59
 
-    day = local->tm_mday;            // le jour, de 1 à 31
-    month = local->tm_mon + 1;    // le mois, de 0 à 11
-    year = local->tm_year + 1900;    // l'année depuis 1900
+    day = local->tm_mday;            // the day, from 1 to 31
+    month = local->tm_mon + 1;    // the month, from 0 to 11
+    year = local->tm_year + 1900;    // the years since 1900
 
-    // le formattage de la ligne de log
+    /* format the line to put in the log */
     switch (request.method) {
         case 0:
             method = "GET";
             fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
                     minutes, seconds, \
-            clientip, request.http_major, request.http_minor, code, method, request.target);
+            client_ip, request.http_major, request.http_minor, code, method, request.target);
             break;
         case 1:
             method = "HEAD";
             fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
                     minutes, seconds, \
-            clientip, request.http_major, request.http_minor, code, method, request.target);
+            client_ip, request.http_major, request.http_minor, code, method, request.target);
             break;
         default:
             method = "UNSUPPORTED";
             fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s\n", day, month, year, hours,
                     minutes, seconds, \
-            clientip, request.http_major, request.http_minor, code, method);
+            client_ip, request.http_major, request.http_minor, code, method);
             break;
     }
 }
 
 /**
- * Fonction qui écrit une erreur dans les logs
- * @param log_file le fichier dans lequel on doit écrire
- * @param error l'erreur à écrire
+ * function to write an error in the log file
+ * @param log_file the log file
+ * @param request the error to write
  */
 void write_error(FILE *log_file, char *error) {
     int hours, minutes, seconds, day, month, year;
     time_t now;
     time(&now);
 
-    // le temps actuel
+    /* actual time */
     struct tm *local = localtime(&now);
 
-    hours = local->tm_hour;        // l'heure depuis minuit, de 0 à 23
-    minutes = local->tm_min;        // les minutes, de 0 à 59
-    seconds = local->tm_sec;        // les secondes, de 0 à 59
+    hours = local->tm_hour;        // time since midnight, from 0 to 23
+    minutes = local->tm_min;        // minutes, from 0 to 59
+    seconds = local->tm_sec;        // seconds, from 0 to 59
 
-    day = local->tm_mday;            // le jour, de 1 à 31
-    month = local->tm_mon + 1;    // le mois, de 0 à 11
-    year = local->tm_year + 1900;    // l'année depuis 1900
+    day = local->tm_mday;            // the day, from 1 to 31
+    month = local->tm_mon + 1;    // the month, from 0 to 11
+    year = local->tm_year + 1900;    // the years since 1900
 
-    // le formattage de la ligne de log
+    /* format the line to put in the log */
     fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] %s\n", day, month, year, hours, minutes, seconds, error);
 }
 
 /**
- * Renvoie un descripteur de fichier vers le fichier de log des requêtes
+ * return a file descriptor to the requests log file
+ * @return the file descriptor
  */
 FILE *get_log_requests(void) {
     return log_requests;
 }
 
 /**
- * Renvoie un descripteur de fichier vers le fichier de log des erreurs
+ * return a file descriptor to the error log file
+ * @return the file descriptor
  */
 FILE *get_log_errors(void) {
     return log_errors;

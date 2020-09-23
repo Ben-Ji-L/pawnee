@@ -18,20 +18,30 @@
 #include "file.h"
 #include "log.h"
 
-void initialiser_signaux(void);
+void init_signals(void);
 
-void repondre_client(int socket_client);
+void respond_client(int socket_client);
 
 void child_handler(void);
 
+/** the root directory of the application */
 char root[PATH_MAX];
 
+/**
+ * the main function of the program
+ * @param argc arguments counter
+ * @param argv arguments array
+ * @return 0 on success, positive value on error
+ */
 int main(int argc, char *argv[]) {
 
     char executable_path[PATH_MAX];
     strncpy(executable_path, get_app_path(argv[0]), PATH_MAX);
 
-    init_config(executable_path);
+    if (init_config(executable_path) != 0) {
+        perror("init config error");
+        exit(1);
+    }
 
     create_requests_logs_file(executable_path);
     create_errors_logs_file(executable_path);
@@ -42,54 +52,54 @@ int main(int argc, char *argv[]) {
     } else
         strncpy(root, check_root(get_config()->website_root), PATH_MAX);
 
-    // Les deux sockets dont on aura besoin.
-    int socket_serveur;
+    /* the two sockets that we need */
+    int socket_server;
     int socket_client;
 
-    // On crée le serveur
-    socket_serveur = creer_serveur(get_config()->port);
+    /* creation of the server */
+    socket_server = create_server(get_config()->port);
 
-    printf("serveur lancé à l'adresse : http://%s:%d\n", get_config()->listen_addr, get_config()->port);
+    printf("server running at : http://%s:%d\n", get_config()->listen_addr, get_config()->port);
 
-    if (listen(socket_serveur, 10) == -1) {
-        write_error(get_log_errors(), "error socket_serveur");
+    if (listen(socket_server, 10) == -1) {
+        write_error(get_log_errors(), "error socket_server");
         exit(1);
     }
 
-    initialiser_signaux();
+    init_signals();
     init_stats();
 
-    // Le serveur attend des requêtes
+    /* server waiting requests */
     while (1) {
 
-        // Les variables néccessaires pour trouver l'adresse ip du client
+        /* vars needed to find ip address of the client */
         struct sockaddr_in addr_client_struct;
-        socklen_t clientaddr_size = sizeof(addr_client_struct);
+        socklen_t client_addr_size = sizeof(addr_client_struct);
 
-        // On accepte une connexion
-        socket_client = accept(socket_serveur, (struct sockaddr *) &addr_client_struct, &clientaddr_size);
+        /* we accept a connection */
+        socket_client = accept(socket_server, (struct sockaddr *) &addr_client_struct, &client_addr_size);
         if (socket_client == -1) {
             write_error(get_log_errors(), "accept error");
             exit(1);
         }
 
-        // Détermination de l'adresse ip du client
+        /* finding the ip address of the client */
         struct sockaddr_in addr;
         socklen_t addr_size = sizeof(struct sockaddr_in);
         if (getpeername(socket_client, (struct sockaddr *) &addr, &addr_size) == -1) {
             write_error(get_log_errors(), "getpeername error");
             exit(EXIT_FAILURE);
         }
-        strncpy(clientip, inet_ntoa(addr.sin_addr), 20);
+        strncpy(client_ip, inet_ntoa(addr.sin_addr), 20);
 
         sem_wait(shared_semaphore);
         get_stats()->served_connections++;
         sem_post(shared_semaphore);
 
-        // Si pas d'erreur on répond au client
-        repondre_client(socket_client);
+        /* if no errors, we send response to the client */
+        respond_client(socket_client);
 
-        // On ferme le socket
+        /* we close the socket */
         close(socket_client);
     }
 
@@ -100,19 +110,17 @@ int main(int argc, char *argv[]) {
 }
 
 /**
- * Cette fonction sert à ignorer le signal SIGPIPE
- * ce signal est déclenché lorsque le programme essaie d'écrire à travers le socket
- * et que celui ci est déconnecté.
+ * function to ignore SIGPIPE signal
  */
-void initialiser_signaux(void) {
+void init_signals(void) {
 
-    // On ignore le signal SIGPIPE
+    /* we ignore the SIGPIPE signal */
     if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
         write_error(get_log_errors(), "signal error");
         exit(1);
     }
 
-    // Traitement signal SIGCHLD
+    /* processing the SIGCHLD signal */
     struct sigaction sa;
 
     sa.sa_handler = (__sighandler_t) child_handler;
@@ -128,19 +136,19 @@ void initialiser_signaux(void) {
 }
 
 /**
- * Cette fonction permet de faire disparaitre les processus zombies.
+ * function to dismiss zombies process
  */
 void child_handler(void) {
     while (waitpid(-1, NULL, WNOHANG) > 0) {}
 }
 
 /**
- * La fonction qui s'occupe de toute la logique de la réponse.
- * @param socket_client le socket à travers lequel il faut envoyer la réponse
+ * function to respond to the client
+ * @param socket_client the socket client
  */
-void repondre_client(int socket_client) {
+void respond_client(int socket_client) {
 
-    // On crée un nouveau processus à chaque requete pour pouvoir traiter plusieurs client àla fois.
+    /* we create a new process for each requests */
     pid_t pid = fork();
 
     if (pid == -1) {
@@ -148,14 +156,14 @@ void repondre_client(int socket_client) {
         exit(1);
     }
 
-    // Si on est dans un processus fils.
+    /* if this is the son process */
     if (pid == 0) {
         FILE *flux;
         FILE *file;
         char data[512];
         http_request request;
 
-        // On ouvre le socket en lecture et en écriture
+        /* we open the socket to read and to write */
         flux = fdopen(socket_client, "w+");
         if (flux == NULL) {
             write_error(get_log_errors(), "error socket client");
@@ -169,9 +177,9 @@ void repondre_client(int socket_client) {
         get_stats()->served_requests++;
         sem_post(shared_semaphore);
 
-        // Ici on parse la requete et selon l'en-tete on envoie la réponse appropriée.
+        /* parsing request and sending appropriate response */
         if (!parse_http_request(data, &request) && (request.method != HTTP_UNSUPPORTED)) {
-            // En cas de requete mal écrite.
+            /* if the requests is miss written */
             write_request(get_log_requests(), request, 400);
 
             sem_wait(shared_semaphore);
@@ -186,7 +194,7 @@ void repondre_client(int socket_client) {
             get_stats()->ko_405++;
             sem_post(shared_semaphore);
 
-            // Si la méthode n'est pas supportée par le serveur sur cette URL.
+            /* if the method is unsupported */
             send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
         } else {
 
@@ -222,7 +230,7 @@ void repondre_client(int socket_client) {
 
                 send_response(flux, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
 
-                // si le client envoie une requête avec la méthode HEAD
+                /* if client send request with HEAD method */
                 if (request.method == HTTP_HEAD) {
                     fclose(flux);
                     fclose(file);
@@ -233,7 +241,7 @@ void repondre_client(int socket_client) {
             }
             fclose(file);
         }
-        // On oublie pas de fermer le socket
+        /* closing socket */
         fclose(flux);
         exit(0);
     }

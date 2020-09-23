@@ -10,11 +10,11 @@
 #include "log.h"
 
 /**
- * Fonction qui vérifie si un fichier existe, si on peut l'ouvrir
- * et ouvre un fichier
- * @param target la cible de la requête
- * @param document_root le répertoire racine du site à servir
- * @return un pointeur vers le fichier ouvert
+ * function to check if the file of the target exist,
+ * check if we can open it and open it
+ * @param target the target of the request
+ * @param document_root the root path of the website
+ * @return a pointer to the opened file
  */
 FILE *check_and_open(const char *target, const char *document_root) {
     char root[PATH_MAX] = "";
@@ -22,12 +22,12 @@ FILE *check_and_open(const char *target, const char *document_root) {
 
     struct stat path_stat;
 
-    // Prépare le path du fichier à ouvrir
+    // prepare the file before opening it
     strncpy(root, document_root, PATH_MAX);
     strncat(path, root, PATH_MAX);
     strncat(path, target, PATH_MAX);
 
-    // Si stat échoue
+    // if stat fail
     if (stat(path, &path_stat) != 0) {
         write_error(get_log_errors(), "stat error: no such file or directory");
         return NULL;
@@ -52,9 +52,9 @@ FILE *check_and_open(const char *target, const char *document_root) {
 }
 
 /**
- * Calcule la taille d'un fichier
- * @param fd le descripteur vers le fichier
- * @return la taille du fichier
+ * find the size of a file
+ * @param fd the file descriptor for the file to open
+ * @return the size of the file
  */
 int get_file_size(int fd) {
     struct stat fd_stat;
@@ -65,9 +65,9 @@ int get_file_size(int fd) {
 }
 
 /**
- * Copie le contenu d'un fichier vers un autre
- * @param in le fichier d'où on lit les données
- * @param out le ficher vers lequel on copie les données
+ * copy the content of the file to another
+ * @param in the file to read
+ * @param out the file to copy data
  */
 void copy(FILE *in, FILE *out) {
     char buff[1024];
@@ -78,11 +78,11 @@ void copy(FILE *in, FILE *out) {
 }
 
 /**
- * On lit des données et en cas d'erreur on quite le programme avec un statut d'erreur.
- * @param buffer Le buffer où l'on va stocker les données.
- * @param size La taille des données lues.
- * @param stream Le flux à partir duquel on va lire les données.
- * @return Le buffer.
+ * read data and if it fail quit the program with error code
+ * @param buffer buffer to store data
+ * @param size the size of data we read
+ * @param stream the stream to read data
+ * @return the buffer
  */
 char *fgets_or_exit(char *buffer, int size, FILE *stream) {
     if (fgets(buffer, size, stream) == NULL) {
@@ -93,9 +93,9 @@ char *fgets_or_exit(char *buffer, int size, FILE *stream) {
 }
 
 /**
- * Vérifie si on peut ouvrir le dossier racine du site
- * @param root le chemin vers la racine du site web
- * @return la racine du site vérifiée et corrigée
+ * check if we can open the root of the website
+ * @param root the path to the root
+ * @return the root after the check
  */
 char *check_root(char *root) {
     if (access(root, R_OK | W_OK) != 0) {
@@ -121,9 +121,9 @@ char *check_root(char *root) {
 }
 
 /**
- * Renvoie le type mime d'un fichier
- * @param name le nom du fichier dont on veut le type
- * @return le type mime du fichier
+ * return the mime type of a file
+ * @param name the name of the file
+ * @return the mime type of the file
  */
 char *get_mime_type(char *name) {
     char *ext = strrchr(name, '.');
@@ -135,7 +135,7 @@ char *get_mime_type(char *name) {
     ssize_t read = 0;
     ext++;
 
-    // Ouvre le fichier des types mimes
+    // open mime type file
     FILE *mime_type_file = fopen(get_config()->mimes_file, "r");
 
     if (mime_type_file != NULL) {
@@ -144,13 +144,13 @@ char *get_mime_type(char *name) {
             strtok(line, delimiter);
             if ((token = strtok(NULL, delimiter)) != NULL) {
 
-                // suppression de l'espace final
+                // remove the final space
                 token[strlen(token) - 1] = '\0';
 
                 if (strcmp(token, ext) == 0) {
                     char *result = strtok(line, delimiter);
 
-                    // si il y a un espace en fin de ligne, le supprime
+                    // if a line has a end space remove it
                     if (strcmp(&result[strlen(result) - 1], " ") == 0)
                         result[strlen(result - 1)] = '\0';
 
@@ -168,9 +168,9 @@ char *get_mime_type(char *name) {
 }
 
 /**
- * Renvoie le chemin de l'application
- * @param argv0 le chemin de l'executable
- * @return le chemin de absolu de l'application
+ * return the path of the application
+ * @param argv0 the path of the executable
+ * @return absolute path of the file
  */
 char *get_app_path(char *argv0) {
     char abs_exe_path[PATH_MAX];
