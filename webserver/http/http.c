@@ -13,6 +13,7 @@
 /**
  * On ignore les en-tête de la requête.
  * @param client  Le stream de la requête.
+ * @param request La requête que l'on parse.
  */
 void skip_headers(FILE *client, http_request *request) {
 
@@ -41,6 +42,7 @@ void send_status(FILE *client, int code, const char *reason_phrase) {
  * @param code Le code HTTP de la réponse.
  * @param reason_phrase La phrase qui accompagne le code de la réponse.
  * @param message_body Le corps de la réponse.
+ * @param size La taille de la réponse.
  */
 void send_response(FILE *client, int code, const char *reason_phrase, char *message_body, int size) {
 

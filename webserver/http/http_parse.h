@@ -43,12 +43,34 @@ enum http_method {
 // The maximum size of the target string.
 #define MAX_TARGET_SIZE 1024
 
-// describes a http request
+/**
+ * describes a http request
+ */
 typedef struct {
+
+    /**
+     * La méthode HTTP de la requête.
+     */
     enum http_method method;
+
+    /**
+     * La version majeure du protocole HTTP utilisé.
+     */
     int http_major;
+
+    /**
+     * La version mineure du protocole HTTP utilisé.
+     */
     int http_minor;
+
+    /**
+     * La cible de la requête.
+     */
     char target[MAX_TARGET_SIZE];
+
+    /**
+     * Les en-têtes de la requête.
+     */
     char *headers[20];
 } http_request;
 

@@ -3,11 +3,29 @@
 
 #include <limits.h>
 
-// Structure représentant la configuration du serveur
+/**
+ * Structure représentant la configuration du serveur
+ */
 typedef struct {
+
+    /**
+     * Le port sur lequel écoute le serveur.
+     */
     int port;
+
+    /**
+     * L'adresse ip sur laquelle le serveur écoute.
+     */
     char listen_addr[PATH_MAX];
+
+    /**
+     * La racine du site que le serveur sert.
+     */
     char website_root[PATH_MAX];
+
+    /**
+     * Le fichier utilisé pour déterminer les types mimes suportés.
+     */
     char mimes_file[PATH_MAX];
 } server_config;
 

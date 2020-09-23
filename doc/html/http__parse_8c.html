@@ -189,15 +189,14 @@ Fonctions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parses a http request line.</p>
-<dl class="params"><dt>Paramètres</dt><dd>
+<p>La fonction qui examine la requête HTTP. </p><dl class="params"><dt>Paramètres</dt><dd>
   <table class="params">
-    <tr><td class="paramname">in</td><td>request_line the line to parse (as a null terminated string) </td></tr>
-    <tr><td class="paramname">out</td><td>request a valid pointer to a <a class="el" href="structhttp__request.html">http_request</a> that will be filled by the function</td></tr>
+    <tr><td class="paramname">request_line</td><td>La ligne principale de la requête. </td></tr>
+    <tr><td class="paramname">request</td><td>La requête que l'on parse. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Renvoie</dt><dd>-1 if error and 0 on success. If the error is an unsupported http method, then the method field of request will be set to HTTP_UNSUPPORTED </dd></dl>
+<dl class="section return"><dt>Renvoie</dt><dd>renvoie 1 si tout se passe bien 0 sinon </dd></dl>
 
 </div>
 </div>

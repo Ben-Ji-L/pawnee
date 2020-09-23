@@ -37,6 +37,12 @@
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define in_range(a, b, c) ((a) < (b) ? 0 : ((a) > (c) ? 0 : 1))
 
+/**
+ * La fonction qui examine la requête HTTP.
+ * @param request_line La ligne principale de la requête.
+ * @param request La requête que l'on parse.
+ * @return renvoie 1 si tout se passe bien 0 sinon
+ */
 int parse_http_request(const char *request_line, http_request *request) {
 
     if (strncmp(request_line, "GET ", 4) == 0)
