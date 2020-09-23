@@ -1,0 +1,67 @@
+\hypertarget{stats_8h}{}\doxysection{webserver/stats/stats.h File Reference}
+\label{stats_8h}\index{webserver/stats/stats.h@{webserver/stats/stats.h}}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{stats_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structweb__stats}{web\+\_\+stats}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{stats_8h_adb34217f73215606a7b0acb55ed0b20a}{send\+\_\+stats}} (F\+I\+LE $\ast$client)
+\item 
+void \mbox{\hyperlink{stats_8h_a39faad333f19a605af6242c9d61eca7c}{init\+\_\+stats}} (void)
+\item 
+\mbox{\hyperlink{structweb__stats}{web\+\_\+stats}} $\ast$ \mbox{\hyperlink{stats_8h_abfea01287800b7517e9f6839a2f9a237}{get\+\_\+stats}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+sem\+\_\+t $\ast$ \mbox{\hyperlink{stats_8h_aadbae336c6cb5c40330bd70e00fa62a9}{shared\+\_\+semaphore}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{stats_8h_abfea01287800b7517e9f6839a2f9a237}\label{stats_8h_abfea01287800b7517e9f6839a2f9a237}} 
+\index{stats.h@{stats.h}!get\_stats@{get\_stats}}
+\index{get\_stats@{get\_stats}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{get\_stats()}{get\_stats()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structweb__stats}{web\+\_\+stats}}$\ast$ get\+\_\+stats (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+return the shared memory zone of the stats \begin{DoxyReturn}{Returns}
+a pointer to the server stats 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stats_8h_a39faad333f19a605af6242c9d61eca7c}\label{stats_8h_a39faad333f19a605af6242c9d61eca7c}} 
+\index{stats.h@{stats.h}!init\_stats@{init\_stats}}
+\index{init\_stats@{init\_stats}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{init\_stats()}{init\_stats()}}
+{\footnotesize\ttfamily void init\+\_\+stats (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+init the server stats, the semaphore and the shared memory \mbox{\Hypertarget{stats_8h_adb34217f73215606a7b0acb55ed0b20a}\label{stats_8h_adb34217f73215606a7b0acb55ed0b20a}} 
+\index{stats.h@{stats.h}!send\_stats@{send\_stats}}
+\index{send\_stats@{send\_stats}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{send\_stats()}{send\_stats()}}
+{\footnotesize\ttfamily void send\+\_\+stats (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{client }\end{DoxyParamCaption})}
+
+function who display stats of the server in html 
+\begin{DoxyParams}{Parameters}
+{\em client} & the socket of the client \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{stats_8h_aadbae336c6cb5c40330bd70e00fa62a9}\label{stats_8h_aadbae336c6cb5c40330bd70e00fa62a9}} 
+\index{stats.h@{stats.h}!shared\_semaphore@{shared\_semaphore}}
+\index{shared\_semaphore@{shared\_semaphore}!stats.h@{stats.h}}
+\doxysubsubsection{\texorpdfstring{shared\_semaphore}{shared\_semaphore}}
+{\footnotesize\ttfamily sem\+\_\+t$\ast$ shared\+\_\+semaphore}
+
+semaphore to avoid concurrent access to the stats 

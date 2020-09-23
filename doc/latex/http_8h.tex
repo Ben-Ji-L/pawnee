@@ -1,0 +1,103 @@
+\hypertarget{http_8h}{}\doxysection{webserver/http/http.h File Reference}
+\label{http_8h}\index{webserver/http/http.h@{webserver/http/http.h}}
+{\ttfamily \#include \char`\"{}http\+\_\+parse.\+h\char`\"{}}\newline
+Include dependency graph for http.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{http_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{http_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{http_8h_a24d47467b565662038f251490c143195}{skip\+\_\+headers}} (F\+I\+LE $\ast$client, \mbox{\hyperlink{structhttp__request}{http\+\_\+request}} $\ast$request)
+\item 
+void \mbox{\hyperlink{http_8h_a949e92f2954dbf94cc1ef53e72a10b6f}{send\+\_\+status}} (F\+I\+LE $\ast$client, int code, const char $\ast$reason\+\_\+phrase)
+\item 
+void \mbox{\hyperlink{http_8h_a3d7059b194a9998e3022e12197ba4f62}{send\+\_\+response}} (F\+I\+LE $\ast$client, int code, const char $\ast$reason\+\_\+phrase, char $\ast$message\+\_\+body, int size)
+\item 
+char $\ast$ \mbox{\hyperlink{http_8h_a2b48b2afbd4034b65b0c7d636e48ea02}{get\+\_\+date\+\_\+http\+\_\+format}} (void)
+\item 
+char $\ast$ \mbox{\hyperlink{http_8h_a7337619187e098d4772ed7d5807cd75b}{rewrite\+\_\+target}} (char $\ast$target)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{http_8h_a2b48b2afbd4034b65b0c7d636e48ea02}\label{http_8h_a2b48b2afbd4034b65b0c7d636e48ea02}} 
+\index{http.h@{http.h}!get\_date\_http\_format@{get\_date\_http\_format}}
+\index{get\_date\_http\_format@{get\_date\_http\_format}!http.h@{http.h}}
+\doxysubsubsection{\texorpdfstring{get\_date\_http\_format()}{get\_date\_http\_format()}}
+{\footnotesize\ttfamily char$\ast$ get\+\_\+date\+\_\+http\+\_\+format (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+return actual date of the server with the correct format for H\+T\+TP response \begin{DoxyReturn}{Returns}
+well formatted date 
+\end{DoxyReturn}
+\mbox{\Hypertarget{http_8h_a7337619187e098d4772ed7d5807cd75b}\label{http_8h_a7337619187e098d4772ed7d5807cd75b}} 
+\index{http.h@{http.h}!rewrite\_target@{rewrite\_target}}
+\index{rewrite\_target@{rewrite\_target}!http.h@{http.h}}
+\doxysubsubsection{\texorpdfstring{rewrite\_target()}{rewrite\_target()}}
+{\footnotesize\ttfamily char$\ast$ rewrite\+\_\+target (\begin{DoxyParamCaption}\item[{char $\ast$}]{target }\end{DoxyParamCaption})}
+
+rewrite the H\+T\+TP target within U\+R\+Ls variables 
+\begin{DoxyParams}{Parameters}
+{\em target} & the target of the request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+well rewrite target 
+\end{DoxyReturn}
+\mbox{\Hypertarget{http_8h_a3d7059b194a9998e3022e12197ba4f62}\label{http_8h_a3d7059b194a9998e3022e12197ba4f62}} 
+\index{http.h@{http.h}!send\_response@{send\_response}}
+\index{send\_response@{send\_response}!http.h@{http.h}}
+\doxysubsubsection{\texorpdfstring{send\_response()}{send\_response()}}
+{\footnotesize\ttfamily void send\+\_\+response (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{client,  }\item[{int}]{code,  }\item[{const char $\ast$}]{reason\+\_\+phrase,  }\item[{char $\ast$}]{message\+\_\+body,  }\item[{int}]{size }\end{DoxyParamCaption})}
+
+function to format the H\+T\+TP response 
+\begin{DoxyParams}{Parameters}
+{\em client} & stream to write the response \\
+\hline
+{\em code} & the H\+T\+TP code of the response \\
+\hline
+{\em reason\+\_\+phrase} & the reason phrase of the response \\
+\hline
+{\em message\+\_\+body} & the body of the response \\
+\hline
+{\em size} & the size of the response body \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{http_8h_a949e92f2954dbf94cc1ef53e72a10b6f}\label{http_8h_a949e92f2954dbf94cc1ef53e72a10b6f}} 
+\index{http.h@{http.h}!send\_status@{send\_status}}
+\index{send\_status@{send\_status}!http.h@{http.h}}
+\doxysubsubsection{\texorpdfstring{send\_status()}{send\_status()}}
+{\footnotesize\ttfamily void send\+\_\+status (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{client,  }\item[{int}]{code,  }\item[{const char $\ast$}]{reason\+\_\+phrase }\end{DoxyParamCaption})}
+
+send the status of the response 
+\begin{DoxyParams}{Parameters}
+{\em client} & stream to send data \\
+\hline
+{\em code} & H\+T\+TP code of the response \\
+\hline
+{\em reason\+\_\+phrase} & H\+T\+TP response reason phrase \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{http_8h_a24d47467b565662038f251490c143195}\label{http_8h_a24d47467b565662038f251490c143195}} 
+\index{http.h@{http.h}!skip\_headers@{skip\_headers}}
+\index{skip\_headers@{skip\_headers}!http.h@{http.h}}
+\doxysubsubsection{\texorpdfstring{skip\_headers()}{skip\_headers()}}
+{\footnotesize\ttfamily void skip\+\_\+headers (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{client,  }\item[{\mbox{\hyperlink{structhttp__request}{http\+\_\+request}} $\ast$}]{request }\end{DoxyParamCaption})}
+
+ignore headers of yhe requests 
+\begin{DoxyParams}{Parameters}
+{\em client} & request stream \\
+\hline
+{\em request} & request we parse \\
+\hline
+\end{DoxyParams}

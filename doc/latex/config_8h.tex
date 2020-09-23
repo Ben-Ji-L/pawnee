@@ -1,0 +1,71 @@
+\hypertarget{config_8h}{}\doxysection{webserver/config/config.h File Reference}
+\label{config_8h}\index{webserver/config/config.h@{webserver/config/config.h}}
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+Include dependency graph for config.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{config_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{config_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structserver__config}{server\+\_\+config}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{config_8h_ac2ee8b2a218b6ad9a3a02588cc202860}{init\+\_\+config}} (char $\ast$abs\+\_\+path)
+\item 
+int \mbox{\hyperlink{config_8h_a86ea90f8c7b20b04e7b2c09108747203}{get\+\_\+config\+\_\+from\+\_\+file}} (char $\ast$abs\+\_\+path)
+\item 
+\mbox{\hyperlink{structserver__config}{server\+\_\+config}} $\ast$ \mbox{\hyperlink{config_8h_a461b71ef96d7fd3feb63f5549072577f}{get\+\_\+config}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{config_8h_a461b71ef96d7fd3feb63f5549072577f}\label{config_8h_a461b71ef96d7fd3feb63f5549072577f}} 
+\index{config.h@{config.h}!get\_config@{get\_config}}
+\index{get\_config@{get\_config}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{get\_config()}{get\_config()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structserver__config}{server\+\_\+config}}$\ast$ get\+\_\+config (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+return server config \begin{DoxyReturn}{Returns}
+a pointer to the shared memory zone with the configuration of the server inside 
+\end{DoxyReturn}
+\mbox{\Hypertarget{config_8h_a86ea90f8c7b20b04e7b2c09108747203}\label{config_8h_a86ea90f8c7b20b04e7b2c09108747203}} 
+\index{config.h@{config.h}!get\_config\_from\_file@{get\_config\_from\_file}}
+\index{get\_config\_from\_file@{get\_config\_from\_file}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{get\_config\_from\_file()}{get\_config\_from\_file()}}
+{\footnotesize\ttfamily int get\+\_\+config\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{char $\ast$}]{abs\+\_\+path }\end{DoxyParamCaption})}
+
+open the config file and read it 
+\begin{DoxyParams}{Parameters}
+{\em abs\+\_\+path} & absolute path of the application \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, 1 on error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{config_8h_ac2ee8b2a218b6ad9a3a02588cc202860}\label{config_8h_ac2ee8b2a218b6ad9a3a02588cc202860}} 
+\index{config.h@{config.h}!init\_config@{init\_config}}
+\index{init\_config@{init\_config}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{init\_config()}{init\_config()}}
+{\footnotesize\ttfamily int init\+\_\+config (\begin{DoxyParamCaption}\item[{char $\ast$}]{abs\+\_\+path }\end{DoxyParamCaption})}
+
+Init the configuration of the server 
+\begin{DoxyParams}{Parameters}
+{\em abs\+\_\+path} & absolute path of the app \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, 1 on error 
+\end{DoxyReturn}

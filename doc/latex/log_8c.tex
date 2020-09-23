@@ -1,0 +1,125 @@
+\hypertarget{log_8c}{}\doxysection{webserver/log.c File Reference}
+\label{log_8c}\index{webserver/log.c@{webserver/log.c}}
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}http/http\+\_\+parse.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}log.\+h\char`\"{}}\newline
+Include dependency graph for log.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{log_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{log_8c_a2831ca839e12e76d5630e786ee34fdf1}{create\+\_\+requests\+\_\+logs\+\_\+file}} (char $\ast$path)
+\item 
+void \mbox{\hyperlink{log_8c_aee450d2b8b503b7004afba39f973c049}{create\+\_\+errors\+\_\+logs\+\_\+file}} (char $\ast$path)
+\item 
+void \mbox{\hyperlink{log_8c_aef334cc88b0cb0b8963a83f9537f8b79}{write\+\_\+request}} (F\+I\+LE $\ast$log\+\_\+file, \mbox{\hyperlink{structhttp__request}{http\+\_\+request}} request, int code)
+\item 
+void \mbox{\hyperlink{log_8c_aee1a42ba13e6e60f8591fe6bc16f05bd}{write\+\_\+error}} (F\+I\+LE $\ast$log\+\_\+file, char $\ast$error)
+\item 
+F\+I\+LE $\ast$ \mbox{\hyperlink{log_8c_a5d68dc13c6f2a3782c739f3b23f1def3}{get\+\_\+log\+\_\+requests}} (void)
+\item 
+F\+I\+LE $\ast$ \mbox{\hyperlink{log_8c_a14e79598649c7314e6c6a5f37fda157a}{get\+\_\+log\+\_\+errors}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+F\+I\+LE $\ast$ \mbox{\hyperlink{log_8c_a1f8dec09437a93ccf33b074886261113}{log\+\_\+requests}}
+\item 
+F\+I\+LE $\ast$ \mbox{\hyperlink{log_8c_a3dd69c1ae2660e86da4e17810e04db76}{log\+\_\+errors}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{log_8c_aee450d2b8b503b7004afba39f973c049}\label{log_8c_aee450d2b8b503b7004afba39f973c049}} 
+\index{log.c@{log.c}!create\_errors\_logs\_file@{create\_errors\_logs\_file}}
+\index{create\_errors\_logs\_file@{create\_errors\_logs\_file}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{create\_errors\_logs\_file()}{create\_errors\_logs\_file()}}
+{\footnotesize\ttfamily void create\+\_\+errors\+\_\+logs\+\_\+file (\begin{DoxyParamCaption}\item[{char $\ast$}]{path }\end{DoxyParamCaption})}
+
+init the errors log file 
+\begin{DoxyParams}{Parameters}
+{\em path} & the path to the log directory \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{log_8c_a2831ca839e12e76d5630e786ee34fdf1}\label{log_8c_a2831ca839e12e76d5630e786ee34fdf1}} 
+\index{log.c@{log.c}!create\_requests\_logs\_file@{create\_requests\_logs\_file}}
+\index{create\_requests\_logs\_file@{create\_requests\_logs\_file}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{create\_requests\_logs\_file()}{create\_requests\_logs\_file()}}
+{\footnotesize\ttfamily void create\+\_\+requests\+\_\+logs\+\_\+file (\begin{DoxyParamCaption}\item[{char $\ast$}]{path }\end{DoxyParamCaption})}
+
+init the requests log file 
+\begin{DoxyParams}{Parameters}
+{\em path} & the path to the log directory \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{log_8c_a14e79598649c7314e6c6a5f37fda157a}\label{log_8c_a14e79598649c7314e6c6a5f37fda157a}} 
+\index{log.c@{log.c}!get\_log\_errors@{get\_log\_errors}}
+\index{get\_log\_errors@{get\_log\_errors}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{get\_log\_errors()}{get\_log\_errors()}}
+{\footnotesize\ttfamily F\+I\+LE$\ast$ get\+\_\+log\+\_\+errors (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+return a file descriptor to the error log file \begin{DoxyReturn}{Returns}
+the file descriptor 
+\end{DoxyReturn}
+\mbox{\Hypertarget{log_8c_a5d68dc13c6f2a3782c739f3b23f1def3}\label{log_8c_a5d68dc13c6f2a3782c739f3b23f1def3}} 
+\index{log.c@{log.c}!get\_log\_requests@{get\_log\_requests}}
+\index{get\_log\_requests@{get\_log\_requests}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{get\_log\_requests()}{get\_log\_requests()}}
+{\footnotesize\ttfamily F\+I\+LE$\ast$ get\+\_\+log\+\_\+requests (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+return a file descriptor to the requests log file \begin{DoxyReturn}{Returns}
+the file descriptor 
+\end{DoxyReturn}
+\mbox{\Hypertarget{log_8c_aee1a42ba13e6e60f8591fe6bc16f05bd}\label{log_8c_aee1a42ba13e6e60f8591fe6bc16f05bd}} 
+\index{log.c@{log.c}!write\_error@{write\_error}}
+\index{write\_error@{write\_error}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{write\_error()}{write\_error()}}
+{\footnotesize\ttfamily void write\+\_\+error (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{log\+\_\+file,  }\item[{char $\ast$}]{error }\end{DoxyParamCaption})}
+
+function to write an error in the log file 
+\begin{DoxyParams}{Parameters}
+{\em log\+\_\+file} & the log file \\
+\hline
+{\em request} & the error to write \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{log_8c_aef334cc88b0cb0b8963a83f9537f8b79}\label{log_8c_aef334cc88b0cb0b8963a83f9537f8b79}} 
+\index{log.c@{log.c}!write\_request@{write\_request}}
+\index{write\_request@{write\_request}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{write\_request()}{write\_request()}}
+{\footnotesize\ttfamily void write\+\_\+request (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{log\+\_\+file,  }\item[{\mbox{\hyperlink{structhttp__request}{http\+\_\+request}}}]{request,  }\item[{int}]{code }\end{DoxyParamCaption})}
+
+function to write a request in the log file 
+\begin{DoxyParams}{Parameters}
+{\em log\+\_\+file} & the log file \\
+\hline
+{\em request} & the request to write \\
+\hline
+{\em code} & the H\+T\+TP code of the request \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{log_8c_a3dd69c1ae2660e86da4e17810e04db76}\label{log_8c_a3dd69c1ae2660e86da4e17810e04db76}} 
+\index{log.c@{log.c}!log\_errors@{log\_errors}}
+\index{log\_errors@{log\_errors}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_errors}{log\_errors}}
+{\footnotesize\ttfamily F\+I\+LE$\ast$ log\+\_\+errors}
+
+the log file for errors \mbox{\Hypertarget{log_8c_a1f8dec09437a93ccf33b074886261113}\label{log_8c_a1f8dec09437a93ccf33b074886261113}} 
+\index{log.c@{log.c}!log\_requests@{log\_requests}}
+\index{log\_requests@{log\_requests}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_requests}{log\_requests}}
+{\footnotesize\ttfamily F\+I\+LE$\ast$ log\+\_\+requests}
+
+the log file for requests 

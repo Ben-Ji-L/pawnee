@@ -1,0 +1,93 @@
+\hypertarget{http__parse_8h}{}\doxysection{webserver/http/http\+\_\+parse.h File Reference}
+\label{http__parse_8h}\index{webserver/http/http\_parse.h@{webserver/http/http\_parse.h}}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{http__parse_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structhttp__request}{http\+\_\+request}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{http__parse_8h_acec8a09f7d09d930341f95177549933a}{M\+A\+X\+\_\+\+T\+A\+R\+G\+E\+T\+\_\+\+S\+I\+ZE}}~1024
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8}{http\+\_\+method}} \{ \mbox{\hyperlink{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8a4ad23c3d2f21f7502ba058ef89518166}{H\+T\+T\+P\+\_\+\+G\+ET}}, 
+\mbox{\hyperlink{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8ab547cb50f6792b41c3e7d52ee0f8e442}{H\+T\+T\+P\+\_\+\+H\+E\+AD}}, 
+\mbox{\hyperlink{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8a7df465c47902ec33ead83309022bbd41}{H\+T\+T\+P\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+ED}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{http__parse_8h_a924ecf6db37bb109b4aece915a4951bf}{parse\+\_\+http\+\_\+request}} (const char $\ast$request\+\_\+line, \mbox{\hyperlink{structhttp__request}{http\+\_\+request}} $\ast$request)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{http__parse_8h_acec8a09f7d09d930341f95177549933a}\label{http__parse_8h_acec8a09f7d09d930341f95177549933a}} 
+\index{http\_parse.h@{http\_parse.h}!MAX\_TARGET\_SIZE@{MAX\_TARGET\_SIZE}}
+\index{MAX\_TARGET\_SIZE@{MAX\_TARGET\_SIZE}!http\_parse.h@{http\_parse.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_TARGET\_SIZE}{MAX\_TARGET\_SIZE}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+T\+A\+R\+G\+E\+T\+\_\+\+S\+I\+ZE~1024}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8}\label{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8}} 
+\index{http\_parse.h@{http\_parse.h}!http\_method@{http\_method}}
+\index{http\_method@{http\_method}!http\_parse.h@{http\_parse.h}}
+\doxysubsubsection{\texorpdfstring{http\_method}{http\_method}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8}{http\+\_\+method}}}
+
+Method supported by the parser \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HTTP\_GET@{HTTP\_GET}!http\_parse.h@{http\_parse.h}}\index{http\_parse.h@{http\_parse.h}!HTTP\_GET@{HTTP\_GET}}}\mbox{\Hypertarget{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8a4ad23c3d2f21f7502ba058ef89518166}\label{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8a4ad23c3d2f21f7502ba058ef89518166}} 
+H\+T\+T\+P\+\_\+\+G\+ET&G\+ET http method \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HTTP\_HEAD@{HTTP\_HEAD}!http\_parse.h@{http\_parse.h}}\index{http\_parse.h@{http\_parse.h}!HTTP\_HEAD@{HTTP\_HEAD}}}\mbox{\Hypertarget{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8ab547cb50f6792b41c3e7d52ee0f8e442}\label{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8ab547cb50f6792b41c3e7d52ee0f8e442}} 
+H\+T\+T\+P\+\_\+\+H\+E\+AD&H\+E\+AD http method \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HTTP\_UNSUPPORTED@{HTTP\_UNSUPPORTED}!http\_parse.h@{http\_parse.h}}\index{http\_parse.h@{http\_parse.h}!HTTP\_UNSUPPORTED@{HTTP\_UNSUPPORTED}}}\mbox{\Hypertarget{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8a7df465c47902ec33ead83309022bbd41}\label{http__parse_8h_aacd5f203e33ac338ca5cb8f02a3ff3b8a7df465c47902ec33ead83309022bbd41}} 
+H\+T\+T\+P\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+ED&the method is not supported \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{http__parse_8h_a924ecf6db37bb109b4aece915a4951bf}\label{http__parse_8h_a924ecf6db37bb109b4aece915a4951bf}} 
+\index{http\_parse.h@{http\_parse.h}!parse\_http\_request@{parse\_http\_request}}
+\index{parse\_http\_request@{parse\_http\_request}!http\_parse.h@{http\_parse.h}}
+\doxysubsubsection{\texorpdfstring{parse\_http\_request()}{parse\_http\_request()}}
+{\footnotesize\ttfamily int parse\+\_\+http\+\_\+request (\begin{DoxyParamCaption}\item[{const char $\ast$}]{request\+\_\+line,  }\item[{\mbox{\hyperlink{structhttp__request}{http\+\_\+request}} $\ast$}]{request }\end{DoxyParamCaption})}
+
+Parses a http request line. 
+\begin{DoxyParams}{Parameters}
+{\em in} & request\+\_\+line the line to parse (as a null terminated string) \\
+\hline
+{\em out} & request a valid pointer to a \mbox{\hyperlink{structhttp__request}{http\+\_\+request}} that will be filled by the function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1 if error and 0 on success. If the error is an unsupported http method, then the method field of request will be set to H\+T\+T\+P\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+ED
+\end{DoxyReturn}
+function to parse the request 
+\begin{DoxyParams}{Parameters}
+{\em request\+\_\+line} & main request line \\
+\hline
+{\em request} & request to parse \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 on success, 0 on error 
+\end{DoxyReturn}
