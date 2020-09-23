@@ -11,3 +11,18 @@ webserver/logs/requests.log
 webserver/logs/errors.log
 
 .idea
+
+doc/latex/*.aux
+doc/latex/*.toc
+doc/latex/*.ilg
+doc/latex/*.ind
+doc/latex/*.log
+doc/latex/*.out
+doc/latex/*.idx
+doc/latex/*.dvi
+doc/latex/*.bbl
+doc/latex/*.blg
+doc/latex/*.brf
+*.tex
+*.md5
+*.sty
