@@ -11,3 +11,5 @@ webserver/logs/requests.log
 webserver/logs/errors.log
 
 .idea
+
+doc/latex/

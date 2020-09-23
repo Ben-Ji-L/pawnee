@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My Awesome Server: Référence du fichier webserver/main.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">My Awesome Server
+   </div>
+   <div id="projectbrief">This is a web server written in C with no dependencies, this project was start from a course project in linux system programming course.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_c479e8412035211390d4f9dec63c1f88.html">webserver</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier main.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;sys/socket.h&gt;</code><br />
+<code>#include &lt;sys/wait.h&gt;</code><br />
+<code>#include &lt;netinet/in.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;signal.h&gt;</code><br />
+<code>#include &lt;limits.h&gt;</code><br />
+<code>#include &lt;semaphore.h&gt;</code><br />
+<code>#include &lt;arpa/inet.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="socket_8h_source.html">socket.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="http__parse_8h_source.html">http/http_parse.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="stats_8h_source.html">stats/stats.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="config_8h_source.html">config/config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="http_8h_source.html">http/http.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="file_8h_source.html">file.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="log_8h_source.html">log.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de main.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8c__incl.png" border="0" usemap="#webserver_2main_8c" alt=""/></div>
+<map name="webserver_2main_8c" id="webserver_2main_8c">
+<area shape="rect" title=" " alt="" coords="781,5,919,32"/>
+<area shape="rect" title=" " alt="" coords="359,155,426,181"/>
+<area shape="rect" title=" " alt="" coords="24,80,95,107"/>
+<area shape="rect" title=" " alt="" coords="119,80,221,107"/>
+<area shape="rect" title=" " alt="" coords="246,80,334,107"/>
+<area shape="rect" title=" " alt="" coords="358,80,454,107"/>
+<area shape="rect" title=" " alt="" coords="479,80,549,107"/>
+<area shape="rect" title=" " alt="" coords="574,80,649,107"/>
+<area shape="rect" title=" " alt="" coords="673,80,747,107"/>
+<area shape="rect" title=" " alt="" coords="1331,155,1401,181"/>
+<area shape="rect" title=" " alt="" coords="850,80,957,107"/>
+<area shape="rect" title=" " alt="" coords="981,80,1073,107"/>
+<area shape="rect" href="socket_8h.html" title=" " alt="" coords="1097,80,1173,107"/>
+<area shape="rect" href="http__parse_8h.html" title=" " alt="" coords="1545,155,1678,181"/>
+<area shape="rect" href="stats_8h.html" title=" " alt="" coords="1337,80,1440,107"/>
+<area shape="rect" href="config_8h.html" title=" " alt="" coords="1197,80,1313,107"/>
+<area shape="rect" href="http_8h.html" title=" " alt="" coords="1566,80,1657,107"/>
+<area shape="rect" href="file_8h.html" title=" " alt="" coords="771,80,825,107"/>
+<area shape="rect" href="log_8h.html" title=" " alt="" coords="1681,80,1736,107"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:ac4b871f9f422980a4779ccbd4241d564"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ac4b871f9f422980a4779ccbd4241d564">initialiser_signaux</a> (void)</td></tr>
+<tr class="separator:ac4b871f9f422980a4779ccbd4241d564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7006e75e1a6fedeafa4c81bda324c42e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a7006e75e1a6fedeafa4c81bda324c42e">repondre_client</a> (int socket_client)</td></tr>
+<tr class="separator:a7006e75e1a6fedeafa4c81bda324c42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95fb33cb4cbdeb88bf658c15bc312f63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a95fb33cb4cbdeb88bf658c15bc312f63">child_handler</a> (void)</td></tr>
+<tr class="separator:a95fb33cb4cbdeb88bf658c15bc312f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a33de3a18d1aa5b872767382a99bbe4ca"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a33de3a18d1aa5b872767382a99bbe4ca">root</a> [PATH_MAX]</td></tr>
+<tr class="separator:a33de3a18d1aa5b872767382a99bbe4ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a95fb33cb4cbdeb88bf658c15bc312f63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95fb33cb4cbdeb88bf658c15bc312f63">&#9670;&nbsp;</a></span>child_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void child_handler </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Cette fonction permet de faire disparaitre les processus zombies. </p>
+
+</div>
+</div>
+<a id="ac4b871f9f422980a4779ccbd4241d564"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4b871f9f422980a4779ccbd4241d564">&#9670;&nbsp;</a></span>initialiser_signaux()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void initialiser_signaux </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Cette fonction sert à ignorer le signal SIGPIPE ce signal est déclenché lorsque le programme essaie d'écrire à travers le socket et que celui ci est déconnecté. </p>
+
+</div>
+</div>
+<a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7006e75e1a6fedeafa4c81bda324c42e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7006e75e1a6fedeafa4c81bda324c42e">&#9670;&nbsp;</a></span>repondre_client()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void repondre_client </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>socket_client</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>La fonction qui s'occupe de toute la logique de la réponse. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">socket_client</td><td>le socket à travers lequel il faut envoyer la réponse </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des variables</h2>
+<a id="a33de3a18d1aa5b872767382a99bbe4ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33de3a18d1aa5b872767382a99bbe4ca">&#9670;&nbsp;</a></span>root</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char root[PATH_MAX]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

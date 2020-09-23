@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My Awesome Server: Référence du fichier webserver/http/http.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">My Awesome Server
+   </div>
+   <div id="projectbrief">This is a web server written in C with no dependencies, this project was start from a course project in linux system programming course.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_c479e8412035211390d4f9dec63c1f88.html">webserver</a></li><li class="navelem"><a class="el" href="dir_2e7afd92b2448c0caaac43c7a3340170.html">http</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier http.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="http__parse_8h_source.html">http_parse.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de http.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="http_8h__incl.png" border="0" usemap="#webserver_2http_2http_8h" alt=""/></div>
+<map name="webserver_2http_2http_8h" id="webserver_2http_2http_8h">
+<area shape="rect" title=" " alt="" coords="5,5,168,32"/>
+<area shape="rect" href="http__parse_8h.html" title=" " alt="" coords="35,80,138,107"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+Ce graphe montre quels fichiers incluent directement ou indirectement ce fichier :</div>
+<div class="dyncontent">
+<div class="center"><img src="http_8h__dep__incl.png" border="0" usemap="#webserver_2http_2http_8hdep" alt=""/></div>
+<map name="webserver_2http_2http_8hdep" id="webserver_2http_2http_8hdep">
+<area shape="rect" title=" " alt="" coords="179,5,342,32"/>
+<area shape="rect" href="http_8c.html" title=" " alt="" coords="5,80,167,107"/>
+<area shape="rect" href="main_8c.html" title=" " alt="" coords="191,80,330,107"/>
+<area shape="rect" href="stats_8c.html" title=" " alt="" coords="354,80,527,107"/>
+</map>
+</div>
+</div>
+<p><a href="http_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a24d47467b565662038f251490c143195"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a24d47467b565662038f251490c143195">skip_headers</a> (FILE *client, <a class="el" href="structhttp__request.html">http_request</a> *request)</td></tr>
+<tr class="separator:a24d47467b565662038f251490c143195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a949e92f2954dbf94cc1ef53e72a10b6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a949e92f2954dbf94cc1ef53e72a10b6f">send_status</a> (FILE *client, int code, const char *reason_phrase)</td></tr>
+<tr class="separator:a949e92f2954dbf94cc1ef53e72a10b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d7059b194a9998e3022e12197ba4f62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a3d7059b194a9998e3022e12197ba4f62">send_response</a> (FILE *client, int code, const char *reason_phrase, char *message_body, int size)</td></tr>
+<tr class="separator:a3d7059b194a9998e3022e12197ba4f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b48b2afbd4034b65b0c7d636e48ea02"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a2b48b2afbd4034b65b0c7d636e48ea02">get_date_http_format</a> (void)</td></tr>
+<tr class="separator:a2b48b2afbd4034b65b0c7d636e48ea02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7337619187e098d4772ed7d5807cd75b"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a7337619187e098d4772ed7d5807cd75b">rewrite_target</a> (char *target)</td></tr>
+<tr class="separator:a7337619187e098d4772ed7d5807cd75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a2b48b2afbd4034b65b0c7d636e48ea02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b48b2afbd4034b65b0c7d636e48ea02">&#9670;&nbsp;</a></span>get_date_http_format()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* get_date_http_format </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Renvoie la date actuelle du serveur formattée pour les en-tetes Date du protocole HTTP </p><dl class="section return"><dt>Renvoie</dt><dd>la date correctement formatée </dd></dl>
+
+</div>
+</div>
+<a id="a7337619187e098d4772ed7d5807cd75b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7337619187e098d4772ed7d5807cd75b">&#9670;&nbsp;</a></span>rewrite_target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* rewrite_target </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>target</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fonction qui réecrit la requête en enlevant les variables (après le ?) et qui transforme la requête "/" en "index.html" </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>la requête à examiner </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>la requête réécrite </dd></dl>
+
+</div>
+</div>
+<a id="a3d7059b194a9998e3022e12197ba4f62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d7059b194a9998e3022e12197ba4f62">&#9670;&nbsp;</a></span>send_response()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void send_response </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>reason_phrase</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>message_body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Dans cette fonction on met en forme la réponse HTTP. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>Le flux où écrire les données </td></tr>
+    <tr><td class="paramname">code</td><td>Le code HTTP de la réponse. </td></tr>
+    <tr><td class="paramname">reason_phrase</td><td>La phrase qui accompagne le code de la réponse. </td></tr>
+    <tr><td class="paramname">message_body</td><td>Le corps de la réponse. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a949e92f2954dbf94cc1ef53e72a10b6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a949e92f2954dbf94cc1ef53e72a10b6f">&#9670;&nbsp;</a></span>send_status()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void send_status </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>reason_phrase</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fonction qui envoie au client le statut de la réponse </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>Le flux où l'in va envoyer les données. </td></tr>
+    <tr><td class="paramname">code</td><td>Le code HTTP de la réponse. </td></tr>
+    <tr><td class="paramname">reason_phrase</td><td>La phrase qui accompagne le code HTTP. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a24d47467b565662038f251490c143195"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d47467b565662038f251490c143195">&#9670;&nbsp;</a></span>skip_headers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void skip_headers </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>client</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structhttp__request.html">http_request</a> *&#160;</td>
+          <td class="paramname"><em>request</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>On ignore les en-tête de la requête. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>Le stream de la requête. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

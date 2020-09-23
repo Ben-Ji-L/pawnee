@@ -27,3 +27,6 @@ mrproper:
 
 run: all
 	./webserver/pawnee
+
+doc:
+	doxygen myAwesomeServ.dox

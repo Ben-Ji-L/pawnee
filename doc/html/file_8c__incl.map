@@ -1,0 +1,13 @@
+<map id="webserver/file.c" name="webserver/file.c">
+<area shape="rect" id="node1" title=" " alt="" coords="371,5,496,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,72,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="97,80,167,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="191,80,262,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="287,80,361,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="385,80,481,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="505,80,591,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="633,155,703,181"/>
+<area shape="rect" id="node9" href="$config_8h.html" title=" " alt="" coords="666,80,782,107"/>
+<area shape="rect" id="node10" href="$log_8h.html" title=" " alt="" coords="806,80,861,107"/>
+<area shape="rect" id="node11" href="$http__parse_8h.html" title=" " alt="" coords="767,155,900,181"/>
+</map>

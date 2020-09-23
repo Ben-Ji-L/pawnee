@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My Awesome Server:  Fichier source de webserver/file.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">My Awesome Server
+   </div>
+   <div id="projectbrief">This is a web server written in C with no dependencies, this project was start from a course project in linux system programming course.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_c479e8412035211390d4f9dec63c1f88.html">webserver</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">file.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="file_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor"># ifndef __FILE_H__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __FILE_H__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;FILE *<a class="code" href="file_8h.html#a61be828f65a202f49c6433b68dfeecab">check_and_open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *target, <span class="keyword">const</span> <span class="keywordtype">char</span> *document_root);</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keywordtype">int</span> <a class="code" href="file_8h.html#a5ef40da693fc473f31a1e97665beb432">get_file_size</a>(<span class="keywordtype">int</span> fd);</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">void</span> <a class="code" href="file_8h.html#a4da15171e4d31ce10b46e583e18fc658">copy</a>(FILE *in, FILE *out);</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="file_8h.html#a2cf492c1455473868af258c79ad703f3">fgets_or_exit</a>(<span class="keywordtype">char</span> *buffer, <span class="keywordtype">int</span> size, FILE *stream);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="file_8h.html#a531db300fd0f05731f64615b749c742a">check_root</a>(<span class="keywordtype">char</span> *<a class="code" href="main_8c.html#a33de3a18d1aa5b872767382a99bbe4ca">root</a>);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="file_8h.html#ad8d0362486b46e83729c01a679de74ca">get_mime_type</a>(<span class="keywordtype">char</span> *name);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="file_8h.html#a73564d8ba9a10bf01bd50166dd0c1811">get_app_path</a>(<span class="keywordtype">char</span> *argv0);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="amain_8c_html_a33de3a18d1aa5b872767382a99bbe4ca"><div class="ttname"><a href="main_8c.html#a33de3a18d1aa5b872767382a99bbe4ca">root</a></div><div class="ttdeci">char root[PATH_MAX]</div><div class="ttdef"><b>Definition:</b> main.c:27</div></div>
+<div class="ttc" id="afile_8h_html_a61be828f65a202f49c6433b68dfeecab"><div class="ttname"><a href="file_8h.html#a61be828f65a202f49c6433b68dfeecab">check_and_open</a></div><div class="ttdeci">FILE * check_and_open(const char *target, const char *document_root)</div><div class="ttdef"><b>Definition:</b> file.c:19</div></div>
+<div class="ttc" id="afile_8h_html_a73564d8ba9a10bf01bd50166dd0c1811"><div class="ttname"><a href="file_8h.html#a73564d8ba9a10bf01bd50166dd0c1811">get_app_path</a></div><div class="ttdeci">char * get_app_path(char *argv0)</div><div class="ttdef"><b>Definition:</b> file.c:175</div></div>
+<div class="ttc" id="afile_8h_html_a5ef40da693fc473f31a1e97665beb432"><div class="ttname"><a href="file_8h.html#a5ef40da693fc473f31a1e97665beb432">get_file_size</a></div><div class="ttdeci">int get_file_size(int fd)</div><div class="ttdef"><b>Definition:</b> file.c:59</div></div>
+<div class="ttc" id="afile_8h_html_a2cf492c1455473868af258c79ad703f3"><div class="ttname"><a href="file_8h.html#a2cf492c1455473868af258c79ad703f3">fgets_or_exit</a></div><div class="ttdeci">char * fgets_or_exit(char *buffer, int size, FILE *stream)</div><div class="ttdef"><b>Definition:</b> file.c:87</div></div>
+<div class="ttc" id="afile_8h_html_a4da15171e4d31ce10b46e583e18fc658"><div class="ttname"><a href="file_8h.html#a4da15171e4d31ce10b46e583e18fc658">copy</a></div><div class="ttdeci">void copy(FILE *in, FILE *out)</div><div class="ttdef"><b>Definition:</b> file.c:72</div></div>
+<div class="ttc" id="afile_8h_html_a531db300fd0f05731f64615b749c742a"><div class="ttname"><a href="file_8h.html#a531db300fd0f05731f64615b749c742a">check_root</a></div><div class="ttdeci">char * check_root(char *root)</div><div class="ttdef"><b>Definition:</b> file.c:100</div></div>
+<div class="ttc" id="afile_8h_html_ad8d0362486b46e83729c01a679de74ca"><div class="ttname"><a href="file_8h.html#ad8d0362486b46e83729c01a679de74ca">get_mime_type</a></div><div class="ttdeci">char * get_mime_type(char *name)</div><div class="ttdef"><b>Definition:</b> file.c:128</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My Awesome Server:  Fichier source de webserver/http/http_parse.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">My Awesome Server
+   </div>
+   <div id="projectbrief">This is a web server written in C with no dependencies, this project was start from a course project in linux system programming course.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_c479e8412035211390d4f9dec63c1f88.html">webserver</a></li><li class="navelem"><a class="el" href="dir_2e7afd92b2448c0caaac43c7a3340170.html">http</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">http_parse.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="http__parse_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright © 2019, Université de Lille.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created: 22 janvier 2019</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">// Corresponding author: Michael Hauspie &lt;michael.hauspie@univ-lille.fr&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// For full author list, see AUTHORS.md file</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// This software is governed by the CeCILL license under French law and</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">// abiding by the rules of distribution of free software.  You can  use,</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">// modify and/ or redistribute the software under the terms of the CeCILL</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// license as circulated by CEA, CNRS and INRIA at the following URL</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// &quot;http://www.cecill.info&quot;.</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// As a counterpart to the access to the source code and  rights to copy,</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// modify and redistribute granted by the license, users are provided only</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// with a limited warranty  and the software author,  the holder of the</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// economic rights,  and the successive licensors  have only  limited</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// liability.</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">// In this respect, the user attention is drawn to the risks associated</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// with loading,  using,  modifying and/or developing or reproducing the</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// software by the user in light of its specific status of free software,</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// that may mean  that it is complicated to manipulate,  and  that  also</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">// therefore means  that it is reserved for developers  and  experienced</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">// professionals having in-depth computer knowledge. Users are therefore</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">// encouraged to load and test the software suitability as regards their</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">// requirements in conditions enabling the security of their systems and/or</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">// data to be ensured and,  more generally, to use and operate it in the</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">// same conditions as regards security.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">// The fact that you are presently reading this means that you have had</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">// knowledge of the CeCILL license and that you accept its terms.</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifndef __HTTP_PARSE__</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define __HTTP_PARSE__</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">// Method supported by the parser</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8">   36</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8">http_method</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8a4ad23c3d2f21f7502ba058ef89518166">   37</a></span>&#160;    <a class="code" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8a4ad23c3d2f21f7502ba058ef89518166">HTTP_GET</a>,</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8ab547cb50f6792b41c3e7d52ee0f8e442">   38</a></span>&#160;    <a class="code" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8ab547cb50f6792b41c3e7d52ee0f8e442">HTTP_HEAD</a>,</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8a7df465c47902ec33ead83309022bbd41">   39</a></span>&#160;    <a class="code" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8a7df465c47902ec33ead83309022bbd41">HTTP_UNSUPPORTED</a>,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">// The maximum size of the target string.</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="http__parse_8h.html#acec8a09f7d09d930341f95177549933a">   44</a></span>&#160;<span class="preprocessor">#define MAX_TARGET_SIZE 1024</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">// describes a http request</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structhttp__request.html">   47</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structhttp__request.html#adbfcd3bcaf57205360bad957a13999e6">   48</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8">http_method</a> method;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structhttp__request.html#ab2ade37341cd84bd094eb316130b1528">   49</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structhttp__request.html#ab2ade37341cd84bd094eb316130b1528">http_major</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structhttp__request.html#ae15a271574d1797c6e9508f02fe7ff6e">   50</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structhttp__request.html#ae15a271574d1797c6e9508f02fe7ff6e">http_minor</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="structhttp__request.html#a0533c6b0c296dffa26400efdeb20f0a4">   51</a></span>&#160;    <span class="keywordtype">char</span> target[<a class="code" href="http__parse_8h.html#acec8a09f7d09d930341f95177549933a">MAX_TARGET_SIZE</a>];</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structhttp__request.html#ac5b0968dc01424d92a645c9328a9d2c0">   52</a></span>&#160;    <span class="keywordtype">char</span> *headers[20];</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;} <a class="code" href="structhttp__request.html">http_request</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">int</span> <a class="code" href="http__parse_8h.html#a924ecf6db37bb109b4aece915a4951bf">parse_http_request</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *request_line, <a class="code" href="structhttp__request.html">http_request</a> *request);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="ahttp__parse_8h_html_a924ecf6db37bb109b4aece915a4951bf"><div class="ttname"><a href="http__parse_8h.html#a924ecf6db37bb109b4aece915a4951bf">parse_http_request</a></div><div class="ttdeci">int parse_http_request(const char *request_line, http_request *request)</div><div class="ttdef"><b>Definition:</b> http_parse.c:40</div></div>
+<div class="ttc" id="ahttp__parse_8h_html_aacd5f203e33ac338ca5cb8f02a3ff3b8a7df465c47902ec33ead83309022bbd41"><div class="ttname"><a href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8a7df465c47902ec33ead83309022bbd41">HTTP_UNSUPPORTED</a></div><div class="ttdeci">@ HTTP_UNSUPPORTED</div><div class="ttdef"><b>Definition:</b> http_parse.h:39</div></div>
+<div class="ttc" id="astructhttp__request_html_ae15a271574d1797c6e9508f02fe7ff6e"><div class="ttname"><a href="structhttp__request.html#ae15a271574d1797c6e9508f02fe7ff6e">http_request::http_minor</a></div><div class="ttdeci">int http_minor</div><div class="ttdef"><b>Definition:</b> http_parse.h:50</div></div>
+<div class="ttc" id="ahttp__parse_8h_html_aacd5f203e33ac338ca5cb8f02a3ff3b8"><div class="ttname"><a href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8">http_method</a></div><div class="ttdeci">http_method</div><div class="ttdef"><b>Definition:</b> http_parse.h:36</div></div>
+<div class="ttc" id="astructhttp__request_html_ab2ade37341cd84bd094eb316130b1528"><div class="ttname"><a href="structhttp__request.html#ab2ade37341cd84bd094eb316130b1528">http_request::http_major</a></div><div class="ttdeci">int http_major</div><div class="ttdef"><b>Definition:</b> http_parse.h:49</div></div>
+<div class="ttc" id="ahttp__parse_8h_html_acec8a09f7d09d930341f95177549933a"><div class="ttname"><a href="http__parse_8h.html#acec8a09f7d09d930341f95177549933a">MAX_TARGET_SIZE</a></div><div class="ttdeci">#define MAX_TARGET_SIZE</div><div class="ttdef"><b>Definition:</b> http_parse.h:44</div></div>
+<div class="ttc" id="ahttp__parse_8h_html_aacd5f203e33ac338ca5cb8f02a3ff3b8a4ad23c3d2f21f7502ba058ef89518166"><div class="ttname"><a href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8a4ad23c3d2f21f7502ba058ef89518166">HTTP_GET</a></div><div class="ttdeci">@ HTTP_GET</div><div class="ttdef"><b>Definition:</b> http_parse.h:37</div></div>
+<div class="ttc" id="ahttp__parse_8h_html_aacd5f203e33ac338ca5cb8f02a3ff3b8ab547cb50f6792b41c3e7d52ee0f8e442"><div class="ttname"><a href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8ab547cb50f6792b41c3e7d52ee0f8e442">HTTP_HEAD</a></div><div class="ttdeci">@ HTTP_HEAD</div><div class="ttdef"><b>Definition:</b> http_parse.h:38</div></div>
+<div class="ttc" id="astructhttp__request_html"><div class="ttname"><a href="structhttp__request.html">http_request</a></div><div class="ttdef"><b>Definition:</b> http_parse.h:47</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

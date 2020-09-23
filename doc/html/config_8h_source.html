@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My Awesome Server:  Fichier source de webserver/config/config.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">My Awesome Server
+   </div>
+   <div id="projectbrief">This is a web server written in C with no dependencies, this project was start from a course project in linux system programming course.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_c479e8412035211390d4f9dec63c1f88.html">webserver</a></li><li class="navelem"><a class="el" href="dir_2e5aa08091b6402cfbcc0a46cc99134d.html">config</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">config.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="config_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __CONFIG_H__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __CONFIG_H__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;limits.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">// Structure représentant la configuration du serveur</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="structserver__config.html">    7</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="structserver__config.html#a7e0b626f4235a2c6b838fabbf3bf59de">    8</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structserver__config.html#a7e0b626f4235a2c6b838fabbf3bf59de">port</a>;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structserver__config.html#a3cba36317a7c73189b47b153bd931c4a">    9</a></span>&#160;    <span class="keywordtype">char</span> listen_addr[PATH_MAX];</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="structserver__config.html#aa02a6d9c5364b65f9fc79708c8b42b90">   10</a></span>&#160;    <span class="keywordtype">char</span> website_root[PATH_MAX];</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="structserver__config.html#af580faf7a40798f11701cb3eadc56b0a">   11</a></span>&#160;    <span class="keywordtype">char</span> mimes_file[PATH_MAX];</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;} <a class="code" href="structserver__config.html">server_config</a>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">int</span> <a class="code" href="config_8h.html#ac2ee8b2a218b6ad9a3a02588cc202860">init_config</a>(<span class="keywordtype">char</span> *abs_path);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">int</span> <a class="code" href="config_8h.html#a86ea90f8c7b20b04e7b2c09108747203">get_config_from_file</a>(<span class="keywordtype">char</span> *abs_path);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<a class="code" href="structserver__config.html">server_config</a> *<a class="code" href="config_8h.html#a461b71ef96d7fd3feb63f5549072577f">get_config</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aconfig_8h_html_ac2ee8b2a218b6ad9a3a02588cc202860"><div class="ttname"><a href="config_8h.html#ac2ee8b2a218b6ad9a3a02588cc202860">init_config</a></div><div class="ttdeci">int init_config(char *abs_path)</div><div class="ttdef"><b>Definition:</b> config.c:21</div></div>
+<div class="ttc" id="aconfig_8h_html_a86ea90f8c7b20b04e7b2c09108747203"><div class="ttname"><a href="config_8h.html#a86ea90f8c7b20b04e7b2c09108747203">get_config_from_file</a></div><div class="ttdeci">int get_config_from_file(char *abs_path)</div><div class="ttdef"><b>Definition:</b> config.c:51</div></div>
+<div class="ttc" id="astructserver__config_html"><div class="ttname"><a href="structserver__config.html">server_config</a></div><div class="ttdef"><b>Definition:</b> config.h:7</div></div>
+<div class="ttc" id="astructserver__config_html_a7e0b626f4235a2c6b838fabbf3bf59de"><div class="ttname"><a href="structserver__config.html#a7e0b626f4235a2c6b838fabbf3bf59de">server_config::port</a></div><div class="ttdeci">int port</div><div class="ttdef"><b>Definition:</b> config.h:8</div></div>
+<div class="ttc" id="aconfig_8h_html_a461b71ef96d7fd3feb63f5549072577f"><div class="ttname"><a href="config_8h.html#a461b71ef96d7fd3feb63f5549072577f">get_config</a></div><div class="ttdeci">server_config * get_config(void)</div><div class="ttdef"><b>Definition:</b> config.c:110</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

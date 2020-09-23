@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My Awesome Server:  Fichier source de webserver/log.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">My Awesome Server
+   </div>
+   <div id="projectbrief">This is a web server written in C with no dependencies, this project was start from a course project in linux system programming course.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_c479e8412035211390d4f9dec63c1f88.html">webserver</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">log.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="log_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor"># ifndef __LOG_H__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __LOG_H__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="http__parse_8h.html">http/http_parse.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="log_8h.html#a60c1a9c046b28397939ff0f0d0fe402e">    6</a></span>&#160;<span class="keywordtype">char</span> <a class="code" href="log_8h.html#a60c1a9c046b28397939ff0f0d0fe402e">clientip</a>[20];</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keywordtype">void</span> <a class="code" href="log_8h.html#a2831ca839e12e76d5630e786ee34fdf1">create_requests_logs_file</a>(<span class="keywordtype">char</span> *path);</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">void</span> <a class="code" href="log_8h.html#aee450d2b8b503b7004afba39f973c049">create_errors_logs_file</a>(<span class="keywordtype">char</span> *path);</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> <a class="code" href="log_8h.html#aef334cc88b0cb0b8963a83f9537f8b79">write_request</a>(FILE *log_file, <a class="code" href="structhttp__request.html">http_request</a> request, <span class="keywordtype">int</span> code);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">void</span> <a class="code" href="log_8h.html#aee1a42ba13e6e60f8591fe6bc16f05bd">write_error</a>(FILE *log_file, <span class="keywordtype">char</span> *error);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;FILE *<a class="code" href="log_8h.html#a5d68dc13c6f2a3782c739f3b23f1def3">get_log_requests</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;FILE *<a class="code" href="log_8h.html#a14e79598649c7314e6c6a5f37fda157a">get_log_errors</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="alog_8h_html_aee1a42ba13e6e60f8591fe6bc16f05bd"><div class="ttname"><a href="log_8h.html#aee1a42ba13e6e60f8591fe6bc16f05bd">write_error</a></div><div class="ttdeci">void write_error(FILE *log_file, char *error)</div><div class="ttdef"><b>Definition:</b> log.c:112</div></div>
+<div class="ttc" id="alog_8h_html_aee450d2b8b503b7004afba39f973c049"><div class="ttname"><a href="log_8h.html#aee450d2b8b503b7004afba39f973c049">create_errors_logs_file</a></div><div class="ttdeci">void create_errors_logs_file(char *path)</div><div class="ttdef"><b>Definition:</b> log.c:44</div></div>
+<div class="ttc" id="alog_8h_html_a2831ca839e12e76d5630e786ee34fdf1"><div class="ttname"><a href="log_8h.html#a2831ca839e12e76d5630e786ee34fdf1">create_requests_logs_file</a></div><div class="ttdeci">void create_requests_logs_file(char *path)</div><div class="ttdef"><b>Definition:</b> log.c:20</div></div>
+<div class="ttc" id="alog_8h_html_a60c1a9c046b28397939ff0f0d0fe402e"><div class="ttname"><a href="log_8h.html#a60c1a9c046b28397939ff0f0d0fe402e">clientip</a></div><div class="ttdeci">char clientip[20]</div><div class="ttdef"><b>Definition:</b> log.h:6</div></div>
+<div class="ttc" id="ahttp__parse_8h_html"><div class="ttname"><a href="http__parse_8h.html">http_parse.h</a></div></div>
+<div class="ttc" id="alog_8h_html_aef334cc88b0cb0b8963a83f9537f8b79"><div class="ttname"><a href="log_8h.html#aef334cc88b0cb0b8963a83f9537f8b79">write_request</a></div><div class="ttdeci">void write_request(FILE *log_file, http_request request, int code)</div><div class="ttdef"><b>Definition:</b> log.c:67</div></div>
+<div class="ttc" id="alog_8h_html_a5d68dc13c6f2a3782c739f3b23f1def3"><div class="ttname"><a href="log_8h.html#a5d68dc13c6f2a3782c739f3b23f1def3">get_log_requests</a></div><div class="ttdeci">FILE * get_log_requests(void)</div><div class="ttdef"><b>Definition:</b> log.c:135</div></div>
+<div class="ttc" id="alog_8h_html_a14e79598649c7314e6c6a5f37fda157a"><div class="ttname"><a href="log_8h.html#a14e79598649c7314e6c6a5f37fda157a">get_log_errors</a></div><div class="ttdeci">FILE * get_log_errors(void)</div><div class="ttdef"><b>Definition:</b> log.c:142</div></div>
+<div class="ttc" id="astructhttp__request_html"><div class="ttname"><a href="structhttp__request.html">http_request</a></div><div class="ttdef"><b>Definition:</b> http_parse.h:47</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>
