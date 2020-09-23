@@ -6,5 +6,5 @@ var searchData=
   ['copy_99',['copy',['../file_8c.html#a4da15171e4d31ce10b46e583e18fc658',1,'copy(FILE *in, FILE *out):&#160;file.c'],['../file_8h.html#a4da15171e4d31ce10b46e583e18fc658',1,'copy(FILE *in, FILE *out):&#160;file.c']]],
   ['create_5ferrors_5flogs_5ffile_100',['create_errors_logs_file',['../log_8c.html#aee450d2b8b503b7004afba39f973c049',1,'create_errors_logs_file(char *path):&#160;log.c'],['../log_8h.html#aee450d2b8b503b7004afba39f973c049',1,'create_errors_logs_file(char *path):&#160;log.c']]],
   ['create_5frequests_5flogs_5ffile_101',['create_requests_logs_file',['../log_8c.html#a2831ca839e12e76d5630e786ee34fdf1',1,'create_requests_logs_file(char *path):&#160;log.c'],['../log_8h.html#a2831ca839e12e76d5630e786ee34fdf1',1,'create_requests_logs_file(char *path):&#160;log.c']]],
-  ['creer_5fserveur_102',['creer_serveur',['../socket_8c.html#ad465988b002e90a83ffd4163faf270db',1,'creer_serveur(int port):&#160;socket.c'],['../socket_8h.html#ad465988b002e90a83ffd4163faf270db',1,'creer_serveur(int port):&#160;socket.c']]]
+  ['create_5fserver_102',['create_server',['../socket_8c.html#a6560cc97b6d8f3c549b97cdd35ba787b',1,'create_server(int port):&#160;socket.c'],['../socket_8h.html#a6560cc97b6d8f3c549b97cdd35ba787b',1,'create_server(int port):&#160;socket.c']]]
 ];
