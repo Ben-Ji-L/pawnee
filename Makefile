@@ -30,3 +30,6 @@ run: all
 
 doc:
 	doxygen myAwesomeServ.dox
+
+doc-latex: doc
+	make -C doc/latex/
