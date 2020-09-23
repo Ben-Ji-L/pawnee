@@ -1,13 +1,22 @@
 # MyAwesomeServ [![Build Status](https://travis-ci.org/Benji59/myawesomeserv.svg?branch=master)](https://travis-ci.org/Benji59/myawesomeserv)
 
-## Colline Praca et Benjamin Lemaire
+## Presentation
 
-### Difficultés rencontrées
+This project was at the beginning a college project, this is a webserver build in C only with 
+systems calls.
 
-* La structure d'une réponse HTTP est très précise, nous avons perdu du temps pour des détails de syntaxe des réponses (un \r\n en trop ou manquant par exemple)
+## Licence 
 
-* Découverte des signaux
+This project is a free software (GPL-3.0 License)
 
-### Avancement du projet
+## Installation
 
-Chapitre 6 terminé
+For building and test the server run the following commands:
+
+`make`
+
+`./webserver/pawnee`
+
+or more simple
+
+`make run`
