@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <limits.h>
+#include <libgen.h>
+
 
 #include "config/config.h"
 #include "log.h"
@@ -172,22 +174,14 @@ char *get_mime_type(char *name) {
  * @param argv0 the path of the executable
  * @return absolute path of the file
  */
-char *get_app_path(char *argv0) {
-    char abs_exe_path[PATH_MAX];
-    char path_save[PATH_MAX];
-    char *p;
-    char *result;
-
-    if (!(p = strrchr(argv0, '/')))
-        getcwd(abs_exe_path, sizeof(abs_exe_path));
-    else {
-        *p = '\0';
-        getcwd(path_save, sizeof(path_save));
-        chdir(argv0);
-        getcwd(abs_exe_path, sizeof(abs_exe_path));
-        chdir(path_save);
+char *get_app_path(void) {
+    char *path = malloc(PATH_MAX);
+    int dest_len = 500;
+    if (readlink ("/proc/self/exe", path, dest_len) != -1) {
+        dirname(path);
+        strcat (path, "/");
+        printf("path=%s\n", path);
     }
 
-    result = (char *) &abs_exe_path;
-    return result;
+    return path;
 }

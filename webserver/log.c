@@ -30,7 +30,7 @@ void create_requests_logs_file(char *path) {
 
     request_log = fopen(request_path, "a");
     if (request_log == NULL) {
-        write_error(get_log_errors(), "fopen request log error");
+        perror("fopen request log error");
         exit(EXIT_FAILURE);
     }
 
@@ -51,7 +51,7 @@ void create_errors_logs_file(char *path) {
 
     error_log = fopen(error_path, "a");
     if (error_log == NULL) {
-        write_error(get_log_errors(), "fopen errors log error ");
+        perror("fopen errors log error ");
         exit(EXIT_FAILURE);
     }
 

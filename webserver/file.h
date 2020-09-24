@@ -15,6 +15,6 @@ char *check_root(char *root);
 
 char *get_mime_type(char *name);
 
-char *get_app_path(char *argv0);
+char *get_app_path(void);
 
 #endif

@@ -36,7 +36,7 @@ char root[PATH_MAX];
 int main(int argc, char *argv[]) {
 
     char executable_path[PATH_MAX];
-    strncpy(executable_path, get_app_path(argv[0]), PATH_MAX);
+    strncpy(executable_path, get_app_path(), PATH_MAX);
 
     if (init_config(executable_path) != 0) {
         perror("init config error");
