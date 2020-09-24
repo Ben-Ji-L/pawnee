@@ -1,6 +1,8 @@
 # ifndef __HTTP_H
 #define __HTTP_H
 
+#include <stdio.h>
+
 #include "http_parse.h"
 
 void skip_headers(FILE *client, http_request *request);

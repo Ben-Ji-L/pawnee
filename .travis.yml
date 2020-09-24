@@ -6,6 +6,8 @@ os:
 addons:
     apt:
         packages:
+            - libcunit1
+            - libcunit1-dev
             - cppcheck
 
 script: 

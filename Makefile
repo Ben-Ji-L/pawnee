@@ -17,7 +17,8 @@ webserver:
 	make -C webserver
 
 check:
-	cppcheck webserver
+	make -C tests/
+	./tests/test
 
 clean:
 	make -C webserver clean
