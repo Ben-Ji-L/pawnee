@@ -2,6 +2,8 @@ webserver/*.o
 webserver/**/*.o
 webserver/pawnee
 webserver/makefile.dep
+tests/*.o
+tests/test
 
 web/
 todolist/

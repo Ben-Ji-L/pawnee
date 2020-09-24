@@ -6,8 +6,9 @@ os:
 addons:
     apt:
         packages:
+            - libcunit1
+            - libcunit1-dev
             - cppcheck
 
 script: 
-    - make
-    - make check
+    - make && make check
