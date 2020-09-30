@@ -9,6 +9,7 @@
 
 #include "http.h"
 #include "../file.h"
+#include "../log.h"
 
 /**
  * ignore headers of yhe requests
@@ -22,6 +23,10 @@ void skip_headers(FILE *client, http_request *request) {
 
     do {
         request->headers[i] = fgets_or_exit(data, 512, client);
+        if (request->headers[i] == NULL) {
+            write_error(get_log_errors(), "read header error");
+            exit(EXIT_FAILURE);
+        }
         i++;
     } while (strncmp(data, "\r\n", 2) != 0);
 }

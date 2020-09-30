@@ -170,7 +170,11 @@ void respond_client(int socket_client) {
             exit(1);
         }
 
-        fgets_or_exit(data, 512, flux);
+        if (fgets_or_exit(data, 512, flux) == NULL) {
+            write_error(get_log_errors(), "read file request error");
+            exit(EXIT_FAILURE);
+        }
+
         skip_headers(flux, &request);
 
         sem_wait(shared_semaphore);
