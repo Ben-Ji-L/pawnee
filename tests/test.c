@@ -63,7 +63,8 @@ int main() {
     /* add the tests to the suite */
     if ((NULL == CU_ADD_TEST(pSuite, test_rewrite_target)) ||
             (NULL == CU_ADD_TEST(pSuite, test_get_date_http_format)) ||
-            (NULL == CU_ADD_TEST(pSuite, test_send_status))
+            (NULL == CU_ADD_TEST(pSuite, test_send_status)) ||
+            (NULL == CU_ADD_TEST(pSuite, test_parse_http_request))
     ) {
         CU_cleanup_registry();
         return CU_get_error();

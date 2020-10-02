@@ -37,3 +37,20 @@ void test_send_status(void) {
     CU_ASSERT_STRING_EQUAL(line, "HTTP/1.1 200 OK\r\n");
     free(line);
 }
+
+void test_parse_http_request(void) {
+    http_request request;
+    parse_http_request("GET /index.html HTTP/1.1\r\n", &request);
+    CU_ASSERT_EQUAL(request.http_major, 1);
+    CU_ASSERT_EQUAL(request.http_minor, 1);
+    CU_ASSERT_EQUAL(request.method, HTTP_GET);
+
+    parse_http_request("PUT / HTTP/1.1\r\n", &request);
+    CU_ASSERT_EQUAL(request.method, HTTP_UNSUPPORTED);
+
+    parse_http_request("ZLA / HTTP/1.1\r\n", &request);
+    CU_ASSERT_EQUAL(request.method, HTTP_UNSUPPORTED);
+
+    parse_http_request("GET / HTTP/42.1\r\n", &request);
+    CU_ASSERT_EQUAL(request.http_major, 1);
+}
