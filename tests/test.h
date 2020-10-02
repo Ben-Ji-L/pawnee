@@ -2,6 +2,5 @@
 #define TEST_H
 
 /* Pointer to the file used by the tests. */
-static FILE *temp_file = NULL;
-
+FILE *get_temp_file(void);
 #endif

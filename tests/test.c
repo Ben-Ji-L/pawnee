@@ -7,6 +7,9 @@
 #include "test.h"
 
 #include "test_http.h"
+#include "../webserver/file.h"
+
+static FILE* temp_file = NULL;
 
 /* The suite initialization function.
  * Opens the temporary file used by the tests.
@@ -14,7 +17,7 @@
  */
 int init_suite1(void)
 {
-    if (NULL == (temp_file = fopen("/tmp/temp.txt", "w+")))
+    if (NULL == (temp_file = fopen("./temp.txt", "w+")))
         return -1;
     else
         return 0;
@@ -29,6 +32,7 @@ int clean_suite1(void)
     if (0 != fclose(temp_file))
         return -1;
     else {
+        remove("./temp.txt");
         temp_file = NULL;
         return 0;
     }
@@ -57,7 +61,10 @@ int main() {
     }
 
     /* add the tests to the suite */
-    if ((NULL == CU_add_test(pSuite, "test of http/rewrite_target()", test_rewrite_target))) {
+    if ((NULL == CU_ADD_TEST(pSuite, test_rewrite_target)) ||
+            (NULL == CU_ADD_TEST(pSuite, test_get_date_http_format)) ||
+            (NULL == CU_ADD_TEST(pSuite, test_send_status))
+    ) {
         CU_cleanup_registry();
         return CU_get_error();
     }
