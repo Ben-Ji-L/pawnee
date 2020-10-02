@@ -7,7 +7,6 @@
 #include <limits.h>
 #include <libgen.h>
 
-
 #include "config/config.h"
 #include "log.h"
 

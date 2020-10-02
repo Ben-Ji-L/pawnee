@@ -105,7 +105,7 @@ char *get_date_http_format(void) {
 char *rewrite_target(char *target) {
     char *rewrite_target = malloc(PATH_MAX);
     if ((rewrite_target = strtok(strdup(target), "?")) == NULL) {
-        perror("rewrite target error");
+        write_error(get_log_errors(), "rewrite target error");
         exit(EXIT_FAILURE);
     }
 
