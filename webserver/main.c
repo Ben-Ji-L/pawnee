@@ -175,7 +175,7 @@ void respond_client(int socket_client) {
             exit(EXIT_FAILURE);
         }
 
-        skip_headers(flux, &request);
+        skip_and_save_headers(flux, &request);
 
         sem_wait(shared_semaphore);
         get_stats()->served_requests++;

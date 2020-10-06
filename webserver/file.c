@@ -179,7 +179,6 @@ char *get_app_path(void) {
     if (readlink ("/proc/self/exe", path, dest_len) != -1) {
         dirname(path);
         strcat (path, "/");
-        printf("path=%s\n", path);
     }
 
     return path;

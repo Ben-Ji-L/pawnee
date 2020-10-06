@@ -16,13 +16,13 @@
  * @param client request stream
  * @param request request we parse
  */
-void skip_headers(FILE *client, http_request *request) {
+void skip_and_save_headers(FILE *client, http_request *request) {
 
     char data[512];
     int i = 0;
-
     do {
-        request->headers[i] = fgets_or_exit(data, 512, client);
+        request->headers[i] = malloc(512);
+        strncpy(request->headers[i], fgets_or_exit(data, 512, client), 512);
         if (request->headers[i] == NULL) {
             write_error(get_log_errors(), "read header error");
             exit(EXIT_FAILURE);

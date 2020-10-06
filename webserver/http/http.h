@@ -5,7 +5,7 @@
 
 #include "http_parse.h"
 
-void skip_headers(FILE *client, http_request *request);
+void skip_and_save_headers(FILE *client, http_request *request);
 
 void send_status(FILE *client, int code, const char *reason_phrase);
 
