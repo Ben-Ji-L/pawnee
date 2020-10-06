@@ -33,3 +33,9 @@ all: $(EXE)
 # .o et effectue l’édition de lien. Rien de nouveau ici
 $(EXE): $(OBJS)
 		$(LD) $^ $(LDFLAGS) -o $@
+
+clean:
+	rm -rf test.o tes_http.o
+
+mrproper: clean
+	rm -rf test
