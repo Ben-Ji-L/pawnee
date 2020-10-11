@@ -7,10 +7,20 @@
 
 char *read_host_file(http_request *request);
 
+/**
+ * get the root dir for a specific virtual host
+ * @param request the request to parse host header
+ * @return the root for the virtual host
+ */
 char *get_vhost_root(http_request *request) {
     return read_host_file(request);
 }
 
+/**
+ * read virtual host config file and search for the host wanted in the request
+ * @param request the request to check host header
+ * @return the root dir requested by the client
+ */
 char *read_host_file(http_request *request) {
     FILE *host_file;
     int bufferLength = 255;

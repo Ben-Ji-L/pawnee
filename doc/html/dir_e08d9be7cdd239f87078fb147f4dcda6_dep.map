@@ -1,0 +1,6 @@
+<map id="webserver/vhosts" name="webserver/vhosts">
+<area shape="rect" id="node1" href="dir_e08d9be7cdd239f87078fb147f4dcda6.html" title="vhosts" alt="" coords="27,52,99,100"/>
+<area shape="rect" id="node2" href="dir_2e7afd92b2448c0caaac43c7a3340170.html" title="http" alt="" coords="27,148,99,196"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000004_000002.html" title="1" alt="" coords="67,122,75,137"/>
+<area shape="rect" id="clust1" href="dir_c479e8412035211390d4f9dec63c1f88.html" title="webserver" alt="" coords="16,16,109,111"/>
+</map>

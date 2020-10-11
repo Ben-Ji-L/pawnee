@@ -82,6 +82,7 @@ $(function() {
 <code>#include &lt;time.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="http_8h_source.html">http.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="file_8h_source.html">../file.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="log_8h_source.html">../log.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for http.c:</div>
 <div class="dyncontent">
@@ -104,8 +105,10 @@ Include dependency graph for http.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a24d47467b565662038f251490c143195"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8c.html#a24d47467b565662038f251490c143195">skip_headers</a> (FILE *client, <a class="el" href="structhttp__request.html">http_request</a> *request)</td></tr>
-<tr class="separator:a24d47467b565662038f251490c143195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a411f2786a791480a26d967cbe3f761c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8c.html#a411f2786a791480a26d967cbe3f761c7">skip_and_save_headers</a> (FILE *client, <a class="el" href="structhttp__request.html">http_request</a> *request)</td></tr>
+<tr class="separator:a411f2786a791480a26d967cbe3f761c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bde0ebd1750e3ea2a9b9a43ec6fc42d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8c.html#a2bde0ebd1750e3ea2a9b9a43ec6fc42d">check_host_header</a> (<a class="el" href="structhttp__request.html">http_request</a> *request)</td></tr>
+<tr class="separator:a2bde0ebd1750e3ea2a9b9a43ec6fc42d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a949e92f2954dbf94cc1ef53e72a10b6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8c.html#a949e92f2954dbf94cc1ef53e72a10b6f">send_status</a> (FILE *client, int code, const char *reason_phrase)</td></tr>
 <tr class="separator:a949e92f2954dbf94cc1ef53e72a10b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d7059b194a9998e3022e12197ba4f62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8c.html#a3d7059b194a9998e3022e12197ba4f62">send_response</a> (FILE *client, int code, const char *reason_phrase, char *message_body, int size)</td></tr>
@@ -116,6 +119,31 @@ Functions</h2></td></tr>
 <tr class="separator:a7337619187e098d4772ed7d5807cd75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a2bde0ebd1750e3ea2a9b9a43ec6fc42d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bde0ebd1750e3ea2a9b9a43ec6fc42d">&#9670;&nbsp;</a></span>check_host_header()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int check_host_header </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structhttp__request.html">http_request</a> *&#160;</td>
+          <td class="paramname"><em>request</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>check host header </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>the request to check headers </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if everything ok, 1 otherwise </dd></dl>
+
+</div>
+</div>
 <a id="a2b48b2afbd4034b65b0c7d636e48ea02"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b48b2afbd4034b65b0c7d636e48ea02">&#9670;&nbsp;</a></span>get_date_http_format()</h2>
 
@@ -258,14 +286,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a24d47467b565662038f251490c143195"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24d47467b565662038f251490c143195">&#9670;&nbsp;</a></span>skip_headers()</h2>
+<a id="a411f2786a791480a26d967cbe3f761c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a411f2786a791480a26d967cbe3f761c7">&#9670;&nbsp;</a></span>skip_and_save_headers()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void skip_headers </td>
+          <td class="memname">void skip_and_save_headers </td>
           <td>(</td>
           <td class="paramtype">FILE *&#160;</td>
           <td class="paramname"><em>client</em>, </td>

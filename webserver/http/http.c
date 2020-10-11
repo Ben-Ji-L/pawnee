@@ -31,6 +31,11 @@ void skip_and_save_headers(FILE *client, http_request *request) {
     } while (strncmp(data, "\r\n", 2) != 0);
 }
 
+/**
+ * check host header
+ * @param request the request to check headers
+ * @return 0 if everything ok, 1 otherwise
+ */
 int check_host_header(http_request *request) {
     char *header = malloc(sizeof(char));
     strcpy(header, request->headers[0]);
