@@ -216,6 +216,10 @@ void respond_client(int socket_client) {
             }
 
             char *host = get_vhost_root(&request);
+            if (host == NULL) {
+                write_error(get_log_errors(), "vhost root error");
+                exit(EXIT_FAILURE);
+            }
             strcpy(root, check_root(host));
 
             file = check_and_open(rewrite_target(request.target), root);
