@@ -31,6 +31,15 @@ void skip_and_save_headers(FILE *client, http_request *request) {
     } while (strncmp(data, "\r\n", 2) != 0);
 }
 
+int check_host_header(http_request *request) {
+    char *header = malloc(sizeof(char));
+    strcpy(header, request->headers[0]);
+    header = strtok(header, ":");
+    if (strcmp(header, "Host") == 0)
+        return 0;
+    return 1;
+}
+
 /**
  * send the status of the response
  * @param client stream to send data

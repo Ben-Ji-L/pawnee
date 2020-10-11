@@ -65,6 +65,8 @@ typedef struct {
     char *headers[20];
 } http_request;
 
+void init_request(http_request *request);
+
 /**
  * Parses a http request line.
  * @param in request_line the line to parse (as a null terminated string)

@@ -17,6 +17,7 @@
 #include "http/http.h"
 #include "file.h"
 #include "log.h"
+#include "vhosts/hosts.h"
 
 void init_signals(void);
 
@@ -49,8 +50,7 @@ int main(int argc, char *argv[]) {
     if (argc > 1) {
         strncpy(root, check_root(argv[1]), PATH_MAX);
         argc++;
-    } else
-        strncpy(root, check_root(get_config()->website_root), PATH_MAX);
+    }
 
     /* the two sockets that we need */
     int socket_server;
@@ -176,13 +176,14 @@ void respond_client(int socket_client) {
         }
 
         skip_and_save_headers(flux, &request);
+        int host_check = check_host_header(&request);
 
         sem_wait(shared_semaphore);
         get_stats()->served_requests++;
         sem_post(shared_semaphore);
 
         /* parsing request and sending appropriate response */
-        if (!parse_http_request(data, &request) && (request.method != HTTP_UNSUPPORTED)) {
+        if ((!parse_http_request(data, &request) && (request.method != HTTP_UNSUPPORTED)) || (host_check != 0)) {
             /* if the requests is miss written */
             write_request(get_log_requests(), request, 400);
 
@@ -213,6 +214,9 @@ void respond_client(int socket_client) {
                 fclose(flux);
                 exit(0);
             }
+
+            char *host = get_vhost_root(&request);
+            strcpy(root, check_root(host));
 
             file = check_and_open(rewrite_target(request.target), root);
             if (file == NULL) {

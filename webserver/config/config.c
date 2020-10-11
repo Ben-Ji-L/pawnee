@@ -87,12 +87,6 @@ int get_config_from_file(char *abs_path) {
                 strcpy(config.listen_addr, token);
 
                 // if the line is the web root
-            } else if (strcmp(token, "website_root") == 0) {
-                token = strtok(NULL, "=");
-                token = strtok(token, "\"");
-                strcpy(config.website_root, token);
-
-                // if the line is the mime types file path
             } else if (strcmp(token, "mimes_file") == 0) {
                 token = strtok(NULL, "=");
                 token = strtok(token, "\"");

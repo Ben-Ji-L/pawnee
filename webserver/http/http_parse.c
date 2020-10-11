@@ -31,6 +31,7 @@
 // knowledge of the CeCILL license and that you accept its terms.
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "http_parse.h"
 
