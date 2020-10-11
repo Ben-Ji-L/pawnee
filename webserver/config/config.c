@@ -33,7 +33,6 @@ int init_config(char *abs_path) {
     // if we don't read the file the structure is set with default values
     config.port = 8080;
     strcpy(config.listen_addr, "127.0.0.1");
-    strcpy(config.website_root, "web");
     strcat(types, "/types.txt");
     strcpy(config.mimes_file, types);
     get_config_from_file(abs_path);

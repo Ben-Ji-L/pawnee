@@ -12,9 +12,6 @@ typedef struct {
     /** ip address to listen */
     char listen_addr[PATH_MAX];
 
-    /** web root of the site to serve */
-    char website_root[PATH_MAX];
-
     /** mime types file path */
     char mimes_file[PATH_MAX];
 } server_config;
