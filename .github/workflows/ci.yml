@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: sudo apt install libcunit1 libcunit1-dev cppcheck  
     - name: make
       run: make
     - name: make check
