@@ -1,4 +1,4 @@
-# MyAwesomeServ [![Build Status](https://travis-ci.org/Benji59/myawesomeserv.svg?branch=master)](https://travis-ci.org/Benji59/myawesomeserv)
+# MyAwesomeServ ![C/C++ CI](https://github.com/Benji59/myawesomeserv/workflows/C/C++%20CI/badge.svg)
 
 ## Overview
 
