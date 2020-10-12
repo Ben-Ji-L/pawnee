@@ -21,6 +21,10 @@ or more simple
 
 `make run`
 
+## Tests
+
+This project use cunit to manage unit tests, you can run tests with `make check`
+
 ## Documentation
 
 Documentation build with [Doxygen](https://www.doxygen.nl/index.html).
