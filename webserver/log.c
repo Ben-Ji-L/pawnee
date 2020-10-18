@@ -65,7 +65,6 @@ void create_errors_logs_file(char *path) {
  * @param code the HTTP code of the request
  */
 void write_request(FILE *log_file, http_request request, int code) {
-    char *method = "";
     int hours, minutes, seconds, day, month, year;
     time_t now;
     time(&now);
@@ -82,26 +81,9 @@ void write_request(FILE *log_file, http_request request, int code) {
     year = local->tm_year + 1900;    // the years since 1900
 
     /* format the line to put in the log */
-    switch (request.method) {
-        case 0:
-            method = "GET";
-            fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
-                    minutes, seconds, \
-            client_ip, request.http_major, request.http_minor, code, method, request.target);
-            break;
-        case 1:
-            method = "HEAD";
-            fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
-                    minutes, seconds, \
-            client_ip, request.http_major, request.http_minor, code, method, request.target);
-            break;
-        default:
-            method = "UNSUPPORTED";
-            fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s\n", day, month, year, hours,
-                    minutes, seconds, \
-            client_ip, request.http_major, request.http_minor, code, method);
-            break;
-    }
+    fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
+            minutes, seconds, \
+            client_ip, request.http_major, request.http_minor, code, get_method(request.method), request.target);
 }
 
 /**
@@ -126,7 +108,7 @@ void write_error(FILE *log_file, char *error) {
     year = local->tm_year + 1900;    // the years since 1900
 
     /* format the line to put in the log */
-    fprintf(log_file, "[%02d/%02d/%d] [%02d:%02d:%02d] %s\n", day, month, year, hours, minutes, seconds, error);
+    fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] %s\n", day, month, year, hours, minutes, seconds, error);
 }
 
 /**

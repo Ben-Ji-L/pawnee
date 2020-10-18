@@ -92,6 +92,15 @@ int parse_http_request(const char *request_line, http_request *request) {
     return 1;
 }
 
+char *get_method(enum http_method method) {
+    switch (method) {
+        case HTTP_GET: return "GET";
+        case HTTP_HEAD: return "HEAD";
+        case HTTP_UNSUPPORTED: return "UNSUPPORTED";
+    }
+    return "UNSUPPORTED";
+}
+
 #ifdef COMPILE_MAIN
 int main(int argc, char **argv) {
    if (argc != 2) {

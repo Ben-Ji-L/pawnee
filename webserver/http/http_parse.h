@@ -76,4 +76,6 @@ void init_request(http_request *request);
  */
 int parse_http_request(const char *request_line, http_request *request);
 
+char *get_method(enum http_method method);
+
 #endif
