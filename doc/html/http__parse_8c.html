@@ -101,6 +101,8 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a924ecf6db37bb109b4aece915a4951bf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http__parse_8c.html#a924ecf6db37bb109b4aece915a4951bf">parse_http_request</a> (const char *request_line, <a class="el" href="structhttp__request.html">http_request</a> *request)</td></tr>
 <tr class="separator:a924ecf6db37bb109b4aece915a4951bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640b8609893d9aee47a75a5e3a1ce123"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http__parse_8c.html#a640b8609893d9aee47a75a5e3a1ce123">get_method</a> (enum <a class="el" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8">http_method</a> method)</td></tr>
+<tr class="separator:a640b8609893d9aee47a75a5e3a1ce123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a27ca3ea6180dff2b2e50d3faa8ed1c72"></a>
@@ -168,6 +170,31 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a640b8609893d9aee47a75a5e3a1ce123"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a640b8609893d9aee47a75a5e3a1ce123">&#9670;&nbsp;</a></span>get_method()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* get_method </td>
+          <td>(</td>
+          <td class="paramtype">enum <a class="el" href="http__parse_8h.html#aacd5f203e33ac338ca5cb8f02a3ff3b8">http_method</a>&#160;</td>
+          <td class="paramname"><em>method</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>get the string name of the http method enum </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">method</td><td>the method enum to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the text name of the method </dd></dl>
+
+</div>
+</div>
 <a id="a924ecf6db37bb109b4aece915a4951bf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a924ecf6db37bb109b4aece915a4951bf">&#9670;&nbsp;</a></span>parse_http_request()</h2>
 

@@ -76,7 +76,7 @@ $(function() {
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="hosts_8h_source.html">hosts.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="log_8h_source.html">../log.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="log_8h_source.html">../log/log.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for hosts.c:</div>
 <div class="dyncontent">
@@ -87,15 +87,13 @@ Include dependency graph for hosts.c:</div>
 <area shape="rect" title=" " alt="" coords="95,80,157,107"/>
 <area shape="rect" title=" " alt="" coords="181,80,245,107"/>
 <area shape="rect" href="hosts_8h.html" title=" " alt="" coords="269,80,335,107"/>
-<area shape="rect" href="log_8h.html" title=" " alt="" coords="359,80,421,107"/>
-<area shape="rect" href="http__parse_8h.html" title=" " alt="" coords="280,155,412,181"/>
+<area shape="rect" href="log_8h.html" title=" " alt="" coords="359,80,442,107"/>
+<area shape="rect" href="http__parse_8h.html" title=" " alt="" coords="285,155,417,181"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a79ffd096bf1c5849d4abd2fc9035e65a"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hosts_8c.html#a79ffd096bf1c5849d4abd2fc9035e65a">read_host_file</a> (<a class="el" href="structhttp__request.html">http_request</a> *request)</td></tr>
-<tr class="separator:a79ffd096bf1c5849d4abd2fc9035e65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a196e564f587de38a21991bbf6e1ff40a"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hosts_8c.html#a196e564f587de38a21991bbf6e1ff40a">get_vhost_root</a> (<a class="el" href="structhttp__request.html">http_request</a> *request)</td></tr>
 <tr class="separator:a196e564f587de38a21991bbf6e1ff40a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -115,38 +113,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>get the root dir for a specific virtual host </p><dl class="params"><dt>Parameters</dt><dd>
+<p>read virtual host config file and search for the host wanted in the request </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">request</td><td>the request to parse host header </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the root for the virtual host </dd></dl>
-
-</div>
-</div>
-<a id="a79ffd096bf1c5849d4abd2fc9035e65a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79ffd096bf1c5849d4abd2fc9035e65a">&#9670;&nbsp;</a></span>read_host_file()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char * read_host_file </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structhttp__request.html">http_request</a> *&#160;</td>
-          <td class="paramname"><em>request</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>read virtual host config file and search for the host wanted in the request </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">request</td><td>the request to check host header </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>the root dir requested by the client </dd></dl>
 
 </div>
 </div>

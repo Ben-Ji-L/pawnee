@@ -92,6 +92,11 @@ int parse_http_request(const char *request_line, http_request *request) {
     return 1;
 }
 
+/**
+ * get the string name of the http method enum
+ * @param method the method enum to check
+ * @return the text name of the method
+ */
 char *get_method(enum http_method method) {
     switch (method) {
         case HTTP_GET: return "GET";

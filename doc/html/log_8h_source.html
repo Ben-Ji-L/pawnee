@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Awesome Server: webserver/log.h Source File</title>
+<title>My Awesome Server: webserver/log/log.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,7 +62,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c479e8412035211390d4f9dec63c1f88.html">webserver</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_c479e8412035211390d4f9dec63c1f88.html">webserver</a></li><li class="navelem"><a class="el" href="dir_908a3541eada50df5cad605da673afff.html">log</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -73,7 +73,7 @@ $(function() {
 <a href="log_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor"># ifndef __LOG_H__</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __LOG_H__</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="http__parse_8h.html">http/http_parse.h</a>&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../http/http_parse.h&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="log_8h.html#ab13c3950251b1a07de5f13b5325ae8bc">    7</a></span>&#160;<span class="keywordtype">char</span> <a class="code" href="log_8h.html#ab13c3950251b1a07de5f13b5325ae8bc">client_ip</a>[20];</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
@@ -91,14 +91,13 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="alog_8h_html_aee1a42ba13e6e60f8591fe6bc16f05bd"><div class="ttname"><a href="log_8h.html#aee1a42ba13e6e60f8591fe6bc16f05bd">write_error</a></div><div class="ttdeci">void write_error(FILE *log_file, char *error)</div><div class="ttdef"><b>Definition:</b> log.c:112</div></div>
-<div class="ttc" id="alog_8h_html_aee450d2b8b503b7004afba39f973c049"><div class="ttname"><a href="log_8h.html#aee450d2b8b503b7004afba39f973c049">create_errors_logs_file</a></div><div class="ttdeci">void create_errors_logs_file(char *path)</div><div class="ttdef"><b>Definition:</b> log.c:44</div></div>
+<div class="ttc" id="alog_8h_html_aee1a42ba13e6e60f8591fe6bc16f05bd"><div class="ttname"><a href="log_8h.html#aee1a42ba13e6e60f8591fe6bc16f05bd">write_error</a></div><div class="ttdeci">void write_error(FILE *log_file, char *error)</div><div class="ttdef"><b>Definition:</b> log.c:95</div></div>
+<div class="ttc" id="alog_8h_html_aee450d2b8b503b7004afba39f973c049"><div class="ttname"><a href="log_8h.html#aee450d2b8b503b7004afba39f973c049">create_errors_logs_file</a></div><div class="ttdeci">void create_errors_logs_file(char *path)</div><div class="ttdef"><b>Definition:</b> log.c:45</div></div>
 <div class="ttc" id="alog_8h_html_a2831ca839e12e76d5630e786ee34fdf1"><div class="ttname"><a href="log_8h.html#a2831ca839e12e76d5630e786ee34fdf1">create_requests_logs_file</a></div><div class="ttdeci">void create_requests_logs_file(char *path)</div><div class="ttdef"><b>Definition:</b> log.c:20</div></div>
 <div class="ttc" id="alog_8h_html_ab13c3950251b1a07de5f13b5325ae8bc"><div class="ttname"><a href="log_8h.html#ab13c3950251b1a07de5f13b5325ae8bc">client_ip</a></div><div class="ttdeci">char client_ip[20]</div><div class="ttdef"><b>Definition:</b> log.h:7</div></div>
-<div class="ttc" id="ahttp__parse_8h_html"><div class="ttname"><a href="http__parse_8h.html">http_parse.h</a></div></div>
-<div class="ttc" id="alog_8h_html_aef334cc88b0cb0b8963a83f9537f8b79"><div class="ttname"><a href="log_8h.html#aef334cc88b0cb0b8963a83f9537f8b79">write_request</a></div><div class="ttdeci">void write_request(FILE *log_file, http_request request, int code)</div><div class="ttdef"><b>Definition:</b> log.c:67</div></div>
-<div class="ttc" id="alog_8h_html_a5d68dc13c6f2a3782c739f3b23f1def3"><div class="ttname"><a href="log_8h.html#a5d68dc13c6f2a3782c739f3b23f1def3">get_log_requests</a></div><div class="ttdeci">FILE * get_log_requests(void)</div><div class="ttdef"><b>Definition:</b> log.c:136</div></div>
-<div class="ttc" id="alog_8h_html_a14e79598649c7314e6c6a5f37fda157a"><div class="ttname"><a href="log_8h.html#a14e79598649c7314e6c6a5f37fda157a">get_log_errors</a></div><div class="ttdeci">FILE * get_log_errors(void)</div><div class="ttdef"><b>Definition:</b> log.c:144</div></div>
+<div class="ttc" id="alog_8h_html_aef334cc88b0cb0b8963a83f9537f8b79"><div class="ttname"><a href="log_8h.html#aef334cc88b0cb0b8963a83f9537f8b79">write_request</a></div><div class="ttdeci">void write_request(FILE *log_file, http_request request, int code)</div><div class="ttdef"><b>Definition:</b> log.c:68</div></div>
+<div class="ttc" id="alog_8h_html_a5d68dc13c6f2a3782c739f3b23f1def3"><div class="ttname"><a href="log_8h.html#a5d68dc13c6f2a3782c739f3b23f1def3">get_log_requests</a></div><div class="ttdeci">FILE * get_log_requests(void)</div><div class="ttdef"><b>Definition:</b> log.c:119</div></div>
+<div class="ttc" id="alog_8h_html_a14e79598649c7314e6c6a5f37fda157a"><div class="ttname"><a href="log_8h.html#a14e79598649c7314e6c6a5f37fda157a">get_log_errors</a></div><div class="ttdeci">FILE * get_log_errors(void)</div><div class="ttdef"><b>Definition:</b> log.c:127</div></div>
 <div class="ttc" id="astructhttp__request_html"><div class="ttname"><a href="structhttp__request.html">http_request</a></div><div class="ttdef"><b>Definition:</b> http_parse.h:50</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
