@@ -8,7 +8,7 @@
 
 #include "stats.h"
 #include "../http/http.h"
-#include "../log.h"
+#include "../log/log.h"
 
 static web_stats stats;
 

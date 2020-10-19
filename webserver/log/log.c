@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <time.h>
 
-#include "http/http_parse.h"
+#include "../http/http_parse.h"
 #include "log.h"
 
 /** the log file for requests */
@@ -21,11 +21,12 @@ void create_requests_logs_file(char *path) {
     FILE *request_log;
     char request_path[PATH_MAX];
 
-    /* path to global logs path */
-    strcat(path, "/logs/");
+    /* path to global log path */
+    strcat(path, "../logs/");
 
     /* path to requests log file */
     strcpy(request_path, path);
+    printf("path: %s\n", request_path);
     strcat(request_path, "requests.log");
 
     request_log = fopen(request_path, "a");

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "hosts.h"
-#include "../log.h"
+#include "../log/log.h"
 
 /**
  * read virtual host config file and search for the host wanted in the request

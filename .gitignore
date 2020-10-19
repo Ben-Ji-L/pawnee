@@ -5,12 +5,13 @@ webserver/makefile.dep
 tests/*.o
 tests/test
 
+logs/requests.log
+logs/errors.log
+
 web/
 todolist/
 
 m4101c.pdf
-webserver/logs/requests.log
-webserver/logs/errors.log
 
 .idea
 

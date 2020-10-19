@@ -1,7 +1,7 @@
 # ifndef __LOG_H__
 #define __LOG_H__
 
-#include "http/http_parse.h"
+#include "../http/http_parse.h"
 
 /** the ip address of the client */
 char client_ip[20];

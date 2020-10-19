@@ -8,7 +8,7 @@
 #include <libgen.h>
 
 #include "config/config.h"
-#include "log.h"
+#include "log/log.h"
 
 /**
  * function to check if the file of the target exist,

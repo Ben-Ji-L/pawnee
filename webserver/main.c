@@ -16,7 +16,7 @@
 #include "config/config.h"
 #include "http/http.h"
 #include "file.h"
-#include "log.h"
+#include "log/log.h"
 #include "vhosts/hosts.h"
 
 void init_signals(void);

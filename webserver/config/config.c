@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #include "config.h"
-#include "../log.h"
+#include "../log/log.h"
 
 // configuration of the server
 static server_config config;
