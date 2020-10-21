@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <time.h>
 
+#include "../http/http.h"
 #include "../http/http_parse.h"
 #include "log.h"
 
@@ -84,7 +85,7 @@ void write_request(FILE *log_file, http_request request, int code) {
     /* format the line to put in the log */
     fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
             minutes, seconds, \
-            client_ip, request.http_major, request.http_minor, code, get_method(request.method), request.target);
+            client_ip, request.http_major, request.http_minor, code, get_method(request.method), rewrite_target(request.target));
 }
 
 /**
