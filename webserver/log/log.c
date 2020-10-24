@@ -27,7 +27,6 @@ void create_requests_logs_file(char *path) {
 
     /* path to requests log file */
     strcpy(request_path, path);
-    printf("path: %s\n", request_path);
     strcat(request_path, "requests.log");
 
     request_log = fopen(request_path, "a");

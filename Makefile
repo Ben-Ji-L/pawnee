@@ -22,9 +22,11 @@ check:
 
 clean:
 	make -C webserver clean
+	make -C tests clean
 
 mrproper:
 	make -C webserver mrproper
+	make -C tests mrproper
 
 run: all
 	./webserver/pawnee
