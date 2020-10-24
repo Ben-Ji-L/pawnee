@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../file.h"
 #include "hosts.h"
 #include "../log/log.h"
 
@@ -18,8 +19,10 @@ char *get_vhost_root(http_request *request) {
     strtok(request->headers[0], ":");
     char *host_content = strtok(NULL, ":");
     host_content++;
+    char *path = get_app_path();
+    strcat(path, "/../config/hosts.cfg");
 
-    if ((host_file = fopen("config/hosts.cfg", "r")) == NULL) {
+    if ((host_file = fopen(path, "r")) == NULL) {
         write_error(get_log_errors(), "open hosts file error");
         exit(EXIT_FAILURE);
     }
