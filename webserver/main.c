@@ -47,10 +47,8 @@ int main(int argc, char *argv[]) {
     create_requests_logs_file(executable_path);
     create_errors_logs_file(executable_path);
 
-    if (argc > 1) {
+    if (argc > 1)
         strncpy(root, check_root(argv[1]), PATH_MAX);
-        argc++;
-    }
 
     /* the two sockets that we need */
     int socket_server;
@@ -102,11 +100,6 @@ int main(int argc, char *argv[]) {
         /* we close the socket */
         close(socket_client);
     }
-
-    fclose(get_log_requests());
-    fclose(get_log_errors());
-
-    return 0;
 }
 
 /**
