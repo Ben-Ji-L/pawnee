@@ -155,6 +155,7 @@ void respond_client(int socket_client) {
         FILE *file;
         char data[512];
         http_request request;
+        char *error_message = "";
 
         /* we open the socket to read and to write */
         flux = fdopen(socket_client, "w+");
@@ -177,6 +178,7 @@ void respond_client(int socket_client) {
 
         /* parsing request and sending appropriate response */
         if ((!parse_http_request(data, &request) && (request.method != HTTP_UNSUPPORTED)) || (host_check != 0)) {
+
             /* if the requests is miss written */
             write_request(get_log_requests(), request, 400);
 
@@ -184,7 +186,10 @@ void respond_client(int socket_client) {
             get_stats()->ko_400++;
             sem_post(shared_semaphore);
 
-            send_response(flux, 400, "Bad Request", "Bad request", strlen("Bad request\r\n"));
+            if (request.method != HTTP_HEAD)
+                error_message = "Bad request\r\n";
+
+            send_response(flux, 400, "Bad Request", error_message, strlen("Bad request\r\n"));
         } else if (request.method == HTTP_UNSUPPORTED) {
             write_request(get_log_requests(), request, 405);
 
@@ -192,8 +197,11 @@ void respond_client(int socket_client) {
             get_stats()->ko_405++;
             sem_post(shared_semaphore);
 
+            if (request.method != HTTP_HEAD)
+                error_message = "Method Not Allowed\r\n";
+
             /* if the method is unsupported */
-            send_response(flux, 405, "Method Not Allowed", "Method Not Allowed", strlen("Method Not Allowed\r\n"));
+            send_response(flux, 405, "Method Not Allowed", error_message, strlen("Method Not Allowed\r\n"));
         } else {
 
             if (strcmp(rewrite_target(request.target), "stats") == 0) {
@@ -211,7 +219,16 @@ void respond_client(int socket_client) {
             char *host = get_vhost_root(&request);
             if (host == NULL) {
                 write_error(get_log_errors(), "vhost root error");
-                exit(EXIT_FAILURE);
+                write_request(get_log_requests(), request, 400);
+
+                sem_wait(shared_semaphore);
+                get_stats()->ko_400++;
+                sem_post(shared_semaphore);
+
+                if (request.method != HTTP_HEAD)
+                    error_message = "Bad request\r\n";
+
+                send_response(flux, 400, "Bad Request", error_message, strlen("Bad request\r\n"));
             }
             strcpy(root, check_root(host));
 
@@ -223,7 +240,10 @@ void respond_client(int socket_client) {
                 get_stats()->ko_404++;
                 sem_post(shared_semaphore);
 
-                send_response(flux, 404, "Not Found", "Not Found", strlen("Not Found\r\n"));
+                if (request.method != HTTP_HEAD)
+                    error_message = "Not Found\r\n";
+
+                send_response(flux, 404, "Not Found", error_message, strlen("Not Found\r\n"));
                 fclose(flux);
                 exit(0);
             } else {
@@ -235,14 +255,8 @@ void respond_client(int socket_client) {
 
                 send_response(flux, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
 
-                /* if client send request with HEAD method */
-                if (request.method == HTTP_HEAD) {
-                    fclose(flux);
-                    fclose(file);
-                    exit(0);
-                }
-
-                copy(file, flux);
+                if (request.method != HTTP_HEAD)
+                    copy(file, flux);
             }
             fclose(file);
         }

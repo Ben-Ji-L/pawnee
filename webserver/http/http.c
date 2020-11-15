@@ -37,10 +37,10 @@ void skip_and_save_headers(FILE *client, http_request *request) {
  * @return 0 if everything ok, 1 otherwise
  */
 int check_host_header(http_request *request) {
-    char *header = malloc(sizeof(char));
+    char header[512];
+
     strcpy(header, request->headers[0]);
-    header = strtok(header, ":");
-    if (strcmp(header, "Host") == 0)
+    if (strcmp(strtok(header, ":"), "Host") == 0)
         return 0;
     return 1;
 }
