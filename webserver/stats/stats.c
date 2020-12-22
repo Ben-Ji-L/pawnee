@@ -23,6 +23,7 @@ void send_stats(FILE *client) {
     send_status(client, 200, "OK");
     fprintf(client, "Content-Length: %d\r\n", 362);
     fprintf(client, "Content-Type: %s\r\n", "text/html");
+    fprintf(client, "Date: %s\r\n", get_date_http_format());
     fprintf(client, "\r\n");
     fprintf(client, "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body><h1>Stats of the server</h1><ul><li>Connexions served: %d</li> \
         <li>Requests served: %d</li> \
