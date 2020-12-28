@@ -175,9 +175,9 @@ char *get_mime_type(char *name) {
  */
 char *get_app_path(void) {
     char *path = malloc(PATH_MAX);
-    if (readlink ("/proc/self/exe", path, PATH_MAX) != -1) {
+    if (readlink("/proc/self/exe", path, PATH_MAX) != -1) {
         dirname(path);
-        strcat (path, "/");
+        strcat(path, "/");
     }
 
     return path;

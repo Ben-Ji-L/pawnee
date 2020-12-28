@@ -99,9 +99,12 @@ int parse_http_request(const char *request_line, http_request *request) {
  */
 char *get_method(enum http_method method) {
     switch (method) {
-        case HTTP_GET: return "GET";
-        case HTTP_HEAD: return "HEAD";
-        case HTTP_UNSUPPORTED: return "UNSUPPORTED";
+        case HTTP_GET:
+            return "GET";
+        case HTTP_HEAD:
+            return "HEAD";
+        case HTTP_UNSUPPORTED:
+            return "UNSUPPORTED";
     }
     return "UNSUPPORTED";
 }
