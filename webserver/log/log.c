@@ -7,6 +7,8 @@
 #include "../http/http.h"
 #include "../http/http_parse.h"
 #include "log.h"
+#include "../config/config.h"
+#include "../file.h"
 
 /** the log file for requests */
 FILE *log_requests;
@@ -16,17 +18,14 @@ FILE *log_errors;
 
 /**
  * init the requests log file
- * @param path the path to the log directory
  */
-void create_requests_logs_file(char *path) {
+void create_requests_logs_file(void) {
     FILE *request_log;
+
+    /* path to the request log file */
     char request_path[PATH_MAX];
 
-    /* path to global log path */
-    strcat(path, "../logs/");
-
-    /* path to requests log file */
-    strcpy(request_path, path);
+    strncpy(request_path, get_config()->log_dir, PATH_MAX);
     strcat(request_path, "requests.log");
 
     request_log = fopen(request_path, "a");
@@ -40,14 +39,14 @@ void create_requests_logs_file(char *path) {
 
 /**
  * init the errors log file
- * @param path the path to the log directory
  */
-void create_errors_logs_file(char *path) {
+void create_errors_logs_file(void) {
     FILE *error_log;
-    char error_path[PATH_MAX];
 
     /* path to the errors log file */
-    strcpy(error_path, path);
+    char error_path[PATH_MAX];
+
+    strncpy(error_path, get_config()->log_dir, PATH_MAX);
     strcat(error_path, "errors.log");
 
     error_log = fopen(error_path, "a");

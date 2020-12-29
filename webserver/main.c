@@ -35,17 +35,13 @@ char root[PATH_MAX];
  * @return 0 on success, positive value on error
  */
 int main(int argc, char *argv[]) {
-
-    char executable_path[PATH_MAX];
-    strncpy(executable_path, get_app_path(), PATH_MAX);
-
-    if (init_config(executable_path) != 0) {
+    if (init_config() != 0) {
         perror("init config error");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
-    create_requests_logs_file(executable_path);
-    create_errors_logs_file(executable_path);
+    create_requests_logs_file();
+    create_errors_logs_file();
 
     if (argc > 1)
         strncpy(root, check_root(argv[1]), PATH_MAX);
@@ -61,7 +57,7 @@ int main(int argc, char *argv[]) {
 
     if (listen(socket_server, 10) == -1) {
         write_error(get_log_errors(), "error socket_server");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     init_signals();
@@ -78,7 +74,7 @@ int main(int argc, char *argv[]) {
         socket_client = accept(socket_server, (struct sockaddr *) &addr_client_struct, &client_addr_size);
         if (socket_client == -1) {
             write_error(get_log_errors(), "accept error");
-            exit(1);
+            exit(EXIT_FAILURE);
         }
 
         /* finding the ip address of the client */
@@ -110,7 +106,7 @@ void init_signals(void) {
     /* we ignore the SIGPIPE signal */
     if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
         write_error(get_log_errors(), "signal error");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     /* processing the SIGCHLD signal */
@@ -122,7 +118,7 @@ void init_signals(void) {
 
     if (sigaction(SIGCHLD, &sa, NULL) == -1) {
         write_error(get_log_errors(), "error sigaction");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
 
@@ -146,7 +142,7 @@ void respond_client(int socket_client) {
 
     if (pid == -1) {
         write_error(get_log_errors(), "fork error");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     /* if this is the son process */
@@ -161,7 +157,7 @@ void respond_client(int socket_client) {
         flux = fdopen(socket_client, "w+");
         if (flux == NULL) {
             write_error(get_log_errors(), "error socket client");
-            exit(1);
+            exit(EXIT_FAILURE);
         }
 
         if (fgets_or_exit(data, 512, flux) == NULL) {
@@ -213,7 +209,7 @@ void respond_client(int socket_client) {
 
                 send_stats(flux);
                 fclose(flux);
-                exit(0);
+                exit(EXIT_SUCCESS);
             }
 
             char *host = get_vhost_root(&request);
@@ -245,7 +241,7 @@ void respond_client(int socket_client) {
 
                 send_response(flux, 404, "Not Found", error_message, strlen("Not Found\r\n"));
                 fclose(flux);
-                exit(0);
+                exit(EXIT_SUCCESS);
             } else {
                 write_request(get_log_requests(), request, 200);
 
@@ -262,6 +258,6 @@ void respond_client(int socket_client) {
         }
         /* closing socket */
         fclose(flux);
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
 }

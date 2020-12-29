@@ -14,11 +14,13 @@ typedef struct {
 
     /** mime types file path */
     char mimes_file[PATH_MAX];
+
+    char log_dir[PATH_MAX];
 } server_config;
 
-int init_config(char *abs_path);
+int init_config();
 
-int get_config_from_file(char *abs_path);
+int get_config_from_file();
 
 server_config *get_config(void);
 
