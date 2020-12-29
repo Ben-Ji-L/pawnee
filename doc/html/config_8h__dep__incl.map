@@ -1,7 +1,8 @@
 <map id="webserver/config/config.h" name="webserver/config/config.h">
-<area shape="rect" id="node1" title=" " alt="" coords="262,5,450,32"/>
-<area shape="rect" id="node2" href="$config_8c.html" title=" " alt="" coords="5,80,192,107"/>
-<area shape="rect" id="node3" href="$file_8c.html" title=" " alt="" coords="216,80,341,107"/>
-<area shape="rect" id="node4" href="$main_8c.html" title=" " alt="" coords="365,80,504,107"/>
-<area shape="rect" id="node5" href="$socket_8c.html" title=" " alt="" coords="528,80,675,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="321,5,492,32"/>
+<area shape="rect" id="node2" href="$config_8c.html" title=" " alt="" coords="5,80,176,107"/>
+<area shape="rect" id="node3" href="$file_8c.html" title=" " alt="" coords="200,80,315,107"/>
+<area shape="rect" id="node4" href="$log_8c.html" title=" " alt="" coords="339,80,474,107"/>
+<area shape="rect" id="node5" href="$main_8c.html" title=" " alt="" coords="499,80,624,107"/>
+<area shape="rect" id="node6" href="$socket_8c.html" title=" " alt="" coords="648,80,784,107"/>
 </map>

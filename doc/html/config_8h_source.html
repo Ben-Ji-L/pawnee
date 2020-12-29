@@ -82,21 +82,23 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structserver__config.html#a3cba36317a7c73189b47b153bd931c4a">   13</a></span>&#160;    <span class="keywordtype">char</span> listen_addr[PATH_MAX];</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="structserver__config.html#af580faf7a40798f11701cb3eadc56b0a">   16</a></span>&#160;    <span class="keywordtype">char</span> mimes_file[PATH_MAX];</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;} <a class="code" href="structserver__config.html">server_config</a>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">int</span> <a class="code" href="config_8h.html#ac2ee8b2a218b6ad9a3a02588cc202860">init_config</a>(<span class="keywordtype">char</span> *abs_path);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="structserver__config.html#aafd148e4a51b2c0f44bee11ee294635d">   18</a></span>&#160;    <span class="keywordtype">char</span> log_dir[PATH_MAX];</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;} <a class="code" href="structserver__config.html">server_config</a>;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="config_8h.html#a86ea90f8c7b20b04e7b2c09108747203">get_config_from_file</a>(<span class="keywordtype">char</span> *abs_path);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="config_8h.html#a1248ee69c9a194579e8d6031dfb8afe1">init_config</a>();</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<a class="code" href="structserver__config.html">server_config</a> *<a class="code" href="config_8h.html#a461b71ef96d7fd3feb63f5549072577f">get_config</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">int</span> <a class="code" href="config_8h.html#a03d0ee11291ace33e543f2dd620c15e0">get_config_from_file</a>();</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<a class="code" href="structserver__config.html">server_config</a> *<a class="code" href="config_8h.html#a461b71ef96d7fd3feb63f5549072577f">get_config</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aconfig_8h_html_ac2ee8b2a218b6ad9a3a02588cc202860"><div class="ttname"><a href="config_8h.html#ac2ee8b2a218b6ad9a3a02588cc202860">init_config</a></div><div class="ttdeci">int init_config(char *abs_path)</div><div class="ttdef"><b>Definition:</b> config.c:22</div></div>
-<div class="ttc" id="aconfig_8h_html_a86ea90f8c7b20b04e7b2c09108747203"><div class="ttname"><a href="config_8h.html#a86ea90f8c7b20b04e7b2c09108747203">get_config_from_file</a></div><div class="ttdeci">int get_config_from_file(char *abs_path)</div><div class="ttdef"><b>Definition:</b> config.c:51</div></div>
 <div class="ttc" id="astructserver__config_html"><div class="ttname"><a href="structserver__config.html">server_config</a></div><div class="ttdef"><b>Definition:</b> config.h:7</div></div>
+<div class="ttc" id="aconfig_8h_html_a03d0ee11291ace33e543f2dd620c15e0"><div class="ttname"><a href="config_8h.html#a03d0ee11291ace33e543f2dd620c15e0">get_config_from_file</a></div><div class="ttdeci">int get_config_from_file()</div><div class="ttdef"><b>Definition:</b> config.c:60</div></div>
 <div class="ttc" id="astructserver__config_html_a7e0b626f4235a2c6b838fabbf3bf59de"><div class="ttname"><a href="structserver__config.html#a7e0b626f4235a2c6b838fabbf3bf59de">server_config::port</a></div><div class="ttdeci">int port</div><div class="ttdef"><b>Definition:</b> config.h:10</div></div>
-<div class="ttc" id="aconfig_8h_html_a461b71ef96d7fd3feb63f5549072577f"><div class="ttname"><a href="config_8h.html#a461b71ef96d7fd3feb63f5549072577f">get_config</a></div><div class="ttdeci">server_config * get_config(void)</div><div class="ttdef"><b>Definition:</b> config.c:104</div></div>
+<div class="ttc" id="aconfig_8h_html_a461b71ef96d7fd3feb63f5549072577f"><div class="ttname"><a href="config_8h.html#a461b71ef96d7fd3feb63f5549072577f">get_config</a></div><div class="ttdeci">server_config * get_config(void)</div><div class="ttdef"><b>Definition:</b> config.c:118</div></div>
+<div class="ttc" id="aconfig_8h_html_a1248ee69c9a194579e8d6031dfb8afe1"><div class="ttname"><a href="config_8h.html#a1248ee69c9a194579e8d6031dfb8afe1">init_config</a></div><div class="ttdeci">int init_config()</div><div class="ttdef"><b>Definition:</b> config.c:23</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

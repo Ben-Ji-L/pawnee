@@ -1,10 +1,13 @@
 <map id="webserver/log/log.c" name="webserver/log/log.c">
-<area shape="rect" id="node1" title=" " alt="" coords="233,5,368,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="372,5,507,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,80,71,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="95,80,157,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="181,80,245,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="269,80,333,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="357,80,415,107"/>
-<area shape="rect" id="node7" href="$http__parse_8h.html" title=" " alt="" coords="417,155,549,181"/>
-<area shape="rect" id="node8" href="$log_8h.html" title=" " alt="" coords="490,80,541,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="511,155,573,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="238,80,302,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="215,155,279,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="377,80,435,107"/>
+<area shape="rect" id="node7" href="$http_8h.html" title=" " alt="" coords="598,80,691,107"/>
+<area shape="rect" id="node8" href="$http__parse_8h.html" title=" " alt="" coords="681,155,776,181"/>
+<area shape="rect" id="node9" href="$log_8h.html" title=" " alt="" coords="766,80,817,107"/>
+<area shape="rect" id="node10" href="$config_8h.html" title=" " alt="" coords="95,80,213,107"/>
+<area shape="rect" id="node11" href="$file_8h.html" title=" " alt="" coords="511,80,573,107"/>
 </map>

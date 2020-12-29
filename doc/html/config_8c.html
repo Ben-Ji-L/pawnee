@@ -79,29 +79,31 @@ $(function() {
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="log_8h_source.html">../log/log.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="file_8h_source.html">../file.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for config.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="config_8c__incl.png" border="0" usemap="#webserver_2config_2config_8c" alt=""/></div>
 <map name="webserver_2config_2config_8c" id="webserver_2config_2config_8c">
-<area shape="rect" title=" " alt="" coords="195,5,365,32"/>
-<area shape="rect" title=" " alt="" coords="5,80,67,107"/>
-<area shape="rect" title=" " alt="" coords="91,80,157,107"/>
-<area shape="rect" title=" " alt="" coords="181,80,275,107"/>
-<area shape="rect" title=" " alt="" coords="300,80,364,107"/>
-<area shape="rect" href="config_8h.html" title=" " alt="" coords="389,80,457,107"/>
-<area shape="rect" href="log_8h.html" title=" " alt="" coords="492,80,575,107"/>
-<area shape="rect" title=" " alt="" coords="384,155,448,181"/>
-<area shape="rect" href="http__parse_8h.html" title=" " alt="" coords="473,155,605,181"/>
+<area shape="rect" title=" " alt="" coords="182,5,352,32"/>
+<area shape="rect" title=" " alt="" coords="143,155,204,181"/>
+<area shape="rect" title=" " alt="" coords="26,80,92,107"/>
+<area shape="rect" title=" " alt="" coords="116,80,210,107"/>
+<area shape="rect" title=" " alt="" coords="235,80,299,107"/>
+<area shape="rect" href="config_8h.html" title=" " alt="" coords="410,80,478,107"/>
+<area shape="rect" href="log_8h.html" title=" " alt="" coords="512,80,595,107"/>
+<area shape="rect" href="file_8h.html" title=" " alt="" coords="324,80,386,107"/>
+<area shape="rect" title=" " alt="" coords="406,155,470,181"/>
+<area shape="rect" href="http__parse_8h.html" title=" " alt="" coords="494,155,626,181"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac2ee8b2a218b6ad9a3a02588cc202860"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#ac2ee8b2a218b6ad9a3a02588cc202860">init_config</a> (char *abs_path)</td></tr>
-<tr class="separator:ac2ee8b2a218b6ad9a3a02588cc202860"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86ea90f8c7b20b04e7b2c09108747203"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#a86ea90f8c7b20b04e7b2c09108747203">get_config_from_file</a> (char *abs_path)</td></tr>
-<tr class="separator:a86ea90f8c7b20b04e7b2c09108747203"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1248ee69c9a194579e8d6031dfb8afe1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#a1248ee69c9a194579e8d6031dfb8afe1">init_config</a> ()</td></tr>
+<tr class="separator:a1248ee69c9a194579e8d6031dfb8afe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aacdfd3142ad324d84c93817a6a2497"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#a7aacdfd3142ad324d84c93817a6a2497">get_config_from_file</a> (void)</td></tr>
+<tr class="separator:a7aacdfd3142ad324d84c93817a6a2497"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a461b71ef96d7fd3feb63f5549072577f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structserver__config.html">server_config</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#a461b71ef96d7fd3feb63f5549072577f">get_config</a> (void)</td></tr>
 <tr class="separator:a461b71ef96d7fd3feb63f5549072577f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -130,8 +132,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a86ea90f8c7b20b04e7b2c09108747203"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86ea90f8c7b20b04e7b2c09108747203">&#9670;&nbsp;</a></span>get_config_from_file()</h2>
+<a id="a7aacdfd3142ad324d84c93817a6a2497"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aacdfd3142ad324d84c93817a6a2497">&#9670;&nbsp;</a></span>get_config_from_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,8 +141,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int get_config_from_file </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>abs_path</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -155,8 +157,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ac2ee8b2a218b6ad9a3a02588cc202860"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2ee8b2a218b6ad9a3a02588cc202860">&#9670;&nbsp;</a></span>init_config()</h2>
+<a id="a1248ee69c9a194579e8d6031dfb8afe1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1248ee69c9a194579e8d6031dfb8afe1">&#9670;&nbsp;</a></span>init_config()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,8 +166,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int init_config </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>abs_path</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>

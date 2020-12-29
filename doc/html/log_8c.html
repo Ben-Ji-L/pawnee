@@ -78,30 +78,36 @@ $(function() {
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;limits.h&gt;</code><br />
 <code>#include &lt;time.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="http_8h_source.html">../http/http.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="http__parse_8h_source.html">../http/http_parse.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="log_8h_source.html">log.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="config_8h_source.html">../config/config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="file_8h_source.html">../file.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for log.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="log_8c__incl.png" border="0" usemap="#webserver_2log_2log_8c" alt=""/></div>
 <map name="webserver_2log_2log_8c" id="webserver_2log_2log_8c">
-<area shape="rect" title=" " alt="" coords="233,5,368,32"/>
+<area shape="rect" title=" " alt="" coords="372,5,507,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,71,107"/>
-<area shape="rect" title=" " alt="" coords="95,80,157,107"/>
-<area shape="rect" title=" " alt="" coords="181,80,245,107"/>
-<area shape="rect" title=" " alt="" coords="269,80,333,107"/>
-<area shape="rect" title=" " alt="" coords="357,80,415,107"/>
-<area shape="rect" href="http__parse_8h.html" title=" " alt="" coords="417,155,549,181"/>
-<area shape="rect" href="log_8h.html" title=" " alt="" coords="490,80,541,107"/>
+<area shape="rect" title=" " alt="" coords="511,155,573,181"/>
+<area shape="rect" title=" " alt="" coords="238,80,302,107"/>
+<area shape="rect" title=" " alt="" coords="215,155,279,181"/>
+<area shape="rect" title=" " alt="" coords="377,80,435,107"/>
+<area shape="rect" href="http_8h.html" title=" " alt="" coords="598,80,691,107"/>
+<area shape="rect" href="http__parse_8h.html" title=" " alt="" coords="681,155,776,181"/>
+<area shape="rect" href="log_8h.html" title=" " alt="" coords="766,80,817,107"/>
+<area shape="rect" href="config_8h.html" title=" " alt="" coords="95,80,213,107"/>
+<area shape="rect" href="file_8h.html" title=" " alt="" coords="511,80,573,107"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2831ca839e12e76d5630e786ee34fdf1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a2831ca839e12e76d5630e786ee34fdf1">create_requests_logs_file</a> (char *path)</td></tr>
-<tr class="separator:a2831ca839e12e76d5630e786ee34fdf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee450d2b8b503b7004afba39f973c049"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#aee450d2b8b503b7004afba39f973c049">create_errors_logs_file</a> (char *path)</td></tr>
-<tr class="separator:aee450d2b8b503b7004afba39f973c049"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e1104fdabda7f3906dd5595406aa010"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a2e1104fdabda7f3906dd5595406aa010">create_requests_logs_file</a> (void)</td></tr>
+<tr class="separator:a2e1104fdabda7f3906dd5595406aa010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9acc9c240963d0ae7d248445060c22b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#a9acc9c240963d0ae7d248445060c22b4">create_errors_logs_file</a> (void)</td></tr>
+<tr class="separator:a9acc9c240963d0ae7d248445060c22b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef334cc88b0cb0b8963a83f9537f8b79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#aef334cc88b0cb0b8963a83f9537f8b79">write_request</a> (FILE *log_file, <a class="el" href="structhttp__request.html">http_request</a> request, int code)</td></tr>
 <tr class="separator:aef334cc88b0cb0b8963a83f9537f8b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee1a42ba13e6e60f8591fe6bc16f05bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="log_8c.html#aee1a42ba13e6e60f8591fe6bc16f05bd">write_error</a> (FILE *log_file, char *error)</td></tr>
@@ -119,8 +125,8 @@ Variables</h2></td></tr>
 <tr class="separator:a3dd69c1ae2660e86da4e17810e04db76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aee450d2b8b503b7004afba39f973c049"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee450d2b8b503b7004afba39f973c049">&#9670;&nbsp;</a></span>create_errors_logs_file()</h2>
+<a id="a9acc9c240963d0ae7d248445060c22b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9acc9c240963d0ae7d248445060c22b4">&#9670;&nbsp;</a></span>create_errors_logs_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -128,23 +134,18 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void create_errors_logs_file </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>init the errors log file </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>the path to the log directory </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>init the errors log file </p>
 
 </div>
 </div>
-<a id="a2831ca839e12e76d5630e786ee34fdf1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2831ca839e12e76d5630e786ee34fdf1">&#9670;&nbsp;</a></span>create_requests_logs_file()</h2>
+<a id="a2e1104fdabda7f3906dd5595406aa010"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e1104fdabda7f3906dd5595406aa010">&#9670;&nbsp;</a></span>create_requests_logs_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,18 +153,13 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void create_requests_logs_file </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>init the requests log file </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>the path to the log directory </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>init the requests log file </p>
 
 </div>
 </div>
