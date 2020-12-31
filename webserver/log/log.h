@@ -18,4 +18,6 @@ FILE *get_log_requests(void);
 
 FILE *get_log_errors(void);
 
+struct tm *get_actual_time(void);
+
 #endif

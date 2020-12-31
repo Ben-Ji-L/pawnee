@@ -20,7 +20,7 @@ FILE *log_errors;
  * init the requests log file
  */
 void create_requests_logs_file(void) {
-    FILE *request_log;
+    FILE *request_file;
 
     /* path to the request log file */
     char request_path[PATH_MAX];
@@ -28,20 +28,20 @@ void create_requests_logs_file(void) {
     strncpy(request_path, get_config()->log_dir, PATH_MAX);
     strcat(request_path, "requests.log");
 
-    request_log = fopen(request_path, "a");
-    if (request_log == NULL) {
+    request_file = fopen(request_path, "a");
+    if (request_file == NULL) {
         perror("fopen request log error");
         exit(EXIT_FAILURE);
     }
 
-    log_requests = request_log;
+    log_requests = request_file;
 }
 
 /**
  * init the errors log file
  */
 void create_errors_logs_file(void) {
-    FILE *error_log;
+    FILE *errors_file;
 
     /* path to the errors log file */
     char error_path[PATH_MAX];
@@ -49,13 +49,13 @@ void create_errors_logs_file(void) {
     strncpy(error_path, get_config()->log_dir, PATH_MAX);
     strcat(error_path, "errors.log");
 
-    error_log = fopen(error_path, "a");
-    if (error_log == NULL) {
+    errors_file = fopen(error_path, "a");
+    if (errors_file == NULL) {
         perror("fopen errors log error ");
         exit(EXIT_FAILURE);
     }
 
-    log_errors = error_log;
+    log_errors = errors_file;
 }
 
 /**
@@ -65,24 +65,11 @@ void create_errors_logs_file(void) {
  * @param code the HTTP code of the request
  */
 void write_request(FILE *log_file, http_request request, int code) {
-    int hours, minutes, seconds, day, month, year;
-    time_t now;
-    time(&now);
-
-    /* actual time */
-    struct tm *local = localtime(&now);
-
-    hours = local->tm_hour;        // time since midnight, from 0 to 23
-    minutes = local->tm_min;        // minutes, from 0 to 59
-    seconds = local->tm_sec;        // seconds, from 0 to 59
-
-    day = local->tm_mday;            // the day, from 1 to 31
-    month = local->tm_mon + 1;    // the month, from 0 to 11
-    year = local->tm_year + 1900;    // the years since 1900
+    struct tm *local = get_actual_time();
 
     /* format the line to put in the log */
-    fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", day, month, year, hours,
-            minutes, seconds, \
+    fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s\n", local->tm_mday, local->tm_mon + 1, local->tm_year + 1900, local->tm_hour,
+            local->tm_min, local->tm_sec, \
             client_ip, request.http_major, request.http_minor, code, get_method(request.method),
             rewrite_target(request.target));
 }
@@ -93,23 +80,11 @@ void write_request(FILE *log_file, http_request request, int code) {
  * @param request the error to write
  */
 void write_error(FILE *log_file, char *error) {
-    int hours, minutes, seconds, day, month, year;
-    time_t now;
-    time(&now);
-
-    /* actual time */
-    struct tm *local = localtime(&now);
-
-    hours = local->tm_hour;        // time since midnight, from 0 to 23
-    minutes = local->tm_min;        // minutes, from 0 to 59
-    seconds = local->tm_sec;        // seconds, from 0 to 59
-
-    day = local->tm_mday;            // the day, from 1 to 31
-    month = local->tm_mon + 1;    // the month, from 0 to 11
-    year = local->tm_year + 1900;    // the years since 1900
+    struct tm *local = get_actual_time();
 
     /* format the line to put in the log */
-    fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] %s\n", day, month, year, hours, minutes, seconds, error);
+    fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] %s\n", local->tm_mday, local->tm_mon + 1, local->tm_year + 1900, local->tm_hour,
+            local->tm_min, local->tm_sec, error);
 }
 
 /**
@@ -126,4 +101,14 @@ FILE *get_log_requests(void) {
  */
 FILE *get_log_errors(void) {
     return log_errors;
+}
+
+struct tm *get_actual_time(void) {
+    time_t now;
+    time(&now);
+
+    /* actual time */
+    struct tm *local = localtime(&now);
+
+    return local;
 }
