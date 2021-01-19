@@ -129,7 +129,7 @@ char *check_root(char *root) {
 char *get_mime_type(char *name) {
     char *ext = strrchr(name, '.');
     char *delimiter = "*";
-    char *mime_type = NULL;
+    char *mime_type = "";
     char *token = "";
     size_t len = 0;
     char *line = malloc(sizeof(len));
@@ -146,7 +146,7 @@ char *get_mime_type(char *name) {
             if ((token = strtok(NULL, delimiter)) != NULL) {
 
                 // remove the final space
-                token[strlen(token) - 1] = '\0';
+                token[strlen(token)] = '\0';
 
                 if (strcmp(token, ext) == 0) {
                     char *result = strtok(line, delimiter);
