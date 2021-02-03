@@ -21,19 +21,25 @@ web_stats *shared_memory;
  */
 void send_stats(FILE *client) {
     send_status(client, 200, "OK");
-    fprintf(client, "Content-Length: %d\r\n", 362);
+    fprintf(client, "Content-Length: %d\r\n", 484);
     fprintf(client, "Content-Type: %s\r\n", "text/html");
     fprintf(client, "Date: %s\r\n", get_date_http_format());
     fprintf(client, "\r\n");
-    fprintf(client, "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body><h1>Stats of the server</h1><ul><li>Connexions served: %d</li> \
-        <li>Requests served: %d</li> \
-        <li>200 responses: %d</li> \
-        <li>400 responses: %d</li> \
-        <li>403 responses: %d</li> \
-        <li>404 responses: %d</li> \
-        <li>405 responses: %d</li></ul></body></html>\r\n", get_stats()->served_connections,
-            get_stats()->served_requests, get_stats()->ok_200, get_stats()->ko_400, get_stats()->ko_403,
-            get_stats()->ko_404, get_stats()->ko_405);
+    fprintf(client, "<!DOCTYPE html><html>\
+        <head><meta charset=\"UTF-8\">\
+        <style>body {font: 1.2em \"Open Sans\", sans-serif;}</style>\
+        </head>\
+        <body>\
+            <h1>Stats of the server</h1><ul><li>Connexions served: %d</li> \
+            <li>Requests served: %d</li> \
+            <li>200 responses: %d</li> \
+            <li>400 responses: %d</li> \
+            <li>403 responses: %d</li> \
+            <li>404 responses: %d</li> \
+            <li>405 responses: %d</li></ul>" \
+       "</body></html>\r\n", get_stats()->served_connections,
+                get_stats()->served_requests, get_stats()->ok_200, get_stats()->ko_400, get_stats()->ko_403,
+                get_stats()->ko_404, get_stats()->ko_405);
 }
 
 /**
