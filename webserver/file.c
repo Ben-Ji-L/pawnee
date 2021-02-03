@@ -128,19 +128,21 @@ char *check_root(char *root) {
  */
 char *get_mime_type(char *name) {
     char *ext = strrchr(name, '.');
-    char *delimiter = "*";
     char *mime_type = "";
-    char *token = "";
     size_t len = 0;
     char *line = malloc(sizeof(len));
-    ssize_t read = 0;
     ext++;
 
     // open mime type file
     FILE *mime_type_file = fopen(get_config()->mimes_file, "r");
 
     if (mime_type_file != NULL) {
+        char *delimiter = "*";
+        ssize_t read = 0;
+
         while ((read = getline(&line, &len, mime_type_file)) != -1) {
+            char *token = "";
+
             line[strlen(line) - 1] = '\0';
             strtok(line, delimiter);
             if ((token = strtok(NULL, delimiter)) != NULL) {

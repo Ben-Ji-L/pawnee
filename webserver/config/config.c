@@ -21,7 +21,7 @@ server_config *shared_mem_config;
  * @return 0 on success, 1 on error
  */
 int init_config() {
-    char types[PATH_MAX];
+    char types[PATH_MAX] = "";
 
     // init the shared memory zone
     shared_mem_config = mmap(NULL, sizeof(config), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
