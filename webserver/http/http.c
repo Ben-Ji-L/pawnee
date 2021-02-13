@@ -68,6 +68,9 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
     /* we send the status of the response */
     send_status(client, code, reason_phrase);
 
+    char *date;
+    date = get_date_http_format();
+
     switch (code) {
         case 200:
             fprintf(client, "Content-Length: %d\r\n", size);
@@ -78,23 +81,24 @@ void send_response(FILE *client, int code, const char *reason_phrase, char *mess
                 fprintf(client, "Content-Type: %s\r\n", get_mime_type(message_body));
 
             fprintf(client, "Accept-Ranges: bytes\r\n");
-            fprintf(client, "Date: %s\r\n", get_date_http_format());
+            fprintf(client, "Date: %s\r\n", date);
             fprintf(client, "\r\n");
             break;
 
         case 405:
             fprintf(client, "Allow: GET, HEAD\r\n");
-            fprintf(client, "Date: %s\r\n", get_date_http_format());
+            fprintf(client, "Date: %s\r\n", date);
             fprintf(client, "\r\n");
             break;
 
         default:
             fprintf(client, "Content-Length: %d\r\n", size);
-            fprintf(client, "Date: %s\r\n", get_date_http_format());
+            fprintf(client, "Date: %s\r\n", date);
             fprintf(client, "\r\n");
             fprintf(client, "%s\r\n", message_body);
             break;
     }
+    free(date);
 }
 
 /**
