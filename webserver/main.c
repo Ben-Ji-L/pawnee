@@ -160,10 +160,7 @@ void respond_client(int socket_client) {
             exit(EXIT_FAILURE);
         }
 
-        if (fgets_or_exit(data, 512, flux) == NULL) {
-            write_error(get_log_errors(), "read file request error");
-            exit(EXIT_FAILURE);
-        }
+        fgets_or_exit(data, 512, flux);
 
         skip_and_save_headers(flux, &request);
         int host_check = check_host_header(&request);
