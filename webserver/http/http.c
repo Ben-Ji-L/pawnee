@@ -122,7 +122,7 @@ char *get_date_http_format(void) {
  * @return well rewrite target
  */
 char *rewrite_target(char *target) {
-    char *rewrite_target = malloc(PATH_MAX);
+    char *rewrite_target;
     if ((rewrite_target = strtok(strdup(target), "?")) == NULL) {
         write_error(get_log_errors(), "rewrite target error");
         exit(EXIT_FAILURE);
@@ -133,4 +133,14 @@ char *rewrite_target(char *target) {
     }
 
     return ++rewrite_target;
+}
+
+char *get_query_params(char *target) {
+    char *query_params;
+
+    if ((query_params = strtok(strdup(target), "?")) == NULL) {
+        return NULL;
+    }
+    query_params = strtok(NULL, "?");
+    return query_params;
 }

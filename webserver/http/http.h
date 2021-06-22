@@ -17,4 +17,6 @@ char *get_date_http_format(void);
 
 char *rewrite_target(char *target);
 
+char *get_query_params(char *target);
+
 #endif
