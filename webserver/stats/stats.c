@@ -20,9 +20,9 @@ sem_t *shared_semaphore;
  * function who display stats of the server in html
  * @param client the socket of the client
  */
-void send_stats(FILE *client) {
-    send_status(client, 200, "OK");
-    fprintf(client, "Content-Length: %d\r\n", 484);
+void send_stats(FILE *client, http_request *request) {
+    send_status(client, request, 200, "OK");
+    fprintf(client, "Content-Length: %d\r\n", 511);
     fprintf(client, "Content-Type: %s\r\n", "text/html");
     fprintf(client, "Date: %s\r\n", get_date_http_format());
     fprintf(client, "\r\n");

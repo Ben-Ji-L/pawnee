@@ -45,14 +45,22 @@ int check_host_header(http_request *request) {
     return 1;
 }
 
+int check_http_version(http_request *request) {
+    // we not support HTTP 2 yet
+    if (request->http_major > 1) {
+        return 1;
+    }
+    return 0;
+}
+
 /**
  * send the status of the response
  * @param client stream to send data
  * @param code HTTP code of the response
  * @param reason_phrase HTTP response reason phrase
  */
-void send_status(FILE *client, int code, const char *reason_phrase) {
-    fprintf(client, "HTTP/1.1 %d %s\r\n", code, reason_phrase);
+void send_status(FILE *client, http_request *request, int code, const char *reason_phrase) {
+    fprintf(client, "HTTP/%d.%d %d %s\r\n", request->http_major, request->http_minor, code, reason_phrase);
 }
 
 /**

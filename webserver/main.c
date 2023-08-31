@@ -182,7 +182,7 @@ void respond_client(int socket_client) {
             if (request.method != HTTP_HEAD)
                 error_message = "Bad request\r\n";
 
-            send_response(flux, 400, "Bad Request", error_message, strlen("Bad request\r\n"));
+            send_response(flux, &request, 400, "Bad Request", error_message, strlen("Bad request\r\n"));
         } else if (request.method == HTTP_UNSUPPORTED) {
             write_request(get_log_requests(), request, 405);
 
@@ -194,7 +194,15 @@ void respond_client(int socket_client) {
                 error_message = "Method Not Allowed\r\n";
 
             /* if the method is unsupported */
-            send_response(flux, 405, "Method Not Allowed", error_message, strlen("Method Not Allowed\r\n"));
+            send_response(flux, &request, 405, "Method Not Allowed", error_message, strlen("Method Not Allowed\r\n"));
+        } else if (check_http_version(&request) != 0) {
+            request.http_major = 1;
+            request.http_minor = 1;
+
+            if (request.method != HTTP_HEAD)
+                error_message = "HTTP Version Not Supported\r\n";
+
+            send_response(flux, &request, 505, "HTTP Version Not Supported", error_message, strlen("HTTP Version Not Supported\r\n"));
         } else {
 
             if (strcmp(rewrite_target(request.target), "stats") == 0) {
@@ -204,7 +212,7 @@ void respond_client(int socket_client) {
                 get_stats()->ok_200++;
                 sem_post(shared_semaphore);
 
-                send_stats(flux);
+                send_stats(flux, &request);
                 fclose(flux);
                 exit(EXIT_SUCCESS);
             }
@@ -221,7 +229,7 @@ void respond_client(int socket_client) {
                 if (request.method != HTTP_HEAD)
                     error_message = "Bad request\r\n";
 
-                send_response(flux, 400, "Bad Request", error_message, strlen("Bad request\r\n"));
+                send_response(flux, &request, 400, "Bad Request", error_message, strlen("Bad request\r\n"));
             }
             strcpy(root, check_root(host));
 
@@ -236,7 +244,7 @@ void respond_client(int socket_client) {
                 if (request.method != HTTP_HEAD)
                     error_message = "Not Found\r\n";
 
-                send_response(flux, 404, "Not Found", error_message, strlen("Not Found\r\n"));
+                send_response(flux, &request, 404, "Not Found", error_message, strlen("Not Found\r\n"));
                 fclose(flux);
                 exit(EXIT_SUCCESS);
             } else {
@@ -246,7 +254,7 @@ void respond_client(int socket_client) {
                 get_stats()->ok_200++;
                 sem_post(shared_semaphore);
 
-                send_response(flux, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
+                send_response(flux, &request, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
 
                 if (request.method != HTTP_HEAD)
                     copy(file, flux);

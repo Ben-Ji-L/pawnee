@@ -31,7 +31,7 @@ typedef struct {
 /** semaphore to avoid concurrent access to the stats */
 extern sem_t *shared_semaphore;
 
-void send_stats(FILE *client);
+void send_stats(FILE *client, http_request *request);
 
 void init_stats(void);
 
