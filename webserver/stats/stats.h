@@ -1,6 +1,8 @@
 # ifndef __STATS_H__
 # define __STATS_H__
 
+#include "../http/http_parse.h"
+
 /** struct for the stats */
 typedef struct {
 
@@ -27,7 +29,7 @@ typedef struct {
 } web_stats;
 
 /** semaphore to avoid concurrent access to the stats */
-sem_t *shared_semaphore;
+extern sem_t *shared_semaphore;
 
 void send_stats(FILE *client);
 

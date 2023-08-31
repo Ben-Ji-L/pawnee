@@ -14,6 +14,7 @@ static web_stats stats;
 
 /** shared memory for the stats */
 web_stats *shared_memory;
+sem_t *shared_semaphore;
 
 /**
  * function who display stats of the server in html
@@ -27,7 +28,7 @@ void send_stats(FILE *client) {
     fprintf(client, "\r\n");
     fprintf(client, "<!DOCTYPE html><html>\
         <head><meta charset=\"UTF-8\">\
-        <style>body {font: 1.2em \"Open Sans\", sans-serif;}</style>\
+        <style>body {font: 1.2em \"Open Sans\", sans-serif; background-color: #DDDDDD;}</style>\
         </head>\
         <body>\
             <h1>Stats of the server</h1><ul><li>Connexions served: %d</li> \
