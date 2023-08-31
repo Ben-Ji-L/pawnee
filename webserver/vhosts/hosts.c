@@ -14,11 +14,20 @@
 char *get_vhost_root(http_request *request) {
     FILE *host_file;
     int bufferLength = 255;
+    char host_buffer[bufferLength];
     char buffer[bufferLength];
+    char *host_content;
 
-    strtok(request->headers[0], ":");
-    char *host_content = strtok(NULL, ":");
-    host_content++;
+    // parsing host header
+    strcpy(host_buffer, request->headers[0]);
+    host_content = strtok(host_buffer, ":");
+    host_content = strtok(NULL, ":");
+    host_content = strtok(host_content, " ");
+    host_content = strtok(host_content, "\r");
+    host_content = strtok(host_content, "\n");
+    // flush buffer
+    buffer[0] = '\0';
+
     char *path = get_app_path();
     strcat(path, "/../config/hosts.cfg");
 
