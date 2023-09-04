@@ -71,10 +71,10 @@ void send_status(FILE *client, http_request *request, int code, const char *reas
  * @param message_body the body of the response
  * @param size the size of the response body
  */
-void send_response(FILE *client, int code, const char *reason_phrase, char *message_body, int size) {
+void send_response(FILE *client, http_request *request, int code, const char *reason_phrase, char *message_body, int size) {
 
     /* we send the status of the response */
-    send_status(client, code, reason_phrase);
+    send_status(client, request, code, reason_phrase);
 
     char *date;
     date = get_date_http_format();
