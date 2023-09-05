@@ -29,8 +29,12 @@ void test_get_date_http_format(void) {
 void test_send_status(void) {
     const size_t line_size = 300;
     char* line = malloc(line_size);
+    http_request request;
+    request.http_major = 1;
+    request.http_minor = 1;
+    request.method = HTTP_GET;
 
-    send_status(get_temp_file(), 200, "OK");
+    send_status(get_temp_file(), &request, 200, "OK");
     rewind(get_temp_file());
 
     fgets(line, line_size, get_temp_file());
