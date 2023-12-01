@@ -25,8 +25,8 @@ FILE *check_and_open(const char *target, const char *document_root) {
 
     // prepare the file before opening it
     strncpy(root, document_root, PATH_MAX);
-    strncat(path, root, PATH_MAX);
-    strncat(path, target, PATH_MAX);
+    strncat(path, root, PATH_MAX - strlen(path));
+    strncat(path, target, PATH_MAX - strlen(path));
 
     // if stat fail
     if (stat(path, &path_stat) != 0) {
