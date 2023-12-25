@@ -118,7 +118,7 @@ char *check_root(char *root) {
     if (strcmp(root + strlen(root) - 1, "/") == 0)
         return root;
 
-    return strcat(root, "/");
+    return strncat(root, "/", PATH_MAX);
 }
 
 /**
@@ -179,7 +179,7 @@ char *get_app_path(void) {
     char *path = malloc(PATH_MAX);
     if (readlink("/proc/self/exe", path, PATH_MAX) != -1) {
         dirname(path);
-        strcat(path, "/");
+        strncat(path, "/", PATH_MAX);
     }
 
     return path;

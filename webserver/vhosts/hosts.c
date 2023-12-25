@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "../file.h"
 #include "hosts.h"
@@ -29,7 +30,7 @@ char *get_vhost_root(http_request *request) {
     buffer[0] = '\0';
 
     char *path = get_app_path();
-    strcat(path, "/../config/hosts.cfg");
+    strncat(path, "/../config/hosts.cfg", PATH_MAX);
 
     if ((host_file = fopen(path, "r")) == NULL) {
         write_error(get_log_errors(), "open hosts file error");
