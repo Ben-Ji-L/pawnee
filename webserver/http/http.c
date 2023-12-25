@@ -21,6 +21,18 @@ void skip_and_save_headers(FILE *client, http_request *request) {
     char data[512];
     int i = 0;
     do {
+        // if header is host we save it value in the request struct
+        if (strncmp(data, "Host: ", strlen("Host: ")) == 0) {
+            // split header and value
+            char *host_header = strtok(data, ": ");
+            host_header = strtok(NULL, " ");
+            request->host_header = malloc(strlen(host_header) + 1);
+            strcpy(request->host_header, host_header);
+        } else {
+            request->host_header = malloc(1);
+            strncpy(request->host_header, "", 1);
+        }
+
         request->headers[i] = malloc(512);
         strncpy(request->headers[i], fgets_or_exit(data, 512, client), 512);
         if (request->headers[i] == NULL) {
@@ -29,20 +41,6 @@ void skip_and_save_headers(FILE *client, http_request *request) {
         }
         i++;
     } while (strncmp(data, "\r\n", 2) != 0);
-}
-
-/**
- * check host header
- * @param request the request to check headers
- * @return 0 if everything ok, 1 otherwise
- */
-int check_host_header(http_request *request) {
-    char header[512];
-
-    strcpy(header, request->headers[0]);
-    if (strcmp(strtok(header, ":"), "Host") == 0)
-        return 0;
-    return 1;
 }
 
 int check_http_version(http_request *request) {

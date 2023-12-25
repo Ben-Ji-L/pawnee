@@ -163,15 +163,14 @@ void respond_client(int socket_client) {
         fgets_or_exit(data, 512, flux);
 
         skip_and_save_headers(flux, &request);
-        int host_check = check_host_header(&request);
 
         sem_wait(shared_semaphore);
         get_stats()->served_requests++;
         sem_post(shared_semaphore);
 
         /* parsing request and sending appropriate response */
-        if ((!parse_http_request(data, &request) && (request.method != HTTP_UNSUPPORTED)) || (host_check != 0)) {
-
+        if ((!parse_http_request(data, &request) && (request.method != HTTP_UNSUPPORTED)) || (strncmp(request.host_header, "",
+                                                                                                      1) != 0)) {
             /* if the requests is miss written */
             write_request(get_log_requests(), request, 400);
 

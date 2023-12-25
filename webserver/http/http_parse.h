@@ -61,6 +61,8 @@ typedef struct {
     /** target of the request */
     char target[MAX_TARGET_SIZE];
 
+    char *host_header;
+
     /** headers of the request */
     char *headers[20];
 } http_request;
