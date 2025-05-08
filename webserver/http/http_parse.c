@@ -32,6 +32,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "http_parse.h"
 
@@ -43,52 +44,90 @@
 
 /**
  * function to parse the request
- * @param request_line main request line
+ * @param data
  * @param request request to parse
  * @return 1 on success, 0 on error
  */
-int parse_http_request(const char *request_line, http_request *request) {
+int parse_http_request(char *request_line, char *headers_block, http_request *request) {
+    request->header_count = 0;
 
-    if (strncmp(request_line, "GET ", 4) == 0)
-        request->method = HTTP_GET;
-    else if (strncmp(request_line, "HEAD", 4) == 0)
-        request->method = HTTP_HEAD;
-    else {
-        request->method = HTTP_UNSUPPORTED;
+    // --- 1. Parse la ligne de requête ---
+    char *method = strtok(request_line, " ");
+    char *target = strtok(NULL, " ");
+    char *version = strtok(NULL, "\r\n");
+
+    if (!method || !target || !version)
         return 0;
+
+    // Méthode
+    if (strcmp(method, "GET") == 0) {
+        request->method = HTTP_GET;
+    } else if (strcmp(method, "HEAD") == 0) {
+        request->method = HTTP_HEAD;
+    } else {
+        request->method = HTTP_UNSUPPORTED;
     }
 
-    /* Find the target start */
-    const char *target = strchr(request_line, ' ');
-    if (target == NULL)
-        return 0;
-    target++;
-    /* Find target end and copy target to request */
-    char *target_end = strchr(target, ' ');
-    if (target_end == NULL)
-        return 0;
-    int size = min(target_end - target, MAX_TARGET_SIZE);
-    strncpy(request->target, target, size);
-    /* If target is more than size, \0 is not add to dst, so... */
-    request->target[size] = '\0';
+    // Target
+    strncpy(request->target, target, sizeof(request->target) - 1);
+    request->target[sizeof(request->target) - 1] = '\0';
 
-    /* Now http version (only support HTTP/M.m version format) */
-    /* Quote from RFC:
-       Additionally, version numbers have been restricted to
-       single digits, due to the fact that implementations are known to
-       handle multi-digit version numbers incorrectly.
-    */
-    char *version = target_end + 1;
-    if (strncmp(version, "HTTP/", 5) != 0)
+    // HTTP version
+    if (sscanf(version, "HTTP/%d.%d", &request->http_major, &request->http_minor) != 2)
         return 0;
-    if (!in_range(version[5], '0', '9')) // major
-        return 0;
-    if (version[6] != '.') // mandatory dot
-        return 0;
-    if (!in_range(version[7], '0', '9')) // minor
-        return 0;
-    request->http_major = version[5] - '0';
-    request->http_minor = version[7] - '0';
+
+    // --- 2. Parser les headers ligne par ligne ---
+    char *line = headers_block;
+
+    while (line && *line != '\0') {
+        // Fin des headers
+        if (strncmp(line, "\r\n", 2) == 0 || strncmp(line, "\n", 1) == 0)
+            break;
+
+        char *colon = strchr(line, ':');
+        if (!colon)
+            return 0;
+
+        // Nom du header
+        int name_len = colon - line;
+        if (name_len >= MAX_HEADER_NAME_SIZE)
+            return 0;
+
+        char name[MAX_HEADER_NAME_SIZE];
+        strncpy(name, line, name_len);
+        name[name_len] = '\0';
+
+        // Nettoyer le nom
+        for (int i = 0; i < name_len; i++)
+            name[i] = tolower(name[i]);
+
+        // Sauter les espaces après le :
+        char *value = colon + 1;
+        while (*value == ' ' || *value == '\t') value++;
+
+        int value_len = strcspn(value, "\r\n");
+        if (value_len >= MAX_HEADER_VALUE_SIZE)
+            return 0;
+
+        char val[MAX_HEADER_VALUE_SIZE];
+        strncpy(val, value, value_len);
+        val[value_len] = '\0';
+
+        // Stocker Host et User-Agent
+        if (strcmp(name, "host") == 0) {
+            strncpy(request->host_header, val, sizeof(request->host_header) - 1);
+            request->host_header[sizeof(request->host_header) - 1] = '\0';
+        } else if (strcmp(name, "user-agent") == 0) {
+            strncpy(request->user_agent, val, sizeof(request->user_agent) - 1);
+            request->user_agent[sizeof(request->user_agent) - 1] = '\0';
+        }
+
+        // Prochaine ligne
+        line = strstr(line, "\n");
+        if (line)
+            line++;
+    }
+
     return 1;
 }
 

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <sys/mman.h>
 #include <stdlib.h>
+#include <dirent.h>
 
 #include "config.h"
 #include "../log/log.h"
@@ -37,9 +38,15 @@ int init_config() {
     strcpy(config.mimes_file, types);
 
     char *log_path = get_app_path();
-    strncat(log_path, "/logs/", PATH_MAX);
+    strncat(log_path, "logs/", PATH_MAX);
 
     strcpy(config.log_dir, "/logs/");
+
+    vhost_config vhost;
+    strcpy(vhost.hostname, "localhost");
+    strcpy(vhost.root, get_app_path());
+    config.vhosts[0] = vhost;
+    config.vhost_count = 1;
 
     if (get_config_from_file() != 0) {
         perror("file config loading error");
@@ -59,10 +66,12 @@ int init_config() {
  */
 int get_config_from_file(void) {
     FILE *config_file;
+    DIR *dir;
+    struct dirent *entry;
 
     char path[PATH_MAX];
     strcpy(path, get_app_path());
-    strcat(path, "../config/server.cfg");
+    strncat(path, "/../config/server.cfg", PATH_MAX - strlen(path) - 1);
 
     int bufferLength = 255;
     char buffer[bufferLength];
@@ -76,7 +85,7 @@ int get_config_from_file(void) {
     /*
      * read a line
      * if it starts with '#' we jump to the next one
-     * if it contains '=' we read the key and it's value
+     * if it contains '=' we read the key and its value
      */
     while (fgets(buffer, bufferLength, config_file)) {
 
@@ -108,6 +117,58 @@ int get_config_from_file(void) {
         }
     }
     fclose(config_file);
+
+    // open the directory of the vhosts
+    strcpy(path, get_app_path());
+    strncat(path, "/../config/sites/", PATH_MAX - strlen(path) - 1);
+
+    if ((dir = opendir(path)) == NULL) {
+        perror("open sites directory error");
+        return 1;
+    }
+
+    config.vhost_count = 0;
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_type == DT_REG) {
+            char vhost_path[PATH_MAX];
+            strncpy(vhost_path, path, PATH_MAX - 1);
+            strncat(vhost_path, entry->d_name, PATH_MAX - strlen(vhost_path) - 1);
+
+            if ((config_file = fopen(vhost_path, "r")) == NULL) {
+                perror("open vhost config file error");
+                closedir(dir);
+                return 1;
+            }
+
+            vhost_config vhost;
+            while (fgets(buffer, bufferLength, config_file)) {
+                if (buffer[0] != '#') {
+                    char *token = strtok(buffer, "=");
+                    if (strcmp(token, "hostname") == 0) {
+                        token = strtok(NULL, "=");
+                        token = strtok(token, "\"");
+                        strcpy(vhost.hostname, token);
+                    } else if (strcmp(token, "root") == 0) {
+                        token = strtok(NULL, "=");
+                        token = strtok(token, "\"");
+                        strcpy(vhost.root, token);
+                    }
+                }
+            }
+            fclose(config_file);
+
+            if (config.vhost_count < MAX_VHOSTS) {
+                config.vhosts[config.vhost_count++] = vhost;
+            } else {
+                fprintf(stderr, "Maximum number of vhosts reached\n");
+                closedir(dir);
+                return 1;
+            }
+        }
+    }
+
+    closedir(dir);
+
     return 0;
 }
 

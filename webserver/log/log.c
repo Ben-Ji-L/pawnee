@@ -70,10 +70,10 @@ void write_request(FILE *log_file, http_request request, int code) {
     struct tm *local = get_actual_time();
 
     /* format the line to put in the log */
-    fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] IP:%s HTTP:%d/%d %d %s %s %s", local->tm_mday, local->tm_mon + 1, local->tm_year + 1900, local->tm_hour,
+    fprintf(log_file, "[%02d/%02d/%d][%02d:%02d:%02d] IP:%s HTTP/%d.%d %d %s %s %s\n", local->tm_mday, local->tm_mon + 1, local->tm_year + 1900, local->tm_hour,
             local->tm_min, local->tm_sec, \
             client_ip, request.http_major, request.http_minor, code, get_method(request.method),
-            rewrite_target(request.target), request.headers[1]);
+            rewrite_target(request.target), request.user_agent);
 }
 
 /**

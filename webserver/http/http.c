@@ -10,38 +10,7 @@
 #include "http.h"
 #include "../file.h"
 #include "../log/log.h"
-
-/**
- * ignore headers of yhe requests
- * @param client request stream
- * @param request request we parse
- */
-void skip_and_save_headers(FILE *client, http_request *request) {
-
-    char data[512];
-    int i = 0;
-    do {
-        // if header is host we save it value in the request struct
-        if (strncmp(data, "Host: ", strlen("Host: ")) == 0) {
-            // split header and value
-            char *host_header = strtok(data, ": ");
-            host_header = strtok(NULL, " ");
-            request->host_header = malloc(strlen(host_header) + 1);
-            strcpy(request->host_header, host_header);
-        } else {
-            request->host_header = malloc(1);
-            strncpy(request->host_header, "", 1);
-        }
-
-        request->headers[i] = malloc(512);
-        strncpy(request->headers[i], fgets_or_exit(data, 512, client), 512);
-        if (request->headers[i] == NULL) {
-            write_error(get_log_errors(), "read header error");
-            exit(EXIT_FAILURE);
-        }
-        i++;
-    } while (strncmp(data, "\r\n", 2) != 0);
-}
+#include "../vhosts/hosts.h"
 
 int check_http_version(http_request *request) {
     // we not support HTTP 2 yet
@@ -57,8 +26,11 @@ int check_http_version(http_request *request) {
  * @param code HTTP code of the response
  * @param reason_phrase HTTP response reason phrase
  */
-void send_status(FILE *client, http_request *request, int code, const char *reason_phrase) {
-    fprintf(client, "HTTP/%d.%d %d %s\r\n", request->http_major, request->http_minor, code, reason_phrase);
+void send_status(int fd, http_request *request, int code, const char *reason_phrase) {
+    char status_line[128];
+    int len = snprintf(status_line, sizeof(status_line), "HTTP/%d.%d %d %s\r\n",
+                       request->http_major, request->http_minor, code, reason_phrase);
+    write(fd, status_line, len);
 }
 
 /**
@@ -70,40 +42,89 @@ void send_status(FILE *client, http_request *request, int code, const char *reas
  * @param size the size of the response body
  */
 void send_response(FILE *client, http_request *request, int code, const char *reason_phrase, char *message_body, int size) {
+    int fd = fileno(client);
 
-    /* we send the status of the response */
-    send_status(client, request, code, reason_phrase);
+    // Envoi de la ligne de statut HTTP
+    send_status(fd, request, code, reason_phrase);
 
-    char *date;
-    date = get_date_http_format();
+    // Date HTTP
+    char *date = get_date_http_format();
 
-    switch (code) {
-        case 200:
-            fprintf(client, "Content-Length: %d\r\n", size);
+    // En-têtes communs à toutes les réponses
+    char header[2048];  // Taille du tampon augmentée pour éviter tout débordement
+    int header_len = snprintf(header, sizeof(header),
+        "Server: Pawnee\r\n"
+        "Date: %s\r\n", date);
 
-            if (strncmp(get_mime_type(message_body), "text/", strlen("text/")) == 0) {
-                fprintf(client, "Content-Type: %s; charset=utf-8\r\n", get_mime_type(message_body));
-            } else
-                fprintf(client, "Content-Type: %s\r\n", get_mime_type(message_body));
+    // Ajouter d'autres en-têtes en fonction du code de réponse
+    if (code == 200) {
+        const char *mime = get_mime_type(message_body);
+        if (!mime) mime = "application/octet-stream";  // Valeur par défaut
 
-            fprintf(client, "Accept-Ranges: bytes\r\n");
-            fprintf(client, "Date: %s\r\n", date);
-            fprintf(client, "\r\n");
-            break;
+        header_len += snprintf(header + header_len, sizeof(header) - header_len,
+            "Content-Length: %d\r\n"
+            "Accept-Ranges: bytes\r\n", size);
 
-        case 405:
-            fprintf(client, "Allow: GET, HEAD\r\n");
-            fprintf(client, "Date: %s\r\n", date);
-            fprintf(client, "\r\n");
-            break;
-
-        default:
-            fprintf(client, "Content-Length: %d\r\n", size);
-            fprintf(client, "Date: %s\r\n", date);
-            fprintf(client, "\r\n");
-            fprintf(client, "%s\r\n", message_body);
-            break;
+        if (strncmp(mime, "text/", 5) == 0) {
+            header_len += snprintf(header + header_len, sizeof(header) - header_len,
+                "Content-Type: %s; charset=utf-8\r\n", mime);
+        } else {
+            header_len += snprintf(header + header_len, sizeof(header) - header_len,
+                "Content-Type: %s\r\n", mime);
+        }
+    } else if (code == 405) {
+        header_len += snprintf(header + header_len, sizeof(header) - header_len,
+            "Allow: GET, HEAD\r\n"
+            "Content-Length: %d\r\n"
+            "Content-Type: text/plain; charset=utf-8\r\n", size);
+    } else {
+        header_len += snprintf(header + header_len, sizeof(header) - header_len,
+            "Content-Length: %d\r\n"
+            "Content-Type: text/plain; charset=utf-8\r\n", size);
     }
+
+    // Ajouter la ligne vide pour séparer les en-têtes du corps
+    snprintf(header + header_len, sizeof(header) - header_len, "\r\n");
+
+    // Envoyer les en-têtes HTTP
+    ssize_t sent_header = write(fileno(client), header, strlen(header));
+    if (sent_header < 0) {
+        perror("Failed to send HTTP headers");
+    }
+    fflush(client);  // Flush pour assurer que tout est envoyé
+
+    // Ne pas envoyer le corps pour une méthode HEAD
+    if (request->method != HTTP_HEAD) {
+        if (code == 200) {
+            // Envoyer le fichier si c'est un code 200
+            char *vhost_root = get_vhost_root(request);
+            FILE *file = check_and_open(message_body, vhost_root);
+            free(vhost_root);
+
+            if (file) {
+                char buffer[8192];
+                size_t read_bytes;
+                while ((read_bytes = fread(buffer, 1, sizeof(buffer), file)) > 0) {
+                    ssize_t sent_file = write(fileno(client), buffer, read_bytes);
+                    if (sent_file < 0) {
+                        perror("Failed to send file content");
+                    }
+                }
+                fclose(file);
+            } else {
+                perror("Failed to open file");
+            }
+        } else {
+            // Pour les autres codes (405, etc.), envoyer simplement le message du corps
+            ssize_t sent_body = write(fileno(client), message_body, size);
+            if (sent_body < 0) {
+                perror("Failed to send body");
+            }
+        }
+    }
+
+    // Assurer que tout a été envoyé
+    fflush(client);
     free(date);
 }
 

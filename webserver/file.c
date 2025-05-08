@@ -23,32 +23,52 @@ FILE *check_and_open(const char *target, const char *document_root) {
 
     struct stat path_stat;
 
-    // prepare the file before opening it
-    strncpy(root, document_root, PATH_MAX);
-    strncat(path, root, PATH_MAX - strlen(path));
-    strncat(path, target, PATH_MAX - strlen(path));
+    // Vérifie que le document_root et target sont valides
+    if (document_root == NULL || strlen(document_root) == 0) {
+        write_error(get_log_errors(), "Invalid document root");
+        return NULL;
+    }
 
-    // if stat fail
+    // Prépare le chemin complet
+    strncpy(root, document_root, PATH_MAX - 1);  // Pour éviter l'overflow
+    root[PATH_MAX - 1] = '\0';  // S'assurer que root est bien terminé
+
+    // Assure-toi qu'il y a un séparateur "/" entre root et target
+    if (root[strlen(root) - 1] != '/') {
+        strncat(root, "/", PATH_MAX - strlen(root) - 1);
+    }
+
+    // Crée le chemin complet
+    strncat(path, root, PATH_MAX - strlen(path) - 1);  // Ajouter le root au path
+    strncat(path, target, PATH_MAX - strlen(path) - 1);  // Ajouter le target au path
+    path[PATH_MAX - 1] = '\0';  // S'assurer que path est bien terminé
+
+    // Vérification de l'existence du fichier
     if (stat(path, &path_stat) != 0) {
         write_error(get_log_errors(), "stat error: no such file or directory");
         return NULL;
     }
 
+    // Vérification si c'est un fichier régulier
     if (!S_ISREG(path_stat.st_mode)) {
         write_error(get_log_errors(), "stat error: not regular file");
         return NULL;
     }
+
+    // Vérification si c'est un répertoire
     if (S_ISDIR(path_stat.st_mode)) {
         write_error(get_log_errors(), "stat error: is a directory");
         return NULL;
     }
 
+    // Ouverture du fichier
     FILE *result = fopen(path, "r");
     if (result == NULL) {
-        write_error(get_log_errors(), "fopen error ");
+        write_error(get_log_errors(), "fopen error");
         return NULL;
     }
 
+    // Retourne le fichier ouvert
     return result;
 }
 
@@ -70,12 +90,17 @@ int get_file_size(int fd) {
  * @param in the file to read
  * @param out the file to copy data
  */
-void copy(FILE *in, FILE *out) {
-    char buff[1024];
-    size_t s;
-
-    while ((s = fread(buff, 1, 1024, in)) != 0)
-        fwrite(buff, 1, s, out);
+void copy(FILE *src, FILE *dest) {
+    char buffer[1024];
+    size_t bytes_read;
+    while ((bytes_read = fread(buffer, 1, sizeof(buffer), src)) > 0) {
+        size_t bytes_written = fwrite(buffer, 1, bytes_read, dest);
+        if (bytes_written != bytes_read) {
+            perror("Error writing to client");
+            break;
+        }
+        fflush(dest);  // Force l'écriture immédiatement
+    }
 }
 
 /**
@@ -173,14 +198,33 @@ char *get_mime_type(char *name) {
 /**
  * return the path of the application
  * @param argv0 the path of the executable
- * @return absolute path of the file
+ * @return absolute path of the file with a \0 at the end
  */
 char *get_app_path(void) {
     char *path = malloc(PATH_MAX);
-    if (readlink("/proc/self/exe", path, PATH_MAX) != -1) {
-        dirname(path);
-        strncat(path, "/", PATH_MAX);
+    if (path == NULL) {
+        perror("malloc error");
+        exit(EXIT_FAILURE);
     }
+
+    ssize_t len = readlink("/proc/self/exe", path, PATH_MAX - 1);
+    if (len == -1) {
+        perror("readlink error");
+        free(path);
+        exit(EXIT_FAILURE);
+    }
+    path[len] = '\0';  // Null-terminate the path
+
+    char *dir = dirname(path);
+    if (dir == NULL) {
+        perror("dirname error");
+        free(path);
+        exit(EXIT_FAILURE);
+    }
+
+    // Copy the directory path back to the original path buffer
+    strncpy(path, dir, PATH_MAX - 1);
+    path[PATH_MAX - 1] = '\0';  // Ensure null-termination
 
     return path;
 }

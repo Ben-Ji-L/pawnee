@@ -3,6 +3,13 @@
 
 #include <limits.h>
 
+#define MAX_VHOSTS 100
+
+typedef struct {
+    char hostname[256];
+    char root[PATH_MAX];
+} vhost_config;
+
 /** struct for saving the configuration of the server */
 typedef struct {
 
@@ -16,6 +23,10 @@ typedef struct {
     char mimes_file[PATH_MAX];
 
     char log_dir[PATH_MAX];
+
+    vhost_config vhosts[MAX_VHOSTS];
+
+    int vhost_count;
 } server_config;
 
 int init_config();

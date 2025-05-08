@@ -44,7 +44,15 @@ enum http_method {
 
 
 // The maximum size of the target string.
-#define MAX_TARGET_SIZE 1024
+#define MAX_HEADERS 100
+#define MAX_HEADER_NAME_SIZE 256
+#define MAX_HEADER_VALUE_SIZE 1024
+#define MAX_TARGET_SIZE 2048
+
+typedef struct {
+    char name[MAX_HEADER_NAME_SIZE];
+    char value[MAX_HEADER_VALUE_SIZE];
+} http_header;
 
 /** describes a http request */
 typedef struct {
@@ -61,10 +69,16 @@ typedef struct {
     /** target of the request */
     char target[MAX_TARGET_SIZE];
 
-    char *host_header;
+    /** number of headers */
+    int header_count;
 
     /** headers of the request */
-    char *headers[20];
+    http_header headers[MAX_HEADERS];
+
+    /** host header of the request */
+    char host_header[MAX_HEADER_VALUE_SIZE];
+
+    char user_agent[MAX_HEADER_VALUE_SIZE];
 } http_request;
 
 void init_request(http_request *request);
@@ -76,7 +90,7 @@ void init_request(http_request *request);
  * @return -1 if error and 0 on success. If the error is an
  * unsupported http method, then the method field of request will be set to HTTP_UNSUPPORTED
  */
-int parse_http_request(const char *request_line, http_request *request);
+int parse_http_request(char *request_line, char *headers_block, http_request *request);
 
 char *get_method(enum http_method method);
 
