@@ -219,7 +219,8 @@ void respond_client(int socket_client) {
         }
 
         char *host_root = get_vhost_root(&request);
-        if (!host_root) {
+
+        if (host_root == NULL) {
             write_error(get_log_errors(), "vhost root error");
             write_request(get_log_requests(), request, 400);
             sem_wait(shared_semaphore);

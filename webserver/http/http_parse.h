@@ -32,6 +32,8 @@
 #ifndef __HTTP_PARSE__
 #define __HTTP_PARSE__
 
+#include "http_headers.h"
+
 /** Method supported by the parser */
 enum http_method {
     /** GET http method */
@@ -49,11 +51,6 @@ enum http_method {
 #define MAX_HEADER_VALUE_SIZE 1024
 #define MAX_TARGET_SIZE 2048
 
-typedef struct {
-    char name[MAX_HEADER_NAME_SIZE];
-    char value[MAX_HEADER_VALUE_SIZE];
-} http_header;
-
 /** describes a http request */
 typedef struct {
 
@@ -69,16 +66,7 @@ typedef struct {
     /** target of the request */
     char target[MAX_TARGET_SIZE];
 
-    /** number of headers */
-    int header_count;
-
-    /** headers of the request */
-    http_header headers[MAX_HEADERS];
-
-    /** host header of the request */
-    char host_header[MAX_HEADER_VALUE_SIZE];
-
-    char user_agent[MAX_HEADER_VALUE_SIZE];
+    http_headers headers;
 } http_request;
 
 void init_request(http_request *request);

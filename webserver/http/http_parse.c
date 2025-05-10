@@ -35,6 +35,7 @@
 #include <ctype.h>
 
 #include "http_parse.h"
+#include "http_headers.h"
 
 /** find the minimum value between two numbers */
 #define min(a, b) ((a) < (b) ? (a) : (b))
@@ -49,8 +50,6 @@
  * @return 1 on success, 0 on error
  */
 int parse_http_request(char *request_line, char *headers_block, http_request *request) {
-    request->header_count = 0;
-
     // --- 1. Parse la ligne de requête ---
     char *method = strtok(request_line, " ");
     char *target = strtok(NULL, " ");
@@ -59,7 +58,6 @@ int parse_http_request(char *request_line, char *headers_block, http_request *re
     if (!method || !target || !version)
         return 0;
 
-    // Méthode
     if (strcmp(method, "GET") == 0) {
         request->method = HTTP_GET;
     } else if (strcmp(method, "HEAD") == 0) {
@@ -68,64 +66,42 @@ int parse_http_request(char *request_line, char *headers_block, http_request *re
         request->method = HTTP_UNSUPPORTED;
     }
 
-    // Target
     strncpy(request->target, target, sizeof(request->target) - 1);
     request->target[sizeof(request->target) - 1] = '\0';
 
-    // HTTP version
     if (sscanf(version, "HTTP/%d.%d", &request->http_major, &request->http_minor) != 2)
         return 0;
 
-    // --- 2. Parser les headers ligne par ligne ---
-    char *line = headers_block;
+    // --- 2. Parse headers ---
+    init_headers(&request->headers);
 
-    while (line && *line != '\0') {
-        // Fin des headers
-        if (strncmp(line, "\r\n", 2) == 0 || strncmp(line, "\n", 1) == 0)
-            break;
+    char *line = strtok(headers_block, "\r\n");
+    while (line) {
+        // Ignore les lignes vides ou blanches
+        while (*line == ' ' || *line == '\t') line++;
+        if (*line == '\0') break;
 
         char *colon = strchr(line, ':');
-        if (!colon)
-            return 0;
-
-        // Nom du header
-        int name_len = colon - line;
-        if (name_len >= MAX_HEADER_NAME_SIZE)
-            return 0;
-
-        char name[MAX_HEADER_NAME_SIZE];
-        strncpy(name, line, name_len);
-        name[name_len] = '\0';
-
-        // Nettoyer le nom
-        for (int i = 0; i < name_len; i++)
-            name[i] = tolower(name[i]);
-
-        // Sauter les espaces après le :
-        char *value = colon + 1;
-        while (*value == ' ' || *value == '\t') value++;
-
-        int value_len = strcspn(value, "\r\n");
-        if (value_len >= MAX_HEADER_VALUE_SIZE)
-            return 0;
-
-        char val[MAX_HEADER_VALUE_SIZE];
-        strncpy(val, value, value_len);
-        val[value_len] = '\0';
-
-        // Stocker Host et User-Agent
-        if (strcmp(name, "host") == 0) {
-            strncpy(request->host_header, val, sizeof(request->host_header) - 1);
-            request->host_header[sizeof(request->host_header) - 1] = '\0';
-        } else if (strcmp(name, "user-agent") == 0) {
-            strncpy(request->user_agent, val, sizeof(request->user_agent) - 1);
-            request->user_agent[sizeof(request->user_agent) - 1] = '\0';
+        if (!colon) {
+            line = strtok(NULL, "\r\n");
+            continue;
         }
 
-        // Prochaine ligne
-        line = strstr(line, "\n");
-        if (line)
-            line++;
+        *colon = '\0';
+        char *name = line;
+        char *value = colon + 1;
+
+        // Trim du nom (fin)
+        name[strcspn(name, " \t")] = '\0';
+
+        // Trim du début du value
+        while (*value == ' ' || *value == '\t') value++;
+
+        if (*name != '\0' && *value != '\0') {
+            add_header(&request->headers, name, value);
+        }
+
+        line = strtok(NULL, "\r\n");
     }
 
     return 1;

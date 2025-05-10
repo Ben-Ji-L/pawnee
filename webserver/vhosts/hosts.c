@@ -8,6 +8,7 @@
 #include "hosts.h"
 #include "../log/log.h"
 #include "../config/config.h"
+#include "../http/http_headers.h"
 
 /**
  * read virtual host config files and search for the host wanted in the request
@@ -19,15 +20,17 @@ char *get_vhost_root(http_request *request) {
     char buffer[bufferLength];
     char *host_content;
 
+    char *host_header = get_header(&request->headers, "Host");
+    
     // parsing host header
-    if (strlen(request->host_header) == 0) {
+    if (host_header == NULL || strlen(host_header) == 0) {
         write_error(get_log_errors(), "missing host header");
         return NULL;
     }
 
     // Work on a copy of the host header to avoid modifying it destructively
     char host_copy[256];
-    strncpy(host_copy, request->host_header, sizeof(host_copy));
+    strncpy(host_copy, host_header, sizeof(host_copy));
     host_copy[sizeof(host_copy) - 1] = '\0';
     host_content = strtok(host_copy, ":");
 

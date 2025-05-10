@@ -8,6 +8,7 @@
 #include <time.h>
 
 #include "http.h"
+#include "http_headers.h"
 #include "../file.h"
 #include "../log/log.h"
 #include "../vhosts/hosts.h"
@@ -91,8 +92,7 @@ void send_response(FILE *client, http_request *request, int code, const char *re
     if (sent_header < 0) {
         perror("Failed to send HTTP headers");
     }
-    fflush(client);  // Flush pour assurer que tout est envoyé
-
+    
     // Ne pas envoyer le corps pour une méthode HEAD
     if (request->method != HTTP_HEAD) {
         if (code == 200) {
@@ -125,6 +125,7 @@ void send_response(FILE *client, http_request *request, int code, const char *re
 
     // Assurer que tout a été envoyé
     fflush(client);
+    free_headers(&request->headers);
     free(date);
 }
 
