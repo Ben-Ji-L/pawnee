@@ -17,4 +17,6 @@ char *get_mime_type(char *name);
 
 char *get_app_path(void);
 
+time_t get_last_modified_date(FILE *file);
+
 #endif

@@ -10,91 +10,87 @@
 #include "../config/config.h"
 #include "../http/http_headers.h"
 
-/**
- * read virtual host config files and search for the host wanted in the request
- * @param request the request to parse host header
- * @return the root for the virtual host
- */
-char *get_vhost_root(http_request *request) {
-    int bufferLength = 255;
-    char buffer[bufferLength];
-    char *host_content;
-
+vhost_config *get_vhost_config(http_request *request) {
+    char buffer[256];
     char *host_header = get_header(&request->headers, "Host");
-    
-    // parsing host header
-    if (host_header == NULL || strlen(host_header) == 0) {
-        write_error(get_log_errors(), "missing host header");
+
+    if (!host_header || strlen(host_header) == 0) {
+        write_error(get_log_errors(), "missing or empty Host header");
         return NULL;
     }
 
-    // Work on a copy of the host header to avoid modifying it destructively
-    char host_copy[256];
-    strncpy(host_copy, host_header, sizeof(host_copy));
-    host_copy[sizeof(host_copy) - 1] = '\0';
-    host_content = strtok(host_copy, ":");
+    // Extraire le host sans le port
+    char host_clean[256];
+    strncpy(host_clean, host_header, sizeof(host_clean));
+    host_clean[sizeof(host_clean) - 1] = '\0';
+    strtok(host_clean, ":");
 
-    // Extract host content (before the ':')
-    host_content = strtok(host_copy, ":");
-    if (host_content == NULL) {
-        write_error(get_log_errors(), "invalid host header");
+    // Obtenir chemin vers le dossier des vhosts
+    char *sites_dir = get_app_path();
+    strncat(sites_dir, "/../config/sites", PATH_MAX - strlen(sites_dir) - 1);
+
+    DIR *dir = opendir(sites_dir);
+    if (!dir) {
+        write_error(get_log_errors(), "cannot open sites directory");
+        free(sites_dir);
         return NULL;
     }
 
-    // flush buffer
-    buffer[0] = '\0';
-
-    // Get the path to the sites directory
-    char *path = get_app_path();
-    strncat(path, "/../config/sites", PATH_MAX - strlen(path) - 1);
-
-    DIR *dir;
     struct dirent *entry;
-
-    if ((dir = opendir(path)) == NULL) {
-        write_error(get_log_errors(), "open sites directory error");
-        free(path);
-        return NULL;
-    }
-
     while ((entry = readdir(dir)) != NULL) {
-        if (entry->d_type == DT_REG) {
-            char vhost_path[PATH_MAX];
-            snprintf(vhost_path, PATH_MAX, "%s/%s", path, entry->d_name);
+        if (entry->d_type != DT_REG) continue;
 
-            FILE *vhost_file = fopen(vhost_path, "r");
-            if (vhost_file == NULL) {
-                write_error(get_log_errors(), "open vhost config file error");
-                closedir(dir);
-                free(path);
-                return NULL;
-            }
+        char filepath[PATH_MAX];
+        snprintf(filepath, sizeof(filepath), "%s/%s", sites_dir, entry->d_name);
+        FILE *file = fopen(filepath, "r");
+        if (!file) continue;
 
-            while (fgets(buffer, bufferLength, vhost_file)) {
-                if (buffer[0] != '#') {
-                    char *token = strtok(buffer, "=");
-                    if (strcmp(token, "hostname") == 0) {
-                        token = strtok(NULL, "=");
-                        token = strtok(token, "\"");
-                        if (strcmp(token, host_content) == 0) {
-                            fgets(buffer, bufferLength, vhost_file);
-                            token = strtok(buffer, "=");
-                            if (strcmp(token, "root") == 0) {
-                                token = strtok(NULL, "=");
-                                char *result = strtok(token, "\"");
-                                fclose(vhost_file);
-                                closedir(dir);
-                                free(path);
-                                return strdup(result);
-                            }
-                        }
-                    }
-                }
+        char *hostname = NULL, *root = NULL, *log_dir = NULL;
+
+        while (fgets(buffer, sizeof(buffer), file)) {
+            if (buffer[0] == '#') continue;
+
+            char *key = strtok(buffer, "=");
+            char *value = strtok(NULL, "\"");
+
+            if (!key || !value) continue;
+
+            if (strcmp(key, "hostname") == 0) {
+                hostname = strdup(value);
+            } else if (strcmp(key, "root") == 0) {
+                root = strdup(value);
+            } else if (strcmp(key, "log_dir") == 0) {
+                log_dir = strdup(value);
             }
-            fclose(vhost_file);
         }
+
+        fclose(file);
+
+        if (hostname && strcmp(hostname, host_clean) == 0) {
+            closedir(dir);
+            free(sites_dir);
+
+            vhost_config *config = malloc(sizeof(vhost_config));
+            config->hostname = strdup(hostname);
+            config->root = strdup(root);
+            config->log_dir = strdup(log_dir);
+            return config;
+        }
+
+        free(hostname);
+        free(root);
+        free(log_dir);
     }
+
     closedir(dir);
-    free(path);
+    free(sites_dir);
     return NULL;
+}
+
+void free_vhost_config(vhost_config *config) {
+    if (!config) return;
+    free(config->hostname);
+    free(config->root);
+    free(config->log_dir);
+    free(config);
 }

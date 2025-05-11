@@ -49,7 +49,9 @@ void send_response(FILE *client, http_request *request, int code, const char *re
     send_status(fd, request, code, reason_phrase);
 
     // Date HTTP
-    char *date = get_date_http_format();
+    char *date = time_to_http_format(get_now());
+
+    FILE *file = NULL;
 
     // En-têtes communs à toutes les réponses
     char header[2048];  // Taille du tampon augmentée pour éviter tout débordement
@@ -57,10 +59,30 @@ void send_response(FILE *client, http_request *request, int code, const char *re
         "Server: Pawnee\r\n"
         "Date: %s\r\n", date);
 
+    if (request->http_major == 1 && request->http_minor == 1) {
+        header_len += snprintf(header + header_len, sizeof(header) - header_len,
+            "Connection: keep-alive\r\n");
+    } else {
+        header_len += snprintf(header + header_len, sizeof(header) - header_len,
+            "Connection: close\r\n");
+    }
+
     // Ajouter d'autres en-têtes en fonction du code de réponse
     if (code == 200) {
         const char *mime = get_mime_type(message_body);
         if (!mime) mime = "application/octet-stream";  // Valeur par défaut
+
+        char *vhost_root = get_vhost_config(request)->root;
+            
+        file = check_and_open(message_body, vhost_root);
+        free(vhost_root);
+
+
+        char *last_modified_date = time_to_http_format(get_last_modified_date(file));
+        if (last_modified_date) {
+            header_len += snprintf(header + header_len, sizeof(header) - header_len,
+                "Last-Modified: %s\r\n", last_modified_date);
+        }
 
         header_len += snprintf(header + header_len, sizeof(header) - header_len,
             "Content-Length: %d\r\n"
@@ -97,10 +119,6 @@ void send_response(FILE *client, http_request *request, int code, const char *re
     if (request->method != HTTP_HEAD) {
         if (code == 200) {
             // Envoyer le fichier si c'est un code 200
-            char *vhost_root = get_vhost_root(request);
-            FILE *file = check_and_open(message_body, vhost_root);
-            free(vhost_root);
-
             if (file) {
                 char buffer[8192];
                 size_t read_bytes;
@@ -129,19 +147,19 @@ void send_response(FILE *client, http_request *request, int code, const char *re
     free(date);
 }
 
-/**
- * return actual date of the server with the correct format for HTTP response
- * @return well formatted date
- */
-char *get_date_http_format(void) {
-    time_t rawtime;
+char *time_to_http_format(time_t time) {
     struct tm *timeinfo;
     char *date = malloc(100);
 
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
+    timeinfo = localtime(&time);
     strftime(date, 40, "%a, %d %b %G %X %Z", timeinfo);
     return date;
+}
+
+time_t get_now(void) {
+    time_t now;
+    time(&now);
+    return now;
 }
 
 /**

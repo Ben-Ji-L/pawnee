@@ -2,7 +2,10 @@
 #define __HOSTS_H__
 
 #include "../http/http_parse.h"
+#include "../config/config.h"
 
-char *get_vhost_root(http_request *request);
+vhost_config *get_vhost_config(http_request *request);
+
+void free_vhost_config(vhost_config *config);
 
 #endif

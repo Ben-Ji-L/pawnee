@@ -6,8 +6,9 @@
 #define MAX_VHOSTS 100
 
 typedef struct {
-    char hostname[256];
-    char root[PATH_MAX];
+    char *hostname; /**< hostname of the virtual host */
+    char *root;     /**< root directory of the virtual host */
+    char *log_dir;  /**< log directory of the virtual host */
 } vhost_config;
 
 /** struct for saving the configuration of the server */

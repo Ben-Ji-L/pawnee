@@ -30,7 +30,7 @@ void send_stats(FILE *client, http_request *request) {
     // Construction des en-têtes HTTP
     char header[1024];
     char date[128];
-    snprintf(date, sizeof(date), "Date: %s\r\n", get_date_http_format());
+    snprintf(date, sizeof(date), "Date: %s\r\n", time_to_http_format(get_now()));
 
     int header_len = snprintf(header, sizeof(header),
         "Content-Length: %d\r\n"

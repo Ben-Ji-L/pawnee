@@ -228,3 +228,11 @@ char *get_app_path(void) {
 
     return path;
 }
+
+time_t get_last_modified_date(FILE *file) {
+    struct stat file_stat;
+    if (fstat(fileno(file), &file_stat) == 0) {
+        return file_stat.st_mtime;
+    }
+    return 0;
+}

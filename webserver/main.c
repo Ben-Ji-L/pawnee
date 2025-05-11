@@ -143,7 +143,7 @@ void respond_client(int socket_client) {
         exit(EXIT_FAILURE);
     }
 
-    if (pid == 0) { // processus fils
+    if (pid == 0) { // child process
         FILE *flux = fdopen(socket_client, "w+");
         if (!flux) {
             write_error(get_log_errors(), "fdopen error on socket");
@@ -155,21 +155,27 @@ void respond_client(int socket_client) {
             exit(EXIT_FAILURE);
         }
 
-        char request_line[1024], data[1024], *error_message = "";
+        char request_line[1024], line[1024], headers_block[8192] = {0};
         http_request request;
 
-        if (!fgets(request_line, sizeof(request_line), flux) ||
-            !fgets(data, sizeof(data), flux)) {
-            write_error(get_log_errors(), "error reading from client");
+        char *error_message = NULL;
+
+        // read the request line
+        if (!fgets(request_line, sizeof(request_line), flux)) {
+            write_error(get_log_errors(), "error reading request line");
             fclose(flux);
             exit(EXIT_FAILURE);
         }
 
-        sem_wait(shared_semaphore);
-        get_stats()->served_requests++;
-        sem_post(shared_semaphore);
-
-        if (!parse_http_request(request_line, data, &request)) {
+        // parse http headers
+        while (fgets(line, sizeof(line), flux)) {
+            if (strcmp(line, "\r\n") == 0 || strcmp(line, "\n") == 0) {
+                break; // end of headers
+            }
+            strncat(headers_block, line, sizeof(headers_block) - strlen(headers_block) - 1);
+        }
+        
+        if (!parse_http_request(request_line, headers_block, &request)) {
             write_request(get_log_requests(), request, 400);
             sem_wait(shared_semaphore);
             get_stats()->ko_400++;
@@ -218,9 +224,9 @@ void respond_client(int socket_client) {
             exit(EXIT_SUCCESS);
         }
 
-        char *host_root = get_vhost_root(&request);
+        vhost_config *vhost = get_vhost_config(&request);
 
-        if (host_root == NULL) {
+        if (vhost == NULL) {
             write_error(get_log_errors(), "vhost root error");
             write_request(get_log_requests(), request, 400);
             sem_wait(shared_semaphore);
@@ -234,7 +240,7 @@ void respond_client(int socket_client) {
             exit(EXIT_SUCCESS);
         }
 
-        char *root = check_root(host_root);
+        char *root = check_root(vhost->root);
 
         FILE *file = check_and_open(target, root);
         if (!file) {
@@ -257,6 +263,7 @@ void respond_client(int socket_client) {
         
         send_response(flux, &request, 200, "OK", rewrite_target(request.target), get_file_size(fileno(file)));
         fclose(flux);
+        free_vhost_config(vhost);
         exit(EXIT_SUCCESS);
     }
 }

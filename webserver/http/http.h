@@ -9,7 +9,9 @@ void send_status(int fd, http_request *request, int code, const char *reason_phr
 
 void send_response(FILE *client, http_request *request, int code, const char *reason_phrase, char *message_body, int size);
 
-char *get_date_http_format(void);
+char *time_to_http_format(time_t time);
+
+time_t get_now(void);
 
 char *rewrite_target(char *target);
 

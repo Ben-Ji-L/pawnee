@@ -38,10 +38,11 @@ void add_header(http_headers *h, const char *name, const char *value) {
     h->count++;
 }
 
-char *get_header(http_headers *h, const char *name) {
-    for (size_t i = 0; i < h->count; i++) {
-        if (strcasecmp(h->headers[i].name, name) == 0)
-            return h->headers[i].value;
+char *get_header(http_headers *headers, const char *name) {
+    for (size_t i = 0; i < headers->count; ++i) {
+        if (strcasecmp(headers->headers[i].name, name) == 0) {
+            return headers->headers[i].value;
+        }
     }
     return NULL;
 }
